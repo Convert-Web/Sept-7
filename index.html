@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Le Sept 7 — Restaurant kebab, paninis & tikka à Montereau-Fault-Yonne. Commandez en ligne ou appelez-nous." />
+  <title>Le Sept 7 — Kebab & Paninis Montereau-Fault-Yonne</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-le">Le</span>
+      <span class="nav-logo-7">7</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link active">Accueil</a></li>
+      <li><a href="menu.html" class="nav-link">Menu</a></li>
+      <li><a href="avis.html" class="nav-link">Avis</a></li>
+      <li><a href="infos.html" class="nav-link">Infos</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="tel:+33XXXXXXXXX" class="nav-cta">📞 Commander</a>
+      <button class="nav-burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- DRAWER -->
+  <div class="nav-drawer" id="drawer">
+    <a href="index.html" class="drawer-link active">Accueil</a>
+    <a href="menu.html" class="drawer-link">Menu</a>
+    <a href="avis.html" class="drawer-link">Avis</a>
+    <a href="infos.html" class="drawer-link">Infos</a>
+    <div class="drawer-divider"></div>
+    <a href="tel:+33XXXXXXXXX" class="drawer-cta">📞 Appeler & Commander</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="images/hero-bg.jpg" alt="Le Sept 7 restaurant" />
+    </div>
+    <div class="hero-bar"></div>
+    <div class="hero-body">
+      <div class="status-pill rv">
+        <span class="sdot"></span>
+        Ouvert maintenant
+      </div>
+      <p class="hero-kicker rv d1">Kebab · Paninis · Tikka</p>
+      <span class="hero-le-txt rv d2">Le</span>
+      <span class="hero-sept rv d2">Sept</span>
+      <span class="hero-7 rv d2">7</span>
+      <p class="hero-sub rv d3">Saveurs généreuses, qualité irréprochable</p>
+      <p class="hero-loc rv d3">📍 Montereau-Fault-Yonne</p>
+      <div class="hero-rating rv d4">
+        <span class="stars">★★★★★</span>
+        <strong>4.8</strong>
+        <span style="color:var(--muted);font-weight:500">· +200 avis</span>
+      </div>
+      <div class="hero-btns rv d4">
+        <a href="tel:+33XXXXXXXXX" class="btn-call">
+          <span>📞</span>
+          <span>
+            Commander par téléphone
+            <small>Rapide · Sur place ou à emporter</small>
+          </span>
+        </a>
+        <div class="dual-divider">ou</div>
+        <a href="https://www.ubereats.com" target="_blank" rel="noopener" class="btn-uber">
+          🛵 Livraison Uber Eats
+        </a>
+      </div>
+      <div class="hero-proof rv d4">
+        <span>✅ Fraîcheur garantie</span>
+        <span class="sep">◆</span>
+        <span>⚡ Prêt en 15 min</span>
+        <span class="sep">◆</span>
+        <span>🏆 Note 4.8/5</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRIP MARQUEE -->
+  <div class="strip">
+    <div class="strip-track">
+      <span class="strip-item">Kebab<span class="strip-sep">◆</span></span>
+      <span class="strip-item">Paninis<span class="strip-sep">◆</span></span>
+      <span class="strip-item">Tikka<span class="strip-sep">◆</span></span>
+      <span class="strip-item">Tacos<span class="strip-sep">◆</span></span>
+      <span class="strip-item">Frites<span class="strip-sep">◆</span></span>
+      <span class="strip-item">Livraison<span class="strip-sep">◆</span></span>
+      <span class="strip-item">À emporter<span class="strip-sep">◆</span></span>
+      <span class="strip-item">Sur place<span class="strip-sep">◆</span></span>
+      <!-- Duplicate for seamless loop -->
+      <span class="strip-item">Kebab<span class="strip-sep">◆</span></span>
+      <span class="strip-item">Paninis<span class="strip-sep">◆</span></span>
+      <span class="strip-item">Tikka<span class="strip-sep">◆</span></span>
+      <span class="strip-item">Tacos<span class="strip-sep">◆</span></span>
+      <span class="strip-item">Frites<span class="strip-sep">◆</span></span>
+      <span class="strip-item">Livraison<span class="strip-sep">◆</span></span>
+      <span class="strip-item">À emporter<span class="strip-sep">◆</span></span>
+      <span class="strip-item">Sur place<span class="strip-sep">◆</span></span>
+    </div>
+  </div>
+
+  <!-- UBER STRIP -->
+  <div class="uber-strip">
+    <div class="uber-inner">
+      <p class="uber-txt"><strong>Livraison disponible</strong> via Uber Eats · Rapide & fiable</p>
+      <a href="https://www.ubereats.com" target="_blank" rel="noopener" class="uber-btn">
+        🛵 Commander
+      </a>
+    </div>
+  </div>
+
+  <!-- POURQUOI NOUS -->
+  <section class="sec sec-dark">
+    <div class="wrap">
+      <div class="sh rv">
+        <span class="sh-eye">Notre promesse</span>
+        <h2 class="sh-title">Pourquoi <em>Le Sept 7</em> ?</h2>
+        <p class="sh-body">Depuis notre ouverture, une seule obsession : vous offrir le meilleur repas possible, à chaque visite.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card rv d1">
+          <span class="why-ico">🥩</span>
+          <h3 class="why-title">Viande Fraîche</h3>
+          <p class="why-desc">Sélectionnée chaque matin, cuisinée à la commande.</p>
+        </div>
+        <div class="why-card rv d2">
+          <span class="why-ico">⚡</span>
+          <h3 class="why-title">Service Rapide</h3>
+          <p class="why-desc">Votre commande prête en 15 min chrono.</p>
+        </div>
+        <div class="why-card rv d3">
+          <span class="why-ico">💰</span>
+          <h3 class="why-title">Prix Justes</h3>
+          <p class="why-desc">Généreux et accessible, sans compromis sur la qualité.</p>
+        </div>
+        <div class="why-card rv d4">
+          <span class="why-ico">🏆</span>
+          <h3 class="why-title">Note 4.8/5</h3>
+          <p class="why-desc">+200 avis clients satisfaits sur Google.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEST-SELLERS -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sh rv">
+        <span class="sh-eye">Nos incontournables</span>
+        <h2 class="sh-title">Les <em>Best-Sellers</em></h2>
+        <p class="sh-body">Les plats que nos clients commandent encore et encore.</p>
+      </div>
+      <div class="top-cards rv">
+        <div class="tc">
+          <div class="tc-img">
+            <img src="images/kebab.jpg" alt="Kebab Le Sept 7" />
+            <span class="tc-tag">N°1</span>
+            <span class="tc-score">★ 4.9</span>
+          </div>
+          <div class="tc-body">
+            <h3 class="tc-name">Kebab Maison</h3>
+            <p class="tc-desc">Viande grillée, sauce secrète, légumes frais dans un pain moelleux.</p>
+            <span class="tc-price">À partir de 6,50€</span>
+          </div>
+        </div>
+        <div class="tc">
+          <div class="tc-img">
+            <img src="images/panini.jpg" alt="Panini Le Sept 7" />
+            <span class="tc-tag">Favori</span>
+            <span class="tc-score">★ 4.8</span>
+          </div>
+          <div class="tc-body">
+            <h3 class="tc-name">Panini Spécial</h3>
+            <p class="tc-desc">Poulet, fromage fondant, tomates et herbes fraîches.</p>
+            <span class="tc-price">À partir de 5,50€</span>
+          </div>
+        </div>
+        <div class="tc">
+          <div class="tc-img">
+            <img src="images/tikka.jpg" alt="Tikka Le Sept 7" />
+            <span class="tc-tag">Épicé</span>
+            <span class="tc-score">★ 4.9</span>
+          </div>
+          <div class="tc-body">
+            <h3 class="tc-name">Assiette Tikka</h3>
+            <p class="tc-desc">Poulet mariné aux épices, riz basmati, sauce raïta.</p>
+            <span class="tc-price">À partir de 9,50€</span>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:1rem">
+        <a href="menu.html" class="reviews-more">Voir la carte complète →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVIS RAPIDES -->
+  <section class="sec sec-dark">
+    <div class="wrap">
+      <div class="sh rv">
+        <span class="sh-eye">Ce qu'ils disent</span>
+        <h2 class="sh-title">Avis <em>clients</em></h2>
+      </div>
+      <div class="rating-card rv">
+        <div class="rating-num">4.8</div>
+        <div>
+          <div class="rating-stars">★★★★★</div>
+          <div class="rating-label">Excellent</div>
+          <div class="rating-count">Basé sur +200 avis</div>
+          <span class="rating-src">Google</span>
+        </div>
+      </div>
+      <div class="reviews rv">
+        <div class="review">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-txt">Le <strong>meilleur kebab</strong> de la région sans hésiter. La viande est fraîche et la sauce… incroyable !</p>
+          <div class="review-name">Mohammed A.</div>
+          <div class="review-src">Google · il y a 2 semaines</div>
+        </div>
+        <div class="review">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-txt">Paninis <strong>généreux et délicieux</strong>. Service rapide même aux heures de pointe. Je recommande !</p>
+          <div class="review-name">Sophie L.</div>
+          <div class="review-src">Google · il y a 1 mois</div>
+        </div>
+      </div>
+      <a href="avis.html" class="reviews-more rv">Lire tous les avis →</a>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-section">
+    <div class="wrap">
+      <h2 class="cta-title rv">Prêt à <em>commander</em> ?</h2>
+      <p class="cta-sub rv">Sur place, à emporter ou en livraison — c'est vous qui choisissez.</p>
+      <div class="cta-btns rv">
+        <a href="tel:+33XXXXXXXXX" class="btn-call" style="width:auto;padding:1rem 2rem">
+          📞 Appeler maintenant
+        </a>
+        <a href="https://www.ubereats.com" target="_blank" rel="noopener" class="btn-uber" style="width:auto;padding:1rem 2rem">
+          🛵 Uber Eats
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-inner">
+      <div>
+        <div class="foot-logo">SEPT 7</div>
+        <p class="foot-tag">Kebab · Paninis · Tikka<br>Montereau-Fault-Yonne</p>
+        <a href="tel:+33XXXXXXXXX" class="foot-tel">📞 XX XX XX XX XX</a>
+      </div>
+      <div>
+        <ul class="foot-nav">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="avis.html">Avis</a></li>
+          <li><a href="infos.html">Infos & Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:.75rem;color:var(--muted);margin-bottom:.5rem">Retrouvez-nous</p>
+        <a href="https://www.ubereats.com" target="_blank" rel="noopener" class="uber-btn" style="display:inline-flex;margin-bottom:.5rem">🛵 Uber Eats</a>
+      </div>
+    </div>
+    <p class="foot-seo">Le Sept 7 — Restaurant rapide à Montereau-Fault-Yonne. Spécialités kebab, paninis, tikka. Livraison disponible via Uber Eats. Ouvert midi et soir, 7j/7.</p>
+    <div class="foot-bottom">
+      <span class="copy">© 2025 Le Sept 7 — Tous droits réservés</span>
+      <div class="foot-legal">
+        <a href="mentions-legales.html">Mentions légales</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- STICKY BAR MOBILE -->
+  <div class="sticky">
+    <a href="menu.html" class="sticky-menu">
+      🍽️<span>Menu</span>
+    </a>
+    <a href="tel:+33XXXXXXXXX" class="sticky-call">
+      📞<span>Commander</span>
+      <span class="sticky-num">XX XX XX XX XX</span>
+    </a>
+    <a href="https://www.ubereats.com" target="_blank" rel="noopener" class="sticky-uber">
+      🛵<span>Livraison</span>
+    </a>
+  </div>
+
+</div><!-- .page-wrap -->
+<script src="script.js"></script>
+</body>
+</html>
