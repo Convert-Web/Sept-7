@@ -1,0 +1,767 @@
+cat > /mnt/user-data/outputs/le-sept-7.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Sept 7 — Street Food Premium · Montereau-Fault-Yonne</title>
+<meta name="description" content="Le Sept 7 — Burgers, Tacos, Kebabs, Riz Thaï, Nuggets. Street food d'exception au 72 rue Jean Jaurès, Montereau-Fault-Yonne. Ouvert 7j/7. 01 75 15 41 28">
+<meta name="keywords" content="Le Sept 7, Sept7, restaurant Montereau, burger, tacos, kebab, riz thaï, nuggets, Seine-et-Marne 77130, street food">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#050505;--bg2:#0c0c0c;--bg3:#111;
+  --gold:#c9a84c;--gold-l:#e8c97a;--gold-dim:rgba(201,168,76,.2);
+  --red:#c0392b;--red-dim:rgba(192,57,43,.15);
+  --cream:#f2ede4;--white:#fff;--muted:#4a4a4a;
+  --txt2:rgba(242,237,228,.6);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:'Outfit',sans-serif;overflow-x:hidden;cursor:none}
+body::after{content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.022;pointer-events:none;z-index:9998;animation:grain .4s steps(1) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-2%,1%)}50%{transform:translate(1%,-2%)}75%{transform:translate(-1%,2%)}}
+
+/* Cursor */
+.cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s,width .3s,height .3s;mix-blend-mode:difference}
+.cursor-ring{position:fixed;width:38px;height:38px;border:1px solid rgba(201,168,76,.5);border-radius:50%;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:transform .12s ease-out,width .3s,height .3s,opacity .3s}
+
+/* Loader */
+#loader{position:fixed;inset:0;background:#000;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s,visibility .8s}
+#loader.out{opacity:0;visibility:hidden}
+.ld-logo{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:.28em;color:var(--gold);margin-bottom:2.5rem}
+.ld-sub{font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;color:var(--muted);margin-bottom:2.5rem;margin-top:-.8rem}
+.ld-track{width:200px;height:1px;background:rgba(201,168,76,.12);position:relative;overflow:hidden}
+.ld-track::after{content:'';position:absolute;inset:0;background:var(--gold);transform-origin:left;animation:ldFill 1.7s cubic-bezier(.77,0,.18,1) forwards}
+@keyframes ldFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 4rem;display:flex;align-items:center;justify-content:space-between;transition:background .5s,border-color .5s}
+nav.sc{background:rgba(5,5,5,.9);backdrop-filter:blur(24px) saturate(1.2);border-bottom:1px solid rgba(201,168,76,.08)}
+.nl{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.12em;color:var(--gold);text-decoration:none}
+.nlinks{display:flex;gap:2.5rem;list-style:none}
+.nlinks a{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(242,237,228,.5);text-decoration:none;transition:color .3s}
+.nlinks a:hover{color:var(--gold)}
+.ntel{font-size:.72rem;letter-spacing:.08em;color:var(--gold);text-decoration:none;border:1px solid rgba(201,168,76,.3);padding:.55rem 1.2rem;transition:all .3s}
+.ntel:hover{background:var(--gold);color:var(--bg)}
+
+/* Hero */
+#hero{position:relative;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+#hcv{position:absolute;inset:0;z-index:0}
+.h-inner{position:relative;z-index:2;text-align:center;padding:2rem}
+.h-badge{display:inline-flex;align-items:center;gap:.6rem;background:rgba(192,57,43,.15);border:1px solid rgba(192,57,43,.3);padding:.4rem 1.2rem;margin-bottom:2rem;opacity:0;transition:opacity .9s,transform .9s;transform:translateY(-8px)}
+.h-badge span{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:#e74c3c}
+.h-star{color:#e8c97a;font-size:.75rem}
+.h-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,14vw,12rem);line-height:.88;letter-spacing:.015em;color:var(--white);opacity:0;transition:opacity 1.3s,transform 1.3s cubic-bezier(.16,1,.3,1);transform:translateY(40px)}
+.h-title .acc{color:var(--gold)}
+.h-tag{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.4vw,1.7rem);font-style:italic;font-weight:300;color:rgba(242,237,228,.8);opacity:0;transition:opacity 1s;margin-bottom:3.5rem;letter-spacing:.04em}
+.h-cta-row{display:flex;align-items:center;gap:1.5rem;justify-content:center;flex-wrap:wrap;opacity:0;transition:opacity 1s,transform 1s;transform:translateY(12px)}
+.h-cta{display:inline-flex;align-items:center;gap:.8rem;padding:1.1rem 3rem;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;position:relative;overflow:hidden}
+.h-cta::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.h-cta:hover::before{transform:scaleX(1)}
+.h-cta:hover{color:var(--bg)}
+.h-cta span{position:relative;z-index:1}
+.h-tel-link{font-size:.72rem;letter-spacing:.15em;color:rgba(242,237,228,.5);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .3s}
+.h-tel-link:hover{color:var(--gold)}
+
+.h-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.6rem;opacity:0;transition:opacity 1s}
+.h-scroll p{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--muted)}
+.h-sline{width:1px;height:55px;background:linear-gradient(to bottom,var(--gold),transparent);animation:spulse 2s ease-in-out infinite}
+@keyframes spulse{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(.65)}}
+
+/* Reveal */
+.rev{opacity:0;transform:translateY(36px);transition:opacity .9s,transform .9s cubic-bezier(.16,1,.3,1)}
+.rev.on{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.22s}.d3{transition-delay:.36s}.d4{transition-delay:.52s}
+
+/* Section label */
+.sl{font-size:.62rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:block}
+
+/* Info bar */
+#infobar{background:var(--red);padding:.7rem 4rem;display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap}
+.ib-item{display:flex;align-items:center;gap:.5rem;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#fff}
+.ib-dot{width:6px;height:6px;background:#fff;border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Story */
+#story{padding:9rem 6rem;max-width:1440px;margin:0 auto}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center}
+.sv{position:relative;height:580px}
+.sc2{width:100%;height:100%;overflow:hidden;background:#0d0803;position:relative}
+.sc2-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%,rgba(201,168,76,.12) 0%,transparent 70%)}
+.sc2-ico{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9rem;filter:drop-shadow(0 0 60px rgba(201,168,76,.35))}
+.sv-frame{position:absolute;bottom:-1.5rem;right:-1.5rem;width:140px;height:140px;border:1px solid rgba(201,168,76,.2);pointer-events:none}
+.sv-num{position:absolute;top:-1rem;left:-1rem;font-family:'Bebas Neue',sans-serif;font-size:10rem;color:rgba(201,168,76,.04);line-height:1;pointer-events:none}
+.st h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3.2rem);font-weight:300;line-height:1.2;color:var(--white);margin-bottom:2rem}
+.st h2 em{color:var(--gold);font-style:italic}
+.st p{font-size:.92rem;line-height:1.95;color:var(--txt2);margin-bottom:1.4rem}
+.st-div{width:60px;height:1px;background:var(--gold);margin:2.5rem 0;opacity:.4}
+.st-stats{display:flex;gap:3rem;padding-top:2.5rem;border-top:1px solid rgba(201,168,76,.1)}
+.sn{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--gold);line-height:1;display:block;margin-bottom:.3rem}
+.sl2{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+
+/* Menu */
+#menu-section{background:var(--bg2);padding:9rem 4rem}
+.mi{max-width:1440px;margin:0 auto}
+.mh{text-align:center;margin-bottom:4.5rem}
+.mh-t{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,9vw,8rem);line-height:.88;color:var(--white)}
+.mh-s{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--gold);margin-top:.8rem}
+.mcats{display:flex;gap:.8rem;justify-content:center;margin-bottom:3.5rem;flex-wrap:wrap}
+.mc{padding:.55rem 1.6rem;border:1px solid rgba(201,168,76,.2);background:none;color:rgba(242,237,228,.55);font-family:'Outfit',sans-serif;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.mc:hover,.mc.on{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px}
+.mcard{position:relative;height:400px;overflow:hidden;cursor:pointer}
+.mc-bg{position:absolute;inset:0;transition:transform .6s cubic-bezier(.33,1,.68,1)}
+.mcard:hover .mc-bg{transform:scale(1.06)}
+.mc-veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.97) 0%,rgba(0,0,0,.2) 55%,transparent 100%);transition:background .4s}
+.mcard:hover .mc-veil{background:linear-gradient(to top,rgba(0,0,0,.99) 0%,rgba(0,0,0,.55) 60%,rgba(0,0,0,.12) 100%)}
+.mc-ico{position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);font-size:5.5rem;filter:drop-shadow(0 4px 30px rgba(0,0,0,.8));transition:all .5s cubic-bezier(.33,1,.68,1)}
+.mcard:hover .mc-ico{transform:translate(-50%,-75%) scale(.72);opacity:.3}
+.mc-body{position:absolute;bottom:0;left:0;right:0;padding:2rem;transform:translateY(65px);transition:transform .45s cubic-bezier(.33,1,.68,1)}
+.mcard:hover .mc-body{transform:translateY(0)}
+.mc-lbl{font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.mc-name{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:400;color:var(--white);margin-bottom:.4rem}
+.mc-desc{font-size:.78rem;color:var(--txt2);line-height:1.65;margin-bottom:1rem;opacity:0;transition:opacity .3s .1s}
+.mcard:hover .mc-desc{opacity:1}
+.mc-foot{display:flex;align-items:center;justify-content:space-between}
+.mc-price{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--gold);letter-spacing:.04em}
+.mc-add{width:36px;height:36px;border:1px solid var(--gold);background:none;color:var(--gold);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s}
+.mc-add:hover{background:var(--gold);color:var(--bg)}
+
+/* Tacos builder highlight */
+.tacos-builder{background:var(--bg);padding:7rem 4rem}
+.tb-inner{max-width:1200px;margin:0 auto}
+.tb-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:3rem}
+.tb-col h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.1em;color:var(--gold);margin-bottom:1.5rem;border-bottom:1px solid rgba(201,168,76,.15);padding-bottom:.8rem}
+.tb-tag{display:inline-block;padding:.3rem .8rem;border:1px solid rgba(201,168,76,.25);font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(242,237,228,.5);margin:.25rem;transition:all .25s;cursor:default}
+.tb-tag:hover{background:var(--gold-dim);border-color:rgba(201,168,76,.5);color:var(--cream)}
+.tb-prices{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:3rem}
+.tp-cell{background:var(--bg2);padding:1.5rem;text-align:center}
+.tp-label{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.tp-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--white)}
+.tp-sub{font-size:.68rem;color:var(--muted);margin-top:.2rem}
+
+/* Order */
+#order-section{padding:9rem 4rem;background:var(--bg2)}
+.oi{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:5rem}
+.o-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,5rem);color:var(--white);line-height:.9}
+.o-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:1.1rem;margin:1rem 0 3rem}
+.qlist{display:flex;flex-direction:column;gap:1px}
+.qi{display:flex;align-items:center;gap:1.5rem;padding:1.3rem 1.5rem;background:var(--bg3);border:1px solid transparent;transition:border-color .3s,background .3s;cursor:pointer}
+.qi:hover{border-color:rgba(201,168,76,.3);background:#151515}
+.qi-ico{font-size:2.2rem}
+.qi-inf{flex:1}
+.qi-n{font-size:.88rem;color:var(--cream);margin-bottom:.2rem}
+.qi-s{font-size:.72rem;color:var(--txt2);line-height:1.5}
+.qi-r{text-align:right}
+.qi-p{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--gold);display:block}
+.qi-ab{margin-top:.4rem;padding:.3rem .9rem;border:1px solid rgba(201,168,76,.4);background:none;color:var(--gold);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:all .25s}
+.qi-ab:hover{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+
+/* Cart */
+.cp{background:var(--bg);border:1px solid rgba(201,168,76,.1);padding:2.5rem;position:sticky;top:6rem;height:fit-content}
+.ct{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.12em;color:var(--gold);margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid rgba(201,168,76,.12)}
+.ce{text-align:center;padding:2.5rem 0;color:var(--muted);font-size:.82rem;line-height:1.8}
+.ceh{color:rgba(201,168,76,.5);font-size:.72rem;margin-top:.4rem}
+.ci{display:flex;align-items:center;gap:1rem;padding:.9rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.ci-ico{font-size:1.4rem}
+.ci-n{font-size:.82rem;color:var(--cream);margin-bottom:.2rem}
+.ci-p{font-size:.72rem;color:var(--gold)}
+.ci-q{display:flex;align-items:center;gap:.5rem}
+.qb{width:24px;height:24px;border:1px solid rgba(201,168,76,.25);background:none;color:var(--gold);font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.qb:hover{background:var(--gold);color:var(--bg)}
+.qn{font-size:.82rem;min-width:18px;text-align:center}
+.ctot{margin-top:1.8rem;padding-top:1.4rem;border-top:1px solid rgba(201,168,76,.12);display:flex;justify-content:space-between;align-items:center}
+.ctl{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.cta2{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold)}
+.osub{width:100%;margin-top:1.5rem;padding:1.1rem;background:var(--gold);color:var(--bg);border:none;font-family:'Outfit',sans-serif;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.osub:hover{background:var(--gold-l);transform:translateY(-2px)}
+
+/* Location */
+#location-section{background:var(--bg);padding:9rem 4rem}
+.li{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:center}
+.mw{position:relative;height:520px;background:#070d07;overflow:hidden}
+.mw svg{width:100%;height:100%}
+.mp{animation:mp 2.2s ease-in-out infinite;transform-origin:300px 240px}
+@keyframes mp{0%,100%{opacity:.9}50%{opacity:.35;transform:scale(1.1)}}
+.linf h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;color:var(--white);margin-bottom:2.5rem;line-height:1.25}
+.lr{display:flex;gap:1.5rem;align-items:flex-start;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.05)}
+.lr:last-child{border-bottom:none}
+.lic{font-size:1.4rem}
+.lr h3{font-size:.62rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.lr p{font-size:.9rem;color:var(--txt2);line-height:1.75}
+.lr a{color:var(--gold);text-decoration:none;font-size:1.1rem;font-weight:500;transition:color .3s}
+.lr a:hover{color:var(--gold-l)}
+.hours-grid{display:grid;grid-template-columns:1fr 1fr;gap:.3rem .8rem}
+.hg-day{font-size:.8rem;color:var(--txt2)}
+.hg-time{font-size:.8rem;color:var(--cream);text-align:right}
+.open-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(39,174,96,.12);border:1px solid rgba(39,174,96,.3);padding:.35rem .9rem;margin-top:1rem}
+.ob-dot{width:6px;height:6px;background:#2ecc71;border-radius:50%;animation:pulse 2s ease-in-out infinite}
+.ob-t{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:#2ecc71}
+
+/* Final CTA */
+#cta-section{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse at center,#140b00 0%,#050505 65%)}
+.cta-rings{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,.1);animation:breathe 5s ease-in-out infinite}
+.ring:nth-child(1){width:250px;height:250px;animation-delay:0s}
+.ring:nth-child(2){width:450px;height:450px;animation-delay:.6s}
+.ring:nth-child(3){width:650px;height:650px;animation-delay:1.2s}
+.ring:nth-child(4){width:850px;height:850px;animation-delay:1.8s}
+.ring:nth-child(5){width:1050px;height:1050px;animation-delay:2.4s}
+@keyframes breathe{0%,100%{opacity:.12;transform:scale(1)}50%{opacity:.04;transform:scale(1.04)}}
+.cta-inner{position:relative;z-index:2;padding:2rem}
+.cta-eye{font-size:.65rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;display:block}
+.cta-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,11vw,10rem);color:var(--white);line-height:.88;margin-bottom:1rem}
+.cta-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.2vw,1.6rem);font-style:italic;color:var(--gold);margin-bottom:4rem}
+.cta-btn{display:inline-block;padding:1.4rem 5rem;background:var(--gold);color:var(--bg);font-family:'Outfit',sans-serif;font-size:.78rem;letter-spacing:.4em;text-transform:uppercase;border:none;cursor:pointer;position:relative;overflow:hidden;transition:transform .4s,box-shadow .4s}
+.cta-btn::after{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:right;transition:transform .4s ease}
+.cta-btn:hover::after{transform:scaleX(1);transform-origin:left}
+.cta-btn:hover{transform:translateY(-4px);box-shadow:0 24px 70px rgba(201,168,76,.28)}
+.cta-btn span{position:relative;z-index:1}
+.cta-tel{margin-top:2rem;font-size:.9rem;color:var(--txt2)}
+.cta-tel a{color:var(--gold);text-decoration:none;font-size:1.1rem;font-weight:500}
+
+/* Footer */
+footer{background:var(--bg);padding:4rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(201,168,76,.07);flex-wrap:wrap;gap:2rem}
+.fl{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gold);letter-spacing:.12em}
+.flinks{display:flex;gap:2rem;list-style:none;flex-wrap:wrap}
+.flinks a{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.flinks a:hover{color:var(--gold)}
+.fc{font-size:.65rem;color:var(--muted)}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--bg2);border:1px solid var(--gold);padding:.9rem 1.5rem;z-index:9990;transform:translateX(130%);transition:transform .4s cubic-bezier(.33,1,.68,1);font-size:.82rem;color:var(--cream);display:flex;align-items:center;gap:.6rem}
+.toast.show{transform:translateX(0)}
+.toast-chk{color:var(--gold);font-weight:700}
+
+/* Confirm */
+.conf-ov{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:99990;display:flex;align-items:center;justify-content:center;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.conf-box{text-align:center;padding:3rem 2rem;max-width:480px}
+.conf-chk{font-size:3.5rem;margin-bottom:1.5rem;color:var(--gold)}
+.conf-title{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--white);margin-bottom:.8rem}
+.conf-txt{font-size:.9rem;color:var(--txt2);line-height:1.8;margin-bottom:2.5rem}
+.conf-close{padding:1rem 3rem;background:var(--gold);color:var(--bg);border:none;font-family:'Outfit',sans-serif;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.conf-close:hover{background:var(--gold-l)}
+
+/* Responsive */
+@media(max-width:900px){
+  nav{padding:1.2rem 1.8rem}.nlinks{display:none}
+  #infobar{padding:.7rem 1.5rem;gap:1.5rem}
+  #story{padding:5rem 2rem}.sg{grid-template-columns:1fr;gap:3.5rem}.sv{height:280px}
+  #menu-section{padding:5rem 1.5rem}
+  .tacos-builder{padding:5rem 1.5rem}.tb-grid{grid-template-columns:1fr}
+  #order-section{padding:5rem 1.5rem}.oi{grid-template-columns:1fr;gap:3rem}.cp{position:static}
+  #location-section{padding:5rem 1.5rem}.li{grid-template-columns:1fr;gap:3rem}.mw{height:280px}
+  footer{flex-direction:column;text-align:center;padding:3rem 2rem;align-items:center}
+  .cursor,.cursor-ring{display:none}
+  .ring:nth-child(n+4){display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="ld-logo">LE SEPT 7</div>
+  <div class="ld-sub">Street Food Premium · Montereau</div>
+  <div class="ld-track"></div>
+</div>
+
+<!-- Cursor -->
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-chk">✓</span>
+  <span id="toast-msg">Ajouté au panier</span>
+</div>
+
+<!-- Nav -->
+<nav id="nav">
+  <a href="#" class="nl">LE SEPT 7</a>
+  <ul class="nlinks">
+    <li><a href="#story">Histoire</a></li>
+    <li><a href="#menu-section">Menu</a></li>
+    <li><a href="#order-section">Commander</a></li>
+    <li><a href="#location-section">Adresse</a></li>
+  </ul>
+  <a href="tel:0175154128" class="ntel">📞 01 75 15 41 28</a>
+</nav>
+
+<!-- Info bar -->
+<div id="infobar">
+  <div class="ib-item"><div class="ib-dot"></div>Ouvert maintenant</div>
+  <div class="ib-item">⭐ 4,5 · 254 avis Google</div>
+  <div class="ib-item">📍 72 rue Jean Jaurès, Montereau</div>
+  <div class="ib-item">🕐 11h00 – 00h00 · 7j/7</div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hcv"></canvas>
+  <div class="h-inner">
+    <div class="h-badge" id="hBadge">
+      <span class="h-star">★★★★★</span>
+      <span>4,5 · 254 avis · 10–20€</span>
+    </div>
+    <h1 class="h-title" id="hTitle">LE<br><span class="acc">SEPT</span><br>7</h1>
+    <p class="h-tag" id="hTag">"Le goût devient une expérience."</p>
+    <div class="h-cta-row" id="hCtas">
+      <a href="#menu-section" class="h-cta"><span>Voir le menu →</span></a>
+      <a href="tel:0175154128" class="h-tel-link">📞 01 75 15 41 28</a>
+    </div>
+  </div>
+  <div class="h-scroll" id="hScroll"><p>Défiler</p><div class="h-sline"></div></div>
+</section>
+
+<!-- STORY -->
+<section id="story">
+  <div class="sg">
+    <div class="sv rev">
+      <div class="sc2">
+        <div class="sc2-glow"></div>
+        <div class="sc2-ico">🍔</div>
+        <div class="sv-frame"></div>
+        <div class="sv-num">7</div>
+      </div>
+    </div>
+    <div class="st">
+      <span class="sl rev">Notre histoire</span>
+      <h2 class="rev d1">Street food urbain,<br><em>qualité sans compromis.</em></h2>
+      <p class="rev d2">Au 72 rue Jean Jaurès à Montereau-Fault-Yonne, Le Sept 7 incarne une vision : celle d'une street food qui ne choisit pas entre plaisir et exigence. Burgers, tacos, kebabs, riz thaï, nuggets — chaque produit est travaillé avec soin.</p>
+      <p class="rev d2">Ouvert 7 jours sur 7, de 11h à minuit, Le Sept 7 est le rendez-vous incontournable de la Seine-et-Marne. Noté 4,5 étoiles sur Google par plus de 254 clients.</p>
+      <div class="st-div rev d3"></div>
+      <div class="st-stats rev d3">
+        <div><span class="sn">4,5★</span><span class="sl2">Note Google</span></div>
+        <div><span class="sn">254</span><span class="sl2">Avis clients</span></div>
+        <div><span class="sn">7j/7</span><span class="sl2">Ouvert</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<div id="menu-section">
+  <div class="mi">
+    <div class="mh">
+      <span class="sl rev" style="text-align:center">La carte</span>
+      <h2 class="mh-t rev d1">L'ART DE<br>SE RÉGALER</h2>
+      <p class="mh-s rev d2">Chaque plat est une signature.</p>
+    </div>
+    <div class="mcats rev d2">
+      <button class="mc on" onclick="filterMenu(this,'all')">Tout</button>
+      <button class="mc" onclick="filterMenu(this,'burgers')">Burgers</button>
+      <button class="mc" onclick="filterMenu(this,'tacos')">Tacos</button>
+      <button class="mc" onclick="filterMenu(this,'sandwiches')">Sandwichs</button>
+      <button class="mc" onclick="filterMenu(this,'riz')">Riz Thaï</button>
+      <button class="mc" onclick="filterMenu(this,'chickens')">Chickens</button>
+      <button class="mc" onclick="filterMenu(this,'desserts')">Desserts</button>
+    </div>
+    <div class="mgrid" id="menuGrid"></div>
+  </div>
+</div>
+
+<!-- TACOS BUILDER -->
+<div class="tacos-builder">
+  <div class="tb-inner">
+    <span class="sl rev">Personnalisez</span>
+    <h2 class="rev d1" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,5rem);color:var(--white);line-height:.9">CONSTRUISEZ<br>VOTRE TACOS</h2>
+    <p class="rev d2" style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:1.1rem;margin-top:.8rem">De 1 à 4 viandes, la combinaison est votre signature.</p>
+    <div class="tb-grid rev d2">
+      <div>
+        <div>
+          <h3>Viandes au choix</h3>
+          <div>
+            <span class="tb-tag">Kebab</span><span class="tb-tag">Andalouse</span>
+            <span class="tb-tag">Curry</span><span class="tb-tag">Tandoori</span>
+            <span class="tb-tag">Escalope</span><span class="tb-tag">Steak</span>
+            <span class="tb-tag">Tenders</span><span class="tb-tag">Nuggets</span>
+            <span class="tb-tag">Merguez</span><span class="tb-tag">Cordon Bleu</span>
+          </div>
+        </div>
+        <div style="margin-top:2rem">
+          <h3>Sauces</h3>
+          <div>
+            <span class="tb-tag">Blanche</span><span class="tb-tag">Ketchup</span>
+            <span class="tb-tag">Mayonnaise</span><span class="tb-tag">Samouraï</span>
+            <span class="tb-tag">Chili Thaï</span><span class="tb-tag">Harissa</span>
+          </div>
+        </div>
+        <div style="margin-top:2rem">
+          <h3>Suppléments</h3>
+          <div>
+            <span class="tb-tag">Bacon</span><span class="tb-tag">Lardon</span>
+            <span class="tb-tag">Cheddar</span><span class="tb-tag">Raclette</span>
+            <span class="tb-tag">Fromage râpé</span><span class="tb-tag">Champignons</span>
+            <span class="tb-tag">Crème fraîche</span><span class="tb-tag">Œuf</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>Tarifs tacos</h3>
+        <div class="tb-prices">
+          <div class="tp-cell"><div class="tp-label">1 Viande</div><div class="tp-val">6,50€</div><div class="tp-sub">Seul</div></div>
+          <div class="tp-cell"><div class="tp-label">Menu</div><div class="tp-val">8,50€</div><div class="tp-sub">+ Frites & Boisson</div></div>
+          <div class="tp-cell"><div class="tp-label">2 Viandes</div><div class="tp-val">8,00€</div><div class="tp-sub">Seul</div></div>
+          <div class="tp-cell"><div class="tp-label">Menu</div><div class="tp-val">10,00€</div><div class="tp-sub">+ Frites & Boisson</div></div>
+          <div class="tp-cell"><div class="tp-label">3 Viandes</div><div class="tp-val">9,50€</div><div class="tp-sub">Seul</div></div>
+          <div class="tp-cell"><div class="tp-label">Menu</div><div class="tp-val">11,50€</div><div class="tp-sub">+ Frites & Boisson</div></div>
+          <div class="tp-cell"><div class="tp-label">4 Viandes</div><div class="tp-val">11,00€</div><div class="tp-sub">Seul</div></div>
+          <div class="tp-cell"><div class="tp-label">Menu</div><div class="tp-val">13,00€</div><div class="tp-sub">+ Frites & Boisson</div></div>
+        </div>
+        <div style="margin-top:1.5rem;padding:1.5rem;background:var(--bg2);border-left:2px solid var(--gold)">
+          <p style="font-size:.72rem;color:var(--txt2);line-height:1.8">Tous les tacos incluent : frites maison, fromage fondu, viande(s) au choix et sauce au choix. Menu = + boisson 33cl.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER -->
+<div id="order-section">
+  <div class="oi">
+    <div>
+      <span class="sl rev">Commander</span>
+      <h2 class="o-title rev d1">VOTRE<br>SÉLECTION</h2>
+      <p class="o-sub rev d2">Commandez en ligne — récupérez au 72 rue Jean Jaurès.</p>
+      <div class="qlist rev d3" id="quickList"></div>
+    </div>
+    <div class="cp">
+      <div class="ct">VOTRE PANIER</div>
+      <div id="cartBody"><div class="ce">Votre panier est vide<p class="ceh">Ajoutez vos favoris →</p></div></div>
+      <div id="cartFoot" style="display:none">
+        <div class="ctot"><span class="ctl">Total</span><span class="cta2" id="ctAmt">0.00€</span></div>
+        <button class="osub" onclick="placeOrder()">Valider la commande →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOCATION -->
+<div id="location-section">
+  <div class="li">
+    <div class="mw rev">
+      <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg">
+        <rect width="600" height="500" fill="#070d07"/>
+        <g stroke="#0e1a0e" stroke-width="1">
+          <line x1="0" y1="100" x2="600" y2="100"/><line x1="0" y1="200" x2="600" y2="200"/>
+          <line x1="0" y1="300" x2="600" y2="300"/><line x1="0" y1="400" x2="600" y2="400"/>
+          <line x1="100" y1="0" x2="100" y2="500"/><line x1="200" y1="0" x2="200" y2="500"/>
+          <line x1="300" y1="0" x2="300" y2="500"/><line x1="400" y1="0" x2="400" y2="500"/>
+          <line x1="500" y1="0" x2="500" y2="500"/>
+        </g>
+        <g stroke="#152815" stroke-width="4" fill="none" stroke-linecap="round">
+          <path d="M0 248 Q150 232 300 250 Q450 268 600 248"/>
+          <path d="M298 0 Q282 150 300 250 Q318 350 298 500"/>
+          <path d="M0 160 Q180 170 300 250 Q390 320 600 370"/>
+          <path d="M120 0 Q140 180 220 300 Q290 400 380 500"/>
+        </g>
+        <!-- Rue Jean Jaurès highlight -->
+        <path d="M0 248 Q150 232 300 250 Q450 268 600 248" stroke="#1e3a1e" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path d="M0 318 Q100 298 200 308 Q300 318 400 303 Q500 288 600 298" stroke="#0d2030" stroke-width="14" fill="none" stroke-linecap="round"/>
+        <path d="M0 318 Q100 298 200 308 Q300 318 400 303 Q500 288 600 298" stroke="#091624" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <text x="195" y="313" fill="#0d2535" font-size="9" font-family="serif" font-style="italic">Yonne</text>
+        <text x="120" y="242" fill="#2a4a2a" font-size="8" font-family="sans-serif" letter-spacing="1">RUE JEAN JAURÈS</text>
+        <text x="310" y="188" fill="#1c3c1c" font-size="7" font-family="sans-serif" letter-spacing="1">AV. DE LA GARE</text>
+        <g>
+          <circle cx="300" cy="240" r="55" fill="rgba(201,168,76,.04)" class="mp"/>
+          <circle cx="300" cy="240" r="30" fill="rgba(201,168,76,.07)" class="mp" style="animation-delay:.4s"/>
+          <circle cx="300" cy="240" r="9" fill="#c9a84c"/>
+          <circle cx="300" cy="240" r="4" fill="#050505"/>
+          <rect x="252" y="210" width="96" height="24" rx="1" fill="#0c0c0c" stroke="#c9a84c" stroke-width=".5"/>
+          <text x="300" y="226" text-anchor="middle" fill="#c9a84c" font-size="8" font-family="'Outfit',sans-serif" letter-spacing="1.5">LE SEPT 7</text>
+          <text x="300" y="260" text-anchor="middle" fill="rgba(201,168,76,.5)" font-size="7" font-family="sans-serif">72 rue Jean Jaurès</text>
+        </g>
+        <rect x="12" y="12" width="80" height="26" fill="none" stroke="rgba(201,168,76,.2)" stroke-width=".5"/>
+        <text x="22" y="28" fill="rgba(201,168,76,.35)" font-size="8" font-family="sans-serif" letter-spacing=".5">MONTEREAU</text>
+      </svg>
+    </div>
+    <div class="linf">
+      <span class="sl rev">Nous trouver</span>
+      <h2 class="rev d1">Venez vivre<br>l'expérience.</h2>
+      <div class="lr rev d2">
+        <div class="lic">📍</div>
+        <div>
+          <h3>Adresse</h3>
+          <p>72 rue Jean Jaurès<br>77130 Montereau-Fault-Yonne<br>Seine-et-Marne, Île-de-France</p>
+          <div class="open-badge" style="margin-top:.8rem"><div class="ob-dot"></div><span class="ob-t">Ouvert maintenant</span></div>
+        </div>
+      </div>
+      <div class="lr rev d3">
+        <div class="lic">🕐</div>
+        <div>
+          <h3>Horaires</h3>
+          <div class="hours-grid">
+            <span class="hg-day">Lundi</span><span class="hg-time">11h00 – 00h00</span>
+            <span class="hg-day">Mardi</span><span class="hg-time">11h00 – 00h00</span>
+            <span class="hg-day">Mercredi</span><span class="hg-time">11h00 – 00h00</span>
+            <span class="hg-day">Jeudi</span><span class="hg-time">11h00 – 00h00</span>
+            <span class="hg-day">Vendredi</span><span class="hg-time">17h00 – 00h00</span>
+            <span class="hg-day">Samedi</span><span class="hg-time">11h00 – 00h00</span>
+            <span class="hg-day">Dimanche</span><span class="hg-time">11h00 – 00h00</span>
+          </div>
+        </div>
+      </div>
+      <div class="lr rev d4">
+        <div class="lic">📞</div>
+        <div>
+          <h3>Téléphone</h3>
+          <a href="tel:0175154128">01 75 15 41 28</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Final CTA -->
+<div id="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-rings">
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="cta-inner">
+    <span class="cta-eye rev">72 rue Jean Jaurès · Montereau · 01 75 15 41 28</span>
+    <h2 class="cta-title rev d1">COMMANDER<br>MAINTENANT</h2>
+    <p class="cta-sub rev d2">"La faim est l'épice ultime."</p>
+    <button class="cta-btn rev d3" onclick="goOrder()"><span>Accéder au menu →</span></button>
+    <p class="cta-tel rev d4">Ou appelez-nous : <a href="tel:0175154128">01 75 15 41 28</a></p>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="fl">LE SEPT 7</div>
+  <ul class="flinks">
+    <li><a href="tel:0175154128">01 75 15 41 28</a></li>
+    <li><a href="#">72 rue Jean Jaurès, 77130</a></li>
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">Facebook</a></li>
+    <li><a href="#">Mentions légales</a></li>
+  </ul>
+  <p class="fc">© 2025 Le Sept 7 — Montereau-Fault-Yonne<br>Ouvert 7j/7 · 11h–00h</p>
+</footer>
+
+<script>
+/* ===== REAL MENU DATA ===== */
+const ITEMS = [
+  // BURGERS
+  {id:1,cat:'burgers',name:'Le 540g',lbl:'Le mastodonte',desc:'3 steaks 180g chacun, 3 fromages, frites & boisson 33cl inclus',price:14.00,ico:'🍔',bg:'linear-gradient(135deg,#1a0800,#2d1200)'},
+  {id:2,cat:'burgers',name:'Chicken Burger',lbl:'Poulet croustillant',desc:'Poulet frit mariné, fromage, salade, sauce maison, pain brioché',price:6.50,ico:'🍗',bg:'linear-gradient(135deg,#1a1000,#2d1a00)'},
+  {id:3,cat:'burgers',name:'Le Zinger',lbl:'Piquant & croustillant',desc:'Poulet tendre mariné, sauce de den frites, fromage fondu, pickles',price:7.00,ico:'🌶️',bg:'linear-gradient(135deg,#1a0500,#2e0900)'},
+  {id:4,cat:'burgers',name:'Le Zinger Tacos',lbl:'Fusion',desc:'Tortilla, poulet zinger, frites, fromage fondu, sauce au choix',price:8.50,ico:'🌮',bg:'linear-gradient(135deg,#1a0900,#2d1400)'},
+  {id:5,cat:'burgers',name:'Cheese',lbl:'Classique',desc:'Steak 45g, fromage, frites & boisson 33cl en menu',price:6.00,ico:'🧀',bg:'linear-gradient(135deg,#0f0e00,#1e1c00)'},
+  {id:6,cat:'burgers',name:'Double Cheese',lbl:'Double plaisir',desc:'2 steaks 45g, double fromage, frites & boisson en menu',price:7.00,ico:'🍔',bg:'linear-gradient(135deg,#160c00,#251500)'},
+  {id:7,cat:'burgers',name:'Bacon Burger',lbl:'Signature fumée',desc:'2 steaks 45g, bacon croustillant, 3 fromages, frites & boisson',price:8.00,ico:'🥓',bg:'linear-gradient(135deg,#1a0300,#2d0600)'},
+  {id:8,cat:'burgers',name:'La Batavia',lbl:'Gourmet',desc:'Double de parmesan de poitrine, 2 steaks, salade batavia, sauce spéciale',price:8.50,ico:'🥗',bg:'linear-gradient(135deg,#0a1500,#121f00)'},
+  // TACOS
+  {id:9,cat:'tacos',name:'Tacos 1 Viande',lbl:'L\'essentiel',desc:'1 viande au choix (kebab, poulet, steak…), fromage fondu, frites, sauce au choix',price:6.50,ico:'🌮',bg:'linear-gradient(135deg,#1a0a00,#2d1800)'},
+  {id:10,cat:'tacos',name:'Tacos 2 Viandes',lbl:'Le généreux',desc:'2 viandes au choix, double fromage fondu, frites, sauce au choix',price:8.00,ico:'🔥',bg:'linear-gradient(135deg,#1a0600,#2e0c00)'},
+  {id:11,cat:'tacos',name:'Tacos 3 Viandes',lbl:'Le XXL',desc:'3 viandes au choix, fromage coulant, frites généreuses, sauce au choix',price:9.50,ico:'💥',bg:'linear-gradient(135deg,#1a0400,#2e0800)'},
+  {id:12,cat:'tacos',name:'Tacos 4 Viandes',lbl:'Le Challenge',desc:'4 viandes au choix, fromage triple, frites maison, sauce au choix — pour les vrais',price:11.00,ico:'👑',bg:'linear-gradient(135deg,#0d0900,#1a1200)'},
+  // SANDWICHES
+  {id:13,cat:'sandwiches',name:'Kebab',lbl:'Incontournable',desc:'Viande de poulet kebab, salade, tomate, oignons, sauce au choix, pain maison',price:6.00,ico:'🥙',bg:'linear-gradient(135deg,#0a1000,#141e00)'},
+  {id:14,cat:'sandwiches',name:'Steak',lbl:'Carné',desc:'2 steaks 45g, fromage, salade, tomate, frites & boisson en menu',price:7.50,ico:'🥩',bg:'linear-gradient(135deg,#1a0800,#2d1200)'},
+  {id:15,cat:'sandwiches',name:'Panini Poulet',lbl:'Fait maison',desc:'Poulet au choix grillé, fromage fondu, pain panini toasté, sauce maison',price:5.50,ico:'🥪',bg:'linear-gradient(135deg,#100e00,#1e1a00)'},
+  {id:16,cat:'sandwiches',name:'Panini 3 Fromages',lbl:'Pour les fans',desc:'Mozzarella, cheddar, raclette fondus, pain grillé doré, sauce tomate maison',price:5.50,ico:'🧀',bg:'linear-gradient(135deg,#0f0e00,#1c1b00)'},
+  {id:17,cat:'sandwiches',name:'Sandwich au Four',lbl:'Gratinée',desc:'Viande hachée ou poulet, sauce, fromage gratiné au four, pain moelleux',price:6.50,ico:'🫓',bg:'linear-gradient(135deg,#0d1000,#171a00)'},
+  // RIZ THAÏ
+  {id:18,cat:'riz',name:'Riz Thaï 1 Viande',lbl:'Fusion Asia',desc:'Riz blanc, sauce thaï maison, oignons frits, viande au choix (kebab, poulet, steak…)',price:8.50,ico:'🍚',bg:'linear-gradient(135deg,#001a12,#002d1e)'},
+  {id:19,cat:'riz',name:'Riz Thaï 2 Viandes',lbl:'Double combo',desc:'Riz blanc, sauce thaï maison, oignons frits, 2 viandes au choix, supplément inclus',price:10.50,ico:'🍛',bg:'linear-gradient(135deg,#001812,#00281c)'},
+  {id:20,cat:'riz',name:'Riz Thaï 3 Viandes',lbl:'L\'assiette royale',desc:'Riz basmati, sauce thaï signature, oignons caramélisés, 3 viandes, sauce au choix',price:12.00,ico:'👑',bg:'linear-gradient(135deg,#001510,#002218)'},
+  {id:21,cat:'riz',name:'Salade César',lbl:'Fresh',desc:'Salade, tomate, poulet frit croustillant, fromage râpé, maïs, sauce césar maison',price:8.00,ico:'🥗',bg:'linear-gradient(135deg,#081500,#122200)'},
+  // CHICKENS
+  {id:22,cat:'chickens',name:'Nuggets 6 pièces',lbl:'Le classique',desc:'6 nuggets croustillants, sauce au choix',price:4.00,ico:'🍗',bg:'linear-gradient(135deg,#1a1000,#2d1a00)'},
+  {id:23,cat:'chickens',name:'Nuggets 10 pièces',lbl:'En groupe',desc:'10 nuggets maison dorés, 2 sauces au choix',price:6.00,ico:'🍗',bg:'linear-gradient(135deg,#1a0e00,#2d1800)'},
+  {id:24,cat:'chickens',name:'Tenders 3 pièces',lbl:'Savoureux',desc:'3 tenders de poulet marinés, panure croustillante, sauce samouraï ou blanche',price:5.00,ico:'🍖',bg:'linear-gradient(135deg,#1a0c00,#2d1600)'},
+  {id:25,cat:'chickens',name:'Wings 6 pièces',lbl:'Épicé & croustillant',desc:'6 ailes de poulet marinées, sauce piquante maison ou douce',price:5.50,ico:'🔥',bg:'linear-gradient(135deg,#1a0500,#2e0a00)'},
+  {id:26,cat:'chickens',name:'Menu Famille',lbl:'Pour partager',desc:'20 nuggets + 6 wings + frites XL + 2 boissons + sauce — idéal pour 3-4 personnes',price:19.00,ico:'👨‍👩‍👧‍👦',bg:'linear-gradient(135deg,#0d0900,#1a1200)'},
+  // DESSERTS
+  {id:27,cat:'desserts',name:'Tiramisu',lbl:'Fait maison',desc:'Mascarpone crémeux, biscuits imbibés café, cacao généreux, recette maison',price:3.00,ico:'☕',bg:'linear-gradient(135deg,#0d0500,#1a0900)'},
+  {id:28,cat:'desserts',name:'Tarte au Café',lbl:'Signature',desc:'Pâte sablée croustillante, crème au café intense, chantilly légère',price:3.00,ico:'🍰',bg:'linear-gradient(135deg,#0a0f00,#181d00)'},
+  {id:29,cat:'desserts',name:'Boisson 33cl',lbl:'Au choix',desc:'Coca-Cola, Orangina, Fanta, eau minérale — à choisir avec votre commande',price:1.30,ico:'🥤',bg:'linear-gradient(135deg,#001a1a,#002d2d)'},
+];
+
+/* ===== CART ===== */
+let cart = {};
+function addToCart(id) {
+  const it = ITEMS.find(i=>i.id===id); if(!it) return;
+  cart[id] = cart[id] ? {...cart[id],qty:cart[id].qty+1} : {...it,qty:1};
+  renderCart(); showToast(it.name);
+}
+function removeFromCart(id) {
+  if(!cart[id]) return;
+  cart[id].qty--;
+  if(cart[id].qty<=0) delete cart[id];
+  renderCart();
+}
+function renderCart() {
+  const body=document.getElementById('cartBody');
+  const foot=document.getElementById('cartFoot');
+  const amt=document.getElementById('ctAmt');
+  const vals=Object.values(cart);
+  if(!vals.length){
+    body.innerHTML='<div class="ce">Votre panier est vide<p class="ceh">Ajoutez vos favoris →</p></div>';
+    foot.style.display='none'; return;
+  }
+  const total=vals.reduce((s,i)=>s+i.price*i.qty,0);
+  body.innerHTML=vals.map(i=>`
+    <div class="ci">
+      <span class="ci-ico">${i.ico}</span>
+      <div style="flex:1"><p class="ci-n">${i.name}</p><p class="ci-p">${(i.price*i.qty).toFixed(2)}€</p></div>
+      <div class="ci-q">
+        <button class="qb" onclick="removeFromCart(${i.id})">−</button>
+        <span class="qn">${i.qty}</span>
+        <button class="qb" onclick="addToCart(${i.id})">+</button>
+      </div>
+    </div>`).join('');
+  amt.textContent=total.toFixed(2)+'€';
+  foot.style.display='block';
+}
+function placeOrder() {
+  const vals=Object.values(cart); if(!vals.length) return;
+  const total=vals.reduce((s,i)=>s+i.price*i.qty,0);
+  const el=document.createElement('div');
+  el.className='conf-ov';
+  el.innerHTML=`<div class="conf-box">
+    <div class="conf-chk">✓</div>
+    <h2 class="conf-title">MERCI !</h2>
+    <p class="conf-txt">Votre commande de <strong style="color:var(--gold)">${total.toFixed(2)}€</strong> est enregistrée.<br>
+    Temps de préparation estimé : <strong style="color:var(--gold)">15 – 25 minutes</strong>.<br><br>
+    Présentez-vous au <strong style="color:var(--white)">72 rue Jean Jaurès</strong> ou<br>
+    appelez le <a href="tel:0175154128" style="color:var(--gold)">01 75 15 41 28</a> pour confirmer.</p>
+    <button class="conf-close" onclick="this.closest('.conf-ov').remove();cart={};renderCart()">Fermer</button>
+  </div>`;
+  document.body.appendChild(el);
+}
+function showToast(name) {
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=name+' ajouté';
+  t.classList.add('show'); clearTimeout(t._to);
+  t._to=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+/* ===== MENU RENDER ===== */
+function renderMenuGrid(cat) {
+  const items=cat==='all'?ITEMS:ITEMS.filter(i=>i.cat===cat);
+  document.getElementById('menuGrid').innerHTML=items.map(i=>`
+    <div class="mcard" style="background:${i.bg}">
+      <div class="mc-bg" style="background:${i.bg}"></div>
+      <div class="mc-veil"></div>
+      <div class="mc-ico">${i.ico}</div>
+      <div class="mc-body">
+        <p class="mc-lbl">${i.lbl}</p>
+        <h3 class="mc-name">${i.name}</h3>
+        <p class="mc-desc">${i.desc}</p>
+        <div class="mc-foot">
+          <span class="mc-price">${i.price.toFixed(2)}€</span>
+          <button class="mc-add" onclick="addToCart(${i.id});event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function filterMenu(btn,cat) {
+  document.querySelectorAll('.mc').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on'); renderMenuGrid(cat);
+}
+function renderQuickList() {
+  document.getElementById('quickList').innerHTML=ITEMS.slice(0,7).map(i=>`
+    <div class="qi">
+      <span class="qi-ico">${i.ico}</span>
+      <div class="qi-inf"><p class="qi-n">${i.name}</p><p class="qi-s">${i.desc.substring(0,65)}…</p></div>
+      <div class="qi-r">
+        <span class="qi-p">${i.price.toFixed(2)}€</span>
+        <button class="qi-ab" onclick="addToCart(${i.id})">Ajouter</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ===== CANVAS ===== */
+function initCanvas() {
+  const cv=document.getElementById('hcv');
+  const cx=cv.getContext('2d');
+  const rz=()=>{cv.width=innerWidth;cv.height=innerHeight};
+  rz(); addEventListener('resize',rz);
+  const N=innerWidth<768?45:110;
+  const pts=Array.from({length:N},()=>({
+    x:Math.random()*innerWidth,y:Math.random()*innerHeight,
+    r:Math.random()*1.4+.3,a:Math.random()*.55+.08,
+    vy:Math.random()*.28+.08,vx:(Math.random()-.5)*.18,
+    glow:Math.random()>.78
+  }));
+  let mx=innerWidth/2,my=innerHeight/2;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+  (function loop(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    const bg=cx.createRadialGradient(mx,my,0,cv.width/2,cv.height/2,cv.width);
+    bg.addColorStop(0,'rgba(22,12,2,.96)');bg.addColorStop(.5,'rgba(5,5,5,.99)');bg.addColorStop(1,'rgba(0,0,0,1)');
+    cx.fillStyle=bg;cx.fillRect(0,0,cv.width,cv.height);
+    const gl=cx.createRadialGradient(cv.width/2,cv.height/2,0,cv.width/2,cv.height/2,350);
+    gl.addColorStop(0,'rgba(201,168,76,.05)');gl.addColorStop(1,'transparent');
+    cx.fillStyle=gl;cx.fillRect(0,0,cv.width,cv.height);
+    pts.forEach(p=>{
+      p.y-=p.vy;p.x+=p.vx;
+      p.a+=(Math.random()-.5)*.018;p.a=Math.max(.04,Math.min(.65,p.a));
+      if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width}
+      if(p.x<0)p.x=cv.width;if(p.x>cv.width)p.x=0;
+      if(p.glow){cx.shadowBlur=10;cx.shadowColor='rgba(201,168,76,.9)'}
+      cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      cx.fillStyle=`rgba(201,168,76,${p.a})`;cx.fill();cx.shadowBlur=0;
+    });
+    requestAnimationFrame(loop);
+  })();
+}
+
+/* ===== CURSOR ===== */
+function initCursor() {
+  const c=document.getElementById('cur'),r=document.getElementById('curR');
+  if(window.matchMedia('(pointer:coarse)').matches) return;
+  let mx=0,my=0,rx=0,ry=0;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;c.style.left=mx+'px';c.style.top=my+'px'});
+  (function loop(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;r.style.left=rx+'px';r.style.top=ry+'px';requestAnimationFrame(loop)})();
+  document.querySelectorAll('a,button,.mcard,.qi').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{c.style.transform='translate(-50%,-50%) scale(2.5)';r.style.transform='translate(-50%,-50%) scale(1.6)';r.style.opacity='1'});
+    el.addEventListener('mouseleave',()=>{c.style.transform='translate(-50%,-50%) scale(1)';r.style.transform='translate(-50%,-50%) scale(1)';r.style.opacity=''});
+  });
+}
+
+/* ===== SCROLL ===== */
+function initScroll() {
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>60));
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')}),{threshold:.1});
+  document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+}
+
+/* ===== HERO IN ===== */
+function heroIn() {
+  const seq=[
+    [document.getElementById('hBadge'),  100, {opacity:'1',transform:'translateY(0)'}],
+    [document.getElementById('hTitle'),  350, {opacity:'1',transform:'translateY(0)'}],
+    [document.getElementById('hTag'),    750, {opacity:'.88'}],
+    [document.getElementById('hCtas'), 1100, {opacity:'1',transform:'translateY(0)'}],
+    [document.getElementById('hScroll'),1550, {opacity:'1'}],
+  ];
+  seq.forEach(([el,delay,styles])=>setTimeout(()=>Object.assign(el.style,styles),delay));
+}
+
+function goOrder(){document.getElementById('order-section').scrollIntoView({behavior:'smooth'})}
+
+/* ===== INIT ===== */
+window.addEventListener('DOMContentLoaded',()=>{
+  renderMenuGrid('all'); renderQuickList();
+  initCanvas(); initCursor(); initScroll();
+  setTimeout(()=>{document.getElementById('loader').classList.add('out');setTimeout(heroIn,300)},1900);
+});
+</script>
+</body>
+</html>
+HTMLEOF
+echo "Done"
