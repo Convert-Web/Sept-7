@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0A0A0A">
+  <meta name="description" content="Le Sept 7 — Street Food Premium. Commandez en ligne !">
+  <title>Le Sept 7 — Commande en ligne</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #0A0A0A;
+      --bg2:    #111111;
+      --bg3:    #1A1A1A;
+      --bg4:    #242424;
+      --gold:   #F5A623;
+      --gold-d: rgba(245,166,35,.14);
+      --gold-b: rgba(245,166,35,.28);
+      --white:  #FFFFFF;
+      --muted:  #6B7280;
+      --dim:    #2A2A2A;
+      --green:  #25D366;
+      --red:    #EF4444;
+      --r:      10px;
+      --rm:     14px;
+      --rxl:    24px;
+      --font:   'Barlow', -apple-system, sans-serif;
+      --head:   'Bebas Neue', 'Impact', sans-serif;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font);
+      overscroll-behavior: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button { cursor: pointer; font-family: var(--font); border: none; background: none; color: inherit; }
+    input  { font-family: var(--font); }
+
+    /* ── APP ── */
+    .app {
+      max-width: 480px; margin: 0 auto;
+      min-height: 100vh; background: var(--bg);
+      overflow-x: hidden; position: relative;
+    }
+
+    /* ── HEADER ── */
+    .hdr {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(10,10,10,.94);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-bottom: 1px solid var(--dim);
+    }
+    .hdr-inner {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px 10px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-num {
+      width: 40px; height: 40px; background: var(--gold); color: #000;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--head); font-size: 27px;
+      border-radius: 10px; flex-shrink: 0;
+    }
+    .brand-name {
+      font-family: var(--head); font-size: 22px;
+      letter-spacing: 1.5px; line-height: 1; display: block;
+    }
+    .brand-sub { font-size: 10px; color: var(--muted); letter-spacing: .5px; margin-top: 1px; }
+
+    .cart-icon-btn {
+      position: relative; width: 42px; height: 42px;
+      background: var(--bg3); border: 1px solid var(--dim);
+      border-radius: var(--r); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s;
+    }
+    .cart-icon-btn:hover { border-color: var(--gold); }
+    .cart-badge {
+      position: absolute; top: -7px; right: -7px;
+      background: var(--gold); color: #000;
+      font-size: 10px; font-weight: 900;
+      width: 19px; height: 19px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--bg);
+    }
+
+    /* ── CAT NAV ── */
+    .cat-nav {
+      display: flex; gap: 8px;
+      padding: 0 16px 12px;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .cat-nav::-webkit-scrollbar { display: none; }
+    .cat-btn {
+      flex-shrink: 0; padding: 6px 14px;
+      background: var(--bg3); border: 1px solid var(--dim);
+      border-radius: 20px; color: var(--muted);
+      font-size: 13px; font-weight: 600;
+      transition: all .2s; white-space: nowrap;
+    }
+    .cat-btn.active { background: var(--gold); border-color: var(--gold); color: #000; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 26px 20px 30px;
+      background: linear-gradient(135deg, #190f00 0%, #0A0A0A 65%);
+      display: flex; align-items: center;
+      justify-content: space-between;
+      overflow: hidden; position: relative;
+    }
+    .hero::before {
+      content: ''; position: absolute; bottom: -60px; left: -60px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(245,166,35,.07) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--gold-d); border: 1px solid var(--gold-b);
+      color: var(--gold); font-size: 12px; font-weight: 600;
+      padding: 4px 10px; border-radius: 20px; margin-bottom: 10px;
+    }
+    .hero-title {
+      font-family: var(--head); font-size: 46px;
+      line-height: .88; letter-spacing: 1px; margin-bottom: 10px;
+    }
+    .hero-sub { color: var(--muted); font-size: 13px; font-weight: 500; }
+    .hero-emoji {
+      font-size: 82px; line-height: 1;
+      animation: float 3s ease-in-out infinite;
+      user-select: none;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+
+    /* ── MENU ── */
+    .menu-container { padding: 8px 16px 0; }
+    .menu-section   { padding-top: 16px; margin-bottom: 28px; scroll-margin-top: 130px; }
+    .section-title  { font-family: var(--head); font-size: 26px; letter-spacing: 1px; margin-bottom: 14px; }
+    .products-list  { display: flex; flex-direction: column; gap: 10px; }
+
+    /* ── PRODUCT CARD ── */
+    .pc {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--bg2); border: 1px solid var(--dim);
+      border-radius: var(--r); padding: 14px; gap: 12px;
+      transition: border-color .25s;
+    }
+    .pc.in-cart { border-color: var(--gold-b); }
+    .pc-info    { flex: 1; min-width: 0; }
+    .pc-name    { font-weight: 700; font-size: 14px; margin-bottom: 3px; line-height: 1.3; }
+    .pc-desc    {
+      font-size: 12px; color: var(--muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-bottom: 6px;
+    }
+    .pc-price   { font-size: 15px; font-weight: 800; color: var(--gold); }
+    .pc-add {
+      width: 36px; height: 36px; min-width: 36px;
+      background: var(--bg3); border: 1.5px solid var(--dim);
+      border-radius: 9px; color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 800; transition: all .18s;
+    }
+    .pc-add:hover    { border-color: var(--gold); color: var(--gold); }
+    .pc-add.in-cart  { background: var(--gold-d); border-color: var(--gold); color: var(--gold); }
+    .pc-add.pop      { background: var(--gold); border-color: var(--gold); color: #000; transform: scale(1.22); }
+
+    /* ── STICKY CTA ── */
+    .sticky-cta {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      padding: 10px 16px 20px;
+      background: linear-gradient(to top, rgba(10,10,10,1) 50%, rgba(10,10,10,0));
+      z-index: 49; pointer-events: none;
+    }
+    .cta-btn {
+      pointer-events: all; width: 100%; max-width: 448px; margin: 0 auto;
+      display: flex; background: var(--gold); color: #000;
+      border-radius: var(--rm); padding: 15px 20px;
+      align-items: center; justify-content: space-between;
+      font-weight: 800; font-size: 15px;
+      box-shadow: 0 8px 32px rgba(245,166,35,.38);
+      transition: transform .1s; animation: cta-in .32s ease;
+    }
+    .cta-btn:active { transform: scale(.98); }
+    @keyframes cta-in {
+      from { transform: translateY(64px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .cta-left  { display: flex; align-items: center; gap: 10px; }
+    .cta-badge {
+      background: rgba(0,0,0,.22); width: 28px; height: 28px;
+      border-radius: 7px; display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 900;
+    }
+    .cta-total { font-size: 15px; font-weight: 900; }
+
+    /* ── SHARED: ICON BTN ── */
+    .icon-btn {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--bg3); border: 1px solid var(--dim);
+      border-radius: 9px; color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s;
+    }
+    .icon-btn:hover { border-color: var(--muted); }
+
+    /* ── CART OVERLAY ── */
+    .cart-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.78);
+      z-index: 199; backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px); animation: fade-in .22s;
+    }
+    @keyframes fade-in { from{opacity:0} to{opacity:1} }
+
+    /* ── CART DRAWER ── */
+    .cart-drawer {
+      position: fixed; bottom: 0; left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      width: 100%; max-width: 480px;
+      background: var(--bg2);
+      border-radius: var(--rxl) var(--rxl) 0 0;
+      border-top: 1px solid var(--dim);
+      z-index: 200; display: flex; flex-direction: column;
+      max-height: 88vh;
+      transition: transform .38s cubic-bezier(.32,.72,0,1);
+    }
+    .cart-drawer.open { transform: translateX(-50%) translateY(0); }
+    .cart-pill {
+      width: 36px; height: 4px; background: var(--bg4);
+      border-radius: 2px; margin: 12px auto 6px; flex-shrink: 0;
+    }
+    .cart-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 18px 14px; flex-shrink: 0;
+    }
+    .cart-header h2 { font-family: var(--head); font-size: 22px; letter-spacing: 1px; }
+    .cart-empty {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 48px 20px; color: var(--muted); gap: 12px;
+    }
+    .cart-empty p    { font-size: 15px; font-weight: 700; color: var(--white); }
+    .cart-empty span { font-size: 13px; text-align: center; }
+    .cart-list {
+      flex: 1; overflow-y: auto;
+      padding: 4px 18px; display: flex; flex-direction: column;
+      gap: 10px; list-style: none;
+    }
+    .cart-item {
+      background: var(--bg3); border-radius: var(--r);
+      padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;
+    }
+    .ci-row  { display: flex; align-items: center; justify-content: space-between; }
+    .ci-name { font-size: 13px; font-weight: 700; flex: 1; padding-right: 8px; }
+    .ci-price { font-size: 14px; font-weight: 800; color: var(--gold); white-space: nowrap; }
+    .ci-controls { display: flex; align-items: center; gap: 8px; }
+    .ci-btn {
+      width: 28px; height: 28px; background: var(--bg2);
+      border: 1px solid var(--dim); border-radius: 7px; color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .15s;
+    }
+    .ci-btn:hover    { border-color: var(--muted); }
+    .ci-del:hover    { border-color: var(--red); color: var(--red); }
+    .ci-qty { font-size: 14px; font-weight: 800; min-width: 20px; text-align: center; }
+    .cart-footer {
+      flex-shrink: 0; padding: 14px 18px 28px;
+      border-top: 1px solid var(--dim);
+    }
+    .cart-total-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 14px; font-size: 14px; color: var(--muted);
+    }
+    .cart-total-num { font-size: 24px; font-weight: 900; color: var(--gold); }
+    .checkout-btn {
+      width: 100%; background: var(--gold); color: #000;
+      border-radius: var(--rm); padding: 15px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-weight: 800; font-size: 15px; transition: opacity .1s;
+    }
+    .checkout-btn:active { opacity: .85; }
+
+    /* ── MODAL ── */
+    .modal-wrap {
+      position: fixed; inset: 0; display: flex;
+      align-items: flex-end; z-index: 300;
+      background: rgba(0,0,0,.82);
+      backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
+    }
+    .modal {
+      background: var(--bg2);
+      border-radius: var(--rxl) var(--rxl) 0 0;
+      width: 100%; max-width: 480px; margin: 0 auto;
+      max-height: 95vh; overflow-y: auto;
+      animation: slide-up .36s cubic-bezier(.32,.72,0,1);
+    }
+    @keyframes slide-up {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+    .modal-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 18px 18px 14px; border-bottom: 1px solid var(--dim);
+      position: sticky; top: 0; background: var(--bg2); z-index: 1;
+    }
+    .modal-header h2 {
+      font-family: var(--head); font-size: 20px; letter-spacing: .5px; flex: 1;
+    }
+    .modal-body { padding: 18px; display: flex; flex-direction: column; gap: 18px; }
+
+    /* RECAP */
+    .recap { background: var(--bg3); border-radius: var(--r); padding: 14px; }
+    .recap-label {
+      font-size: 10px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--muted); margin-bottom: 10px;
+    }
+    .recap-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
+    .recap-row span:first-child { color: var(--muted); }
+    .recap-row span:last-child  { font-weight: 600; }
+    .recap-total {
+      display: flex; justify-content: space-between;
+      font-size: 15px; font-weight: 800;
+      padding-top: 10px; margin-top: 8px;
+      border-top: 1px solid var(--dim); color: var(--gold);
+    }
+
+    /* FORM */
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .9px;
+      color: var(--muted); display: flex; align-items: center; gap: 5px;
+    }
+    .form-input {
+      background: var(--bg3); border: 1.5px solid var(--dim);
+      border-radius: var(--r); padding: 13px 15px;
+      color: var(--white); font-size: 15px;
+      outline: none; transition: border-color .2s; width: 100%;
+    }
+    .form-input:focus { border-color: var(--gold); }
+    .form-input.err   { border-color: var(--red); }
+    .form-input::placeholder { color: var(--muted); }
+    input[type="time"].form-input { color-scheme: dark; }
+    .form-error { font-size: 11px; color: var(--red); }
+
+    /* MODE GRID */
+    .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .mode-option {
+      padding: 13px 8px; background: var(--bg3);
+      border: 1.5px solid var(--dim); border-radius: var(--r);
+      color: var(--muted); font-size: 14px; font-weight: 600;
+      transition: all .2s; text-align: center;
+    }
+    .mode-option.active { background: var(--gold-d); border-color: var(--gold); color: var(--gold); }
+
+    /* MODAL FOOTER */
+    .modal-footer { padding: 12px 18px 36px; display: flex; flex-direction: column; gap: 10px; }
+    .wa-btn {
+      width: 100%; background: #25D366; color: #fff;
+      border-radius: var(--rm); padding: 16px 20px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      font-weight: 800; font-size: 16px;
+      box-shadow: 0 6px 24px rgba(37,211,102,.28); transition: opacity .1s;
+    }
+    .wa-btn:active { opacity: .88; }
+    .sms-btn {
+      width: 100%; background: transparent; color: var(--muted);
+      border: 1px solid var(--dim); border-radius: var(--rm);
+      padding: 13px 20px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-weight: 600; font-size: 14px; transition: border-color .2s;
+    }
+    .sms-btn:hover { border-color: var(--muted); }
+
+    /* SUCCESS */
+    .success {
+      padding: 64px 24px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
+    .success-icon { font-size: 72px; animation: pop-in .5s cubic-bezier(.175,.885,.32,1.275); }
+    @keyframes pop-in {
+      0%   { transform: scale(0) rotate(-15deg); }
+      100% { transform: scale(1) rotate(0); }
+    }
+    .success h2  { font-family: var(--head); font-size: 32px; letter-spacing: 1px; }
+    .success p   { color: var(--muted); font-size: 14px; line-height: 1.6; max-width: 280px; }
+    .success-dot {
+      width: 8px; height: 8px; background: var(--green);
+      border-radius: 50%; animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0    rgba(37,211,102,.4); }
+      70%  { box-shadow: 0 0 0 10px rgba(37,211,102,0);  }
+      100% { box-shadow: 0 0 0 0    rgba(37,211,102,0);  }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useReducer, createContext, useContext, useRef, useEffect } = React;
+
+    /* ══════════════════════════════════════
+       SVG ICONS (remplace lucide-react)
+    ══════════════════════════════════════ */
+    const IcoBag  = ({s=20}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>;
+    const IcoPlus = ({s=14}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>;
+    const IcoMin  = ({s=12}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>;
+    const IcoX    = ({s=18}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
+    const IcoOk   = ({s=14}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>;
+    const IcoR    = ({s=18}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>;
+    const IcoL    = ({s=18}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>;
+    const IcoWa   = ({s=20}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>;
+    const IcoTel  = ({s=16}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>;
+    const IcoUser = ({s=12}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
+    const IcoMap  = ({s=12}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>;
+    const IcoClock= ({s=12}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
+
+    /* ══════════════════════════════════════
+       MENU DATA — modifie ici tes produits
+    ══════════════════════════════════════ */
+    const MENU = [
+      {
+        id: "tacos", label: "Tacos", emoji: "🌮",
+        items: [
+          { id: 1,  name: "Tacos 2 viandes",  price: 7.50,  desc: "Sauce maison · Salade · Fromage fondu" },
+          { id: 2,  name: "Tacos 3 viandes",  price: 9.00,  desc: "Sauce maison · Salade · Fromage fondu" },
+          { id: 3,  name: "Tacos XXL",        price: 11.50, desc: "4 viandes · Format géant · Sauce secrète" },
+          { id: 4,  name: "Tacos Chicken",    price: 8.50,  desc: "Poulet croustillant · Ranch · Cheddar" },
+        ],
+      },
+      {
+        id: "menus", label: "Menus", emoji: "🍱",
+        items: [
+          { id: 5, name: "Menu Nuggets", price: 8.50,  desc: "6 pièces croustillantes · Frites · Boisson" },
+          { id: 6, name: "Menu Burger",  price: 10.50, desc: "Double burger · Frites maison · Boisson" },
+          { id: 7, name: "Menu Tacos",   price: 11.00, desc: "Tacos 2 viandes · Frites · Boisson" },
+        ],
+      },
+      {
+        id: "plats", label: "Plats", emoji: "🍚",
+        items: [
+          { id: 8,  name: "Riz Thaï",         price: 8.00, desc: "Riz sauté · Légumes wok · Sauce thaï" },
+          { id: 9,  name: "Pâtes Arrabbiata", price: 7.50, desc: "Sauce tomate épicée · Parmesan" },
+          { id: 10, name: "Bowl Poulet",       price: 9.00, desc: "Poulet grillé · Riz · Légumes rôtis" },
+        ],
+      },
+      {
+        id: "boissons", label: "Boissons", emoji: "🥤",
+        items: [
+          { id: 11, name: "Coca-Cola 33cl",     price: 2.50, desc: "" },
+          { id: 12, name: "Orangina 33cl",       price: 2.50, desc: "" },
+          { id: 13, name: "Eau minérale",        price: 1.50, desc: "" },
+          { id: 14, name: "Jus d'orange frais",  price: 3.00, desc: "Pressé à la commande" },
+        ],
+      },
+    ];
+
+    /* ══════════════════════════════════════
+       CART CONTEXT
+    ══════════════════════════════════════ */
+    const CartCtx = createContext(null);
+
+    function cartReducer(state, action) {
+      switch (action.type) {
+        case "ADD": {
+          const i = state.findIndex(x => x.id === action.item.id);
+          return i >= 0
+            ? state.map((x, n) => n === i ? { ...x, qty: x.qty + 1 } : x)
+            : [...state, { ...action.item, qty: 1 }];
+        }
+        case "INC":   return state.map(x => x.id === action.id ? { ...x, qty: x.qty + 1 } : x);
+        case "DEC":   return state.map(x => x.id === action.id ? { ...x, qty: x.qty - 1 } : x).filter(x => x.qty > 0);
+        case "DEL":   return state.filter(x => x.id !== action.id);
+        case "CLEAR": return [];
+        default:      return state;
+      }
+    }
+
+    function CartProvider({ children }) {
+      const [items, dispatch] = useReducer(cartReducer, []);
+      const total = items.reduce((s, i) => s + i.price * i.qty, 0);
+      const count = items.reduce((s, i) => s + i.qty, 0);
+      return (
+        <CartCtx.Provider value={{ items, dispatch, total, count }}>
+          {children}
+        </CartCtx.Provider>
+      );
+    }
+
+    function useCart() { return useContext(CartCtx); }
+
+    /* ══════════════════════════════════════
+       PRODUCT CARD
+    ══════════════════════════════════════ */
+    function ProductCard({ item }) {
+      const { items, dispatch } = useCart();
+      const [pop, setPop] = useState(false);
+      const cartItem = items.find(i => i.id === item.id);
+
+      function add() {
+        dispatch({ type: "ADD", item });
+        setPop(true);
+        setTimeout(() => setPop(false), 460);
+      }
+
+      return (
+        <div className={`pc${cartItem ? " in-cart" : ""}`}>
+          <div className="pc-info">
+            <p className="pc-name">{item.name}</p>
+            {item.desc && <p className="pc-desc">{item.desc}</p>}
+            <p className="pc-price">{item.price.toFixed(2)}€</p>
+          </div>
+          <button
+            className={`pc-add${cartItem ? " in-cart" : ""}${pop ? " pop" : ""}`}
+            onClick={add}
+            aria-label={`Ajouter ${item.name}`}
+          >
+            {pop ? <IcoOk s={14} /> : cartItem ? cartItem.qty : <IcoPlus s={14} />}
+          </button>
+        </div>
+      );
+    }
+
+    /* ══════════════════════════════════════
+       CART DRAWER
+    ══════════════════════════════════════ */
+    function CartDrawer({ open, onClose, onCheckout }) {
+      const { items, dispatch, total } = useCart();
+
+      return (
+        <>
+          {open && <div className="cart-overlay" onClick={onClose} />}
+          <div className={`cart-drawer${open ? " open" : ""}`} role="dialog" aria-label="Panier">
+            <div className="cart-pill" />
+            <div className="cart-header">
+              <h2>Mon Panier</h2>
+              <button className="icon-btn" onClick={onClose}><IcoX s={18} /></button>
+            </div>
+
+            {items.length === 0 ? (
+              <div className="cart-empty">
+                <IcoBag s={42} />
+                <p>Panier vide</p>
+                <span>Ajoute tes produits pour commander</span>
+              </div>
+            ) : (
+              <>
+                <ul className="cart-list">
+                  {items.map(it => (
+                    <li key={it.id} className="cart-item">
+                      <div className="ci-row">
+                        <span className="ci-name">{it.name}</span>
+                        <span className="ci-price">{(it.price * it.qty).toFixed(2)}€</span>
+                      </div>
+                      <div className="ci-row">
+                        <div className="ci-controls">
+                          <button className="ci-btn" onClick={() => dispatch({ type:"DEC", id:it.id })}><IcoMin s={12} /></button>
+                          <span className="ci-qty">{it.qty}</span>
+                          <button className="ci-btn" onClick={() => dispatch({ type:"INC", id:it.id })}><IcoPlus s={12} /></button>
+                        </div>
+                        <button className="ci-btn ci-del" onClick={() => dispatch({ type:"DEL", id:it.id })}><IcoX s={12} /></button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <div className="cart-footer">
+                  <div className="cart-total-row">
+                    <span>Total commande</span>
+                    <span className="cart-total-num">{total.toFixed(2)}€</span>
+                  </div>
+                  <button className="checkout-btn" onClick={() => { onClose(); setTimeout(onCheckout, 330); }}>
+                    <span>Passer la commande</span>
+                    <IcoR s={18} />
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </>
+      );
+    }
+
+    /* ══════════════════════════════════════
+       CHECKOUT MODAL
+    ══════════════════════════════════════ */
+    const INIT = { name: "", phone: "", mode: "sur_place", time: "" };
+
+    function Checkout({ open, onClose }) {
+      const { items, total, dispatch } = useCart();
+      const [form,   setForm]   = useState(INIT);
+      const [errors, setErrors] = useState({});
+      const [done,   setDone]   = useState(false);
+
+      function validate() {
+        const e = {};
+        if (!form.name.trim())  e.name  = "Champ requis";
+        if (!form.phone.trim()) e.phone = "Champ requis";
+        if (!form.time)         e.time  = "Champ requis";
+        setErrors(e);
+        return !Object.keys(e).length;
+      }
+
+      function buildMsg() {
+        const ml    = form.mode === "sur_place" ? "Sur place 🪑" : "À emporter 🥡";
+        const lines = items.map(i => `• ${i.qty}x ${i.name} — ${(i.price*i.qty).toFixed(2)}€`).join("\n");
+        return (
+          `🍽️ Nouvelle commande — Le Sept 7\n\n` +
+          `👤 Nom : ${form.name}\n📞 Tél : ${form.phone}\n\n` +
+          `📋 Commande :\n${lines}\n\n` +
+          `💰 Total : ${total.toFixed(2)}€\n\n` +
+          `🏠 Mode : ${ml}\n⏰ Heure : ${form.time}`
+        );
+      }
+
+      function afterSend() {
+        setDone(true);
+        setTimeout(() => {
+          dispatch({ type: "CLEAR" });
+          setDone(false); setForm(INIT); onClose();
+        }, 3200);
+      }
+
+      function sendWA()  {
+        if (!validate()) return;
+        window.open(`https://wa.me/33763676191?text=${encodeURIComponent(buildMsg())}`, "_blank");
+        afterSend();
+      }
+      function sendSMS() {
+        if (!validate()) return;
+        window.open(`sms:0763676191?body=${encodeURIComponent(buildMsg())}`, "_blank");
+        afterSend();
+      }
+
+      function set(k, v) { setForm(f => ({...f, [k]:v})); setErrors(e => ({...e, [k]:""})); }
+
+      if (!open) return null;
+
+      return (
+        <div className="modal-wrap" onClick={e => e.target===e.currentTarget && onClose()}>
+          <div className="modal">
+            {done ? (
+              <div className="success">
+                <div className="success-icon">🎉</div>
+                <h2>Commande envoyée !</h2>
+                <div className="success-dot" />
+                <p>Le restaurant va confirmer votre commande rapidement. À très vite !</p>
+              </div>
+            ) : (
+              <>
+                <div className="modal-header">
+                  <button className="icon-btn" onClick={onClose}><IcoL s={18} /></button>
+                  <h2>Finaliser ma commande</h2>
+                </div>
+
+                <div className="modal-body">
+                  {/* Récap */}
+                  <div className="recap">
+                    <p className="recap-label">Récapitulatif</p>
+                    {items.map(i => (
+                      <div key={i.id} className="recap-row">
+                        <span>{i.qty}× {i.name}</span>
+                        <span>{(i.price*i.qty).toFixed(2)}€</span>
+                      </div>
+                    ))}
+                    <div className="recap-total">
+                      <span>Total</span><span>{total.toFixed(2)}€</span>
+                    </div>
+                  </div>
+
+                  {/* Nom */}
+                  <div className="form-group">
+                    <label className="form-label"><IcoUser s={12} /> Prénom &amp; Nom</label>
+                    <input className={`form-input${errors.name ? " err" : ""}`}
+                      placeholder="Ex : Jean Dupont"
+                      value={form.name} onChange={e => set("name", e.target.value)} />
+                    {errors.name && <span className="form-error">{errors.name}</span>}
+                  </div>
+
+                  {/* Téléphone */}
+                  <div className="form-group">
+                    <label className="form-label"><IcoTel s={12} /> Téléphone</label>
+                    <input className={`form-input${errors.phone ? " err" : ""}`}
+                      placeholder="06 12 34 56 78" type="tel"
+                      value={form.phone} onChange={e => set("phone", e.target.value)} />
+                    {errors.phone && <span className="form-error">{errors.phone}</span>}
+                  </div>
+
+                  {/* Mode */}
+                  <div className="form-group">
+                    <label className="form-label"><IcoMap s={12} /> Mode</label>
+                    <div className="mode-grid">
+                      <button className={`mode-option${form.mode==="sur_place"?" active":""}`}
+                        onClick={() => set("mode","sur_place")}>🪑 Sur place</button>
+                      <button className={`mode-option${form.mode==="emporter"?" active":""}`}
+                        onClick={() => set("mode","emporter")}>🥡 À emporter</button>
+                    </div>
+                  </div>
+
+                  {/* Heure */}
+                  <div className="form-group">
+                    <label className="form-label"><IcoClock s={12} /> Heure souhaitée</label>
+                    <input className={`form-input${errors.time ? " err" : ""}`}
+                      type="time" value={form.time}
+                      onChange={e => set("time", e.target.value)} />
+                    {errors.time && <span className="form-error">{errors.time}</span>}
+                  </div>
+                </div>
+
+                <div className="modal-footer">
+                  <button className="wa-btn"  onClick={sendWA}><IcoWa  s={20} /> Commander via WhatsApp</button>
+                  <button className="sms-btn" onClick={sendSMS}><IcoTel s={16} /> Envoyer par SMS</button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    /* ══════════════════════════════════════
+       PAGE PRINCIPALE
+    ══════════════════════════════════════ */
+    function PageContent() {
+      const { count, total } = useCart();
+      const [cartOpen,     setCartOpen]     = useState(false);
+      const [checkoutOpen, setCheckoutOpen] = useState(false);
+      const [activeSection, setActiveSection] = useState("tacos");
+      const refs = useRef({});
+
+      useEffect(() => {
+        const obs = {};
+        MENU.forEach(cat => {
+          const el = refs.current[cat.id];
+          if (!el) return;
+          const o = new IntersectionObserver(
+            ([e]) => { if (e.isIntersecting) setActiveSection(cat.id); },
+            { rootMargin: "-40% 0px -55% 0px" }
+          );
+          o.observe(el); obs[cat.id] = o;
+        });
+        return () => Object.values(obs).forEach(o => o.disconnect());
+      }, []);
+
+      function scrollTo(id) {
+        setActiveSection(id);
+        const el = refs.current[id];
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      return (
+        <div className="app">
+
+          {/* HEADER */}
+          <header className="hdr">
+            <div className="hdr-inner">
+              <div className="brand">
+                <div className="brand-num">7</div>
+                <div>
+                  <span className="brand-name">Le Sept</span>
+                  <span className="brand-sub">Street Food Premium</span>
+                </div>
+              </div>
+              <button className="cart-icon-btn" onClick={() => setCartOpen(true)} aria-label="Panier">
+                <IcoBag s={20} />
+                {count > 0 && <span className="cart-badge">{count}</span>}
+              </button>
+            </div>
+            <nav className="cat-nav">
+              {MENU.map(cat => (
+                <button key={cat.id}
+                  className={`cat-btn${activeSection===cat.id?" active":""}`}
+                  onClick={() => scrollTo(cat.id)}>
+                  {cat.emoji} {cat.label}
+                </button>
+              ))}
+            </nav>
+          </header>
+
+          {/* HERO */}
+          <section className="hero">
+            <div>
+              <div className="hero-pill">⚡ Commande rapide</div>
+              <h1 className="hero-title">Street<br />Food</h1>
+              <p className="hero-sub">Prêt en 15 min · 7j/7</p>
+            </div>
+            <div className="hero-emoji">🌮</div>
+          </section>
+
+          {/* MENU */}
+          <main className="menu-container">
+            {MENU.map(cat => (
+              <section key={cat.id} id={cat.id} className="menu-section"
+                ref={el => refs.current[cat.id] = el}>
+                <h2 className="section-title">{cat.emoji} {cat.label}</h2>
+                <div className="products-list">
+                  {cat.items.map(item => <ProductCard key={item.id} item={item} />)}
+                </div>
+              </section>
+            ))}
+          </main>
+
+          <div style={{height:88}} />
+
+          {/* CTA STICKY */}
+          {count > 0 && (
+            <div className="sticky-cta">
+              <button className="cta-btn" onClick={() => setCartOpen(true)}>
+                <div className="cta-left">
+                  <span className="cta-badge">{count}</span>
+                  <span>Voir mon panier</span>
+                </div>
+                <span className="cta-total">{total.toFixed(2)}€</span>
+              </button>
+            </div>
+          )}
+
+          <CartDrawer
+            open={cartOpen}
+            onClose={() => setCartOpen(false)}
+            onCheckout={() => setCheckoutOpen(true)}
+          />
+          <Checkout
+            open={checkoutOpen}
+            onClose={() => setCheckoutOpen(false)}
+          />
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <CartProvider>
+          <PageContent />
+        </CartProvider>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
