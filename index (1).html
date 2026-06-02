@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#020202">
+  <title>Le Sept 7 — Street Food Premium</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+/* ════════════════════════════════════════════════════════
+   RESET + SYSTEM
+════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#020202; --c1:#0a0a0a; --c2:#111; --c3:#181818; --c4:#222;
+  --gold:#F5A623; --gold2:#FFD426; --gold-d:rgba(245,166,35,.12); --gold-b:rgba(245,166,35,.25);
+  --white:#fff; --gray:#AEAEB2; --muted:#636366; --dim:#252525;
+  --green:#30D158; --red:#FF453A; --blue:#0A84FF;
+  --tacos:linear-gradient(135deg,#FF6B35,#C73E00);
+  --menus:linear-gradient(135deg,#F5A623,#B87000);
+  --plats:linear-gradient(135deg,#00C4A7,#00796B);
+  --boissons:linear-gradient(135deg,#7B61FF,#3B1FA8);
+  --r:12px; --rm:16px; --rxl:26px;
+  --font:'Barlow',-apple-system,sans-serif;
+  --head:'Bebas Neue','Impact',sans-serif;
+  --ease:cubic-bezier(.32,.72,0,1);
+}
+html,body{
+  background:var(--black); color:var(--white);
+  font-family:var(--font); overscroll-behavior:none;
+  -webkit-tap-highlight-color:transparent; -webkit-font-smoothing:antialiased;
+}
+button{cursor:pointer;font-family:var(--font);border:none;background:none;color:inherit}
+input{font-family:var(--font)}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--dim);border-radius:2px}
+
+/* ════════════════════════════════════════════════════════
+   LOADER
+════════════════════════════════════════════════════════ */
+.loader{
+  position:fixed;inset:0;z-index:9999;background:var(--black);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+  transition:opacity .6s ease,visibility .6s ease;
+}
+.loader.out{opacity:0;visibility:hidden;pointer-events:none}
+.ldr-ring{
+  position:relative;width:88px;height:88px;
+  display:flex;align-items:center;justify-content:center;
+}
+.ldr-ring::before,.ldr-ring::after{
+  content:'';position:absolute;inset:0;border-radius:50%;
+}
+.ldr-ring::before{
+  background:conic-gradient(var(--gold),var(--gold2),transparent,transparent);
+  animation:spin 1.4s linear infinite;
+}
+.ldr-ring::after{
+  inset:3px;background:var(--black);border-radius:50%;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ldr-num{
+  position:relative;z-index:1;
+  font-family:var(--head);font-size:44px;line-height:1;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:ldr-pop .5s var(--ease) .3s both;
+}
+@keyframes ldr-pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.ldr-label{
+  font-family:var(--head);font-size:22px;letter-spacing:4px;
+  color:var(--white);animation:ldr-up .5s ease .6s both;
+}
+.ldr-sub{
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--muted);animation:ldr-up .5s ease .75s both;
+}
+@keyframes ldr-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ════════════════════════════════════════════════════════
+   PROMO TICKER
+════════════════════════════════════════════════════════ */
+.ticker{
+  background:var(--gold);color:#000;
+  padding:7px 0;overflow:hidden;position:relative;z-index:60;
+}
+.ticker-track{
+  display:flex;gap:0;width:max-content;
+  animation:ticker 22s linear infinite;
+}
+.ticker-item{
+  padding:0 28px;font-size:11.5px;font-weight:800;
+  white-space:nowrap;display:flex;align-items:center;gap:8px;
+}
+.ticker-dot{width:4px;height:4px;background:#00000040;border-radius:50%;flex-shrink:0}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ════════════════════════════════════════════════════════
+   HEADER
+════════════════════════════════════════════════════════ */
+.hdr{
+  position:sticky;top:0;z-index:50;
+  background:rgba(2,2,2,.9);
+  backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.hdr-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 18px;
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{
+  width:42px;height:42px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--head);font-size:28px;color:#000;
+  box-shadow:0 4px 20px rgba(245,166,35,.35);
+  position:relative;overflow:hidden;
+}
+.brand-mark::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);
+  border-radius:inherit;
+}
+.brand-name{font-family:var(--head);font-size:20px;letter-spacing:1.5px;line-height:1;display:block}
+.brand-tag{font-size:9.5px;color:var(--muted);letter-spacing:.8px;margin-top:1px}
+.cart-btn{
+  position:relative;width:44px;height:44px;
+  background:var(--c3);border:1px solid var(--dim);
+  border-radius:13px;color:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .2s,background .2s;
+}
+.cart-btn:hover{border-color:var(--gold);background:var(--c4)}
+.cart-btn.shake{animation:shake .4s ease}
+@keyframes shake{
+  0%,100%{transform:rotate(0)}
+  20%{transform:rotate(-12deg)}
+  40%{transform:rotate(10deg)}
+  60%{transform:rotate(-8deg)}
+  80%{transform:rotate(6deg)}
+}
+.badge{
+  position:absolute;top:-8px;right:-8px;
+  background:var(--gold);color:#000;
+  font-size:10px;font-weight:900;
+  min-width:20px;height:20px;padding:0 4px;
+  border-radius:20px;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--black);
+  animation:badge-in .3s var(--ease);
+}
+@keyframes badge-in{from{transform:scale(0)}to{transform:scale(1)}}
+
+/* ════════════════════════════════════════════════════════
+   CATEGORY NAV
+════════════════════════════════════════════════════════ */
+.cat-nav{
+  display:flex;gap:8px;padding:0 18px 12px;
+  overflow-x:auto;scrollbar-width:none;background:inherit;
+}
+.cat-nav::-webkit-scrollbar{display:none}
+.cat-pill{
+  flex-shrink:0;display:flex;align-items:center;gap:6px;
+  padding:6px 14px;background:var(--c3);border:1px solid var(--dim);
+  border-radius:20px;color:var(--muted);
+  font-size:12.5px;font-weight:700;
+  transition:all .22s;white-space:nowrap;
+}
+.cat-pill.on{background:var(--gold);border-color:var(--gold);color:#000}
+.cat-pill .dot{
+  width:5px;height:5px;border-radius:50%;
+  opacity:0;transition:opacity .2s;flex-shrink:0;
+}
+.cat-pill.on .dot{opacity:1;background:#000}
+
+/* ════════════════════════════════════════════════════════
+   HERO
+════════════════════════════════════════════════════════ */
+.hero{
+  min-height:92vh;display:flex;flex-direction:column;justify-content:center;
+  padding:0 20px 40px;position:relative;overflow:hidden;
+}
+.hero-orb1,.hero-orb2,.hero-orb3{
+  position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);
+}
+.hero-orb1{
+  width:400px;height:400px;top:-100px;right:-150px;
+  background:radial-gradient(circle,rgba(245,166,35,.09),transparent 70%);
+  animation:orb1 9s ease-in-out infinite;
+}
+.hero-orb2{
+  width:300px;height:300px;bottom:-100px;left:-100px;
+  background:radial-gradient(circle,rgba(255,107,53,.07),transparent 70%);
+  animation:orb2 12s ease-in-out infinite;
+}
+.hero-orb3{
+  width:200px;height:200px;top:40%;left:40%;
+  background:radial-gradient(circle,rgba(245,166,35,.04),transparent 70%);
+  animation:orb3 7s ease-in-out infinite;
+}
+@keyframes orb1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,20px) scale(1.1)}}
+@keyframes orb2{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-30px)}}
+@keyframes orb3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-15px,15px) scale(0.9)}}
+.hero-watermark{
+  position:absolute;right:-20px;bottom:-40px;
+  font-family:var(--head);font-size:320px;line-height:1;
+  color:rgba(245,166,35,.025);pointer-events:none;user-select:none;
+  letter-spacing:-10px;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:800;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:20px;
+  animation:h-in .7s ease .5s both;
+}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 8px var(--green)}50%{box-shadow:0 0 16px var(--green),0 0 24px rgba(48,209,88,.3)}}
+.hero-title{
+  font-family:var(--head);
+  font-size:clamp(72px,20vw,96px);
+  line-height:.84;letter-spacing:2px;
+  margin-bottom:20px;
+  animation:h-in .7s ease .65s both;
+}
+.hero-title .line2{display:block}
+.hero-title .gold-grad{
+  background:linear-gradient(90deg,var(--gold) 0%,var(--gold2) 60%,var(--gold) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:200%;animation:gold-shift 4s linear infinite;
+}
+@keyframes gold-shift{from{background-position:0%}to{background-position:200%}}
+.hero-divider{
+  width:60px;height:2px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+  margin-bottom:20px;
+  animation:h-in .7s ease .75s both;
+}
+.hero-sub{
+  font-size:15px;color:var(--muted);font-weight:500;
+  margin-bottom:36px;line-height:1.6;
+  animation:h-in .7s ease .85s both;
+}
+.hero-sub b{color:var(--gray);font-weight:700}
+.hero-actions{display:flex;align-items:center;gap:14px;animation:h-in .7s ease .95s both}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--gold);color:#000;
+  padding:14px 24px;border-radius:50px;
+  font-weight:800;font-size:14px;letter-spacing:.3px;
+  box-shadow:0 8px 36px rgba(245,166,35,.4);
+  transition:transform .2s,box-shadow .2s;
+}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 12px 48px rgba(245,166,35,.5)}
+.hero-cta:active{transform:scale(.97)}
+.hero-pill-tag{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  padding:12px 16px;border-radius:50px;
+  font-size:12.5px;font-weight:600;color:var(--gray);
+}
+@keyframes h-in{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ════════════════════════════════════════════════════════
+   INFO BAR
+════════════════════════════════════════════════════════ */
+.info-bar{
+  background:rgba(255,255,255,.02);
+  border-top:1px solid rgba(255,255,255,.04);
+  border-bottom:1px solid rgba(255,255,255,.04);
+  padding:12px 20px;
+  display:flex;gap:24px;overflow-x:auto;scrollbar-width:none;
+}
+.info-bar::-webkit-scrollbar{display:none}
+.info-item{
+  display:flex;align-items:center;gap:7px;
+  font-size:12px;font-weight:600;color:var(--muted);
+  white-space:nowrap;flex-shrink:0;
+}
+.info-item .ico{font-size:14px}
+.info-item.hi{color:var(--gray)}
+
+/* ════════════════════════════════════════════════════════
+   HOT SECTION
+════════════════════════════════════════════════════════ */
+.hot-section{padding:24px 0 8px}
+.hot-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;margin-bottom:16px;
+}
+.hot-title{
+  font-family:var(--head);font-size:22px;letter-spacing:1px;
+  display:flex;align-items:center;gap:10px;
+}
+.hot-all{font-size:12px;font-weight:700;color:var(--gold);cursor:pointer}
+.hot-scroll{
+  display:flex;gap:12px;padding:4px 20px 8px;
+  overflow-x:auto;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.hot-scroll::-webkit-scrollbar{display:none}
+.hot-card{
+  flex-shrink:0;width:148px;
+  background:var(--c2);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:18px;overflow:hidden;
+  transition:transform .25s,border-color .25s;
+  position:relative;
+}
+.hot-card:hover{transform:translateY(-4px);border-color:var(--gold-b)}
+.hot-card.incart{border-color:var(--gold-b);box-shadow:0 4px 24px rgba(245,166,35,.1)}
+.hot-img{
+  height:86px;display:flex;align-items:center;justify-content:center;
+  font-size:38px;position:relative;
+}
+.hot-info{padding:10px 12px 12px}
+.hot-name{font-size:12.5px;font-weight:800;margin-bottom:2px;line-height:1.3}
+.hot-cat{font-size:10.5px;color:var(--muted);font-weight:500;margin-bottom:8px}
+.hot-foot{display:flex;align-items:center;justify-content:space-between}
+.hot-price{font-size:14px;font-weight:900;color:var(--gold)}
+.hot-add{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--gold);color:#000;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:16px;
+  transition:transform .2s var(--ease),opacity .15s;
+  flex-shrink:0;
+}
+.hot-add:hover{transform:scale(1.18)}
+.hot-add.incart{background:var(--c4);border:1.5px solid var(--gold);color:var(--gold);font-size:11px;font-weight:900}
+.hot-add.pop{transform:scale(1.3);background:var(--gold2)}
+
+/* ════════════════════════════════════════════════════════
+   MENU SECTION
+════════════════════════════════════════════════════════ */
+.menu-wrap{padding:8px 18px 0}
+.msec{padding-top:16px;margin-bottom:32px;scroll-margin-top:128px}
+.msec-head{
+  display:flex;align-items:center;gap:14px;margin-bottom:18px;
+}
+.msec-title{
+  font-family:var(--head);font-size:28px;letter-spacing:1.5px;
+  flex-shrink:0;
+}
+.msec-line{
+  flex:1;height:1px;
+  background:linear-gradient(to right,rgba(255,255,255,.06),transparent);
+}
+.msec-count{
+  font-size:11px;font-weight:700;color:var(--muted);
+  background:var(--c3);padding:3px 9px;border-radius:20px;
+  border:1px solid var(--dim);flex-shrink:0;
+}
+.prods-grid{display:flex;flex-direction:column;gap:12px}
+
+/* ════════════════════════════════════════════════════════
+   PRODUCT CARD
+════════════════════════════════════════════════════════ */
+.pcard{
+  display:flex;gap:14px;
+  background:linear-gradient(135deg,rgba(255,255,255,.025),rgba(255,255,255,.008));
+  border:1px solid rgba(255,255,255,.055);
+  border-radius:18px;padding:13px;
+  position:relative;overflow:hidden;
+  transition:border-color .25s,box-shadow .25s,transform .1s;
+}
+.pcard::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 0% 50%,var(--cat-glow,rgba(245,166,35,.05)),transparent 60%);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.pcard:hover{border-color:rgba(255,255,255,.1)}
+.pcard:hover::before{opacity:1}
+.pcard.incart{
+  border-color:var(--gold-b);
+  box-shadow:0 4px 28px rgba(245,166,35,.08);
+}
+.pcard:active{transform:scale(.99)}
+.pcard-badge{
+  position:absolute;top:10px;right:10px;
+  font-size:9.5px;font-weight:800;letter-spacing:.8px;
+  padding:3px 8px;border-radius:20px;
+}
+.pcard-badge.hot{background:rgba(255,107,53,.14);border:1px solid rgba(255,107,53,.25);color:#FF6B35}
+.pcard-badge.new{background:rgba(48,209,88,.12);border:1px solid rgba(48,209,88,.25);color:#30D158}
+
+.pcard-emoji{
+  width:74px;height:74px;flex-shrink:0;
+  border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;
+  position:relative;overflow:hidden;
+}
+.pcard-emoji::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  border-radius:inherit;pointer-events:none;
+}
+
+.pcard-body{flex:1;min-width:0;display:flex;flex-direction:column}
+.pcard-name{font-size:14px;font-weight:800;line-height:1.3;margin-bottom:4px}
+.pcard-desc{font-size:11.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;margin-bottom:10px}
+.pcard-foot{display:flex;align-items:center;justify-content:space-between}
+.pcard-price{font-size:16px;font-weight:900;color:var(--gold);letter-spacing:-.3px}
+.pcard-add{
+  height:34px;min-width:34px;
+  background:rgba(255,255,255,.06);
+  border:1.5px solid rgba(255,255,255,.1);
+  border-radius:50px;color:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  gap:5px;padding:0 10px;
+  font-size:11.5px;font-weight:900;
+  transition:all .22s var(--ease);flex-shrink:0;
+}
+.pcard-add:hover{border-color:var(--gold);color:var(--gold);transform:scale(1.05)}
+.pcard-add.incart{background:var(--gold-d);border-color:var(--gold);color:var(--gold);padding:0 12px}
+.pcard-add.pop{background:var(--gold);border-color:var(--gold);color:#000;transform:scale(1.15)}
+
+/* ════════════════════════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════════════════════════ */
+.ri{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.ri.vis{opacity:1;transform:translateY(0)}
+.ri:nth-child(1){transition-delay:.0s}
+.ri:nth-child(2){transition-delay:.07s}
+.ri:nth-child(3){transition-delay:.14s}
+.ri:nth-child(4){transition-delay:.21s}
+
+/* ════════════════════════════════════════════════════════
+   STICKY CTA
+════════════════════════════════════════════════════════ */
+.sticky-cta{
+  position:fixed;bottom:0;left:0;right:0;
+  padding:10px 18px 22px;
+  background:linear-gradient(to top,rgba(2,2,2,1) 55%,rgba(2,2,2,0));
+  z-index:49;pointer-events:none;
+}
+.scta{
+  pointer-events:all;width:100%;max-width:448px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--gold);color:#000;
+  border-radius:var(--rm);padding:14px 18px;
+  font-weight:800;font-size:15px;
+  box-shadow:0 8px 40px rgba(245,166,35,.4),0 2px 8px rgba(0,0,0,.3);
+  transition:transform .1s;animation:scta-in .35s var(--ease);
+}
+.scta:active{transform:scale(.98)}
+@keyframes scta-in{from{transform:translateY(70px);opacity:0}to{transform:translateY(0);opacity:1}}
+.scta-l{display:flex;align-items:center;gap:12px}
+.scta-count{
+  background:rgba(0,0,0,.2);
+  width:30px;height:30px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:900;
+}
+.scta-total{font-size:16px;font-weight:900}
+
+/* ════════════════════════════════════════════════════════
+   SHARED
+════════════════════════════════════════════════════════ */
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:199;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:ov-in .22s ease;
+}
+@keyframes ov-in{from{opacity:0}to{opacity:1}}
+.ico-btn{
+  width:38px;height:38px;flex-shrink:0;
+  background:var(--c3);border:1px solid var(--dim);
+  border-radius:11px;color:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .2s;
+}
+.ico-btn:hover{border-color:rgba(255,255,255,.2)}
+
+/* ════════════════════════════════════════════════════════
+   CART DRAWER
+════════════════════════════════════════════════════════ */
+.drawer{
+  position:fixed;bottom:0;left:50%;
+  transform:translateX(-50%) translateY(102%);
+  width:100%;max-width:480px;
+  background:var(--c1);
+  border-radius:var(--rxl) var(--rxl) 0 0;
+  border-top:1px solid rgba(255,255,255,.07);
+  z-index:200;display:flex;flex-direction:column;
+  max-height:90vh;
+  transition:transform .42s var(--ease);
+}
+.drawer.open{transform:translateX(-50%) translateY(0)}
+.drawer-pill{
+  width:40px;height:4px;background:var(--c4);
+  border-radius:2px;margin:13px auto 5px;flex-shrink:0;
+}
+.drawer-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 18px 14px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.05);
+}
+.drawer-hdr h2{font-family:var(--head);font-size:24px;letter-spacing:1px}
+.drawer-empty{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:48px 20px;gap:14px;color:var(--muted);
+}
+.drawer-empty p{font-size:16px;font-weight:700;color:var(--gray)}
+.drawer-empty span{font-size:13px;text-align:center;line-height:1.5}
+.drawer-list{
+  flex:1;overflow-y:auto;
+  padding:14px 18px;display:flex;flex-direction:column;gap:10px;
+  list-style:none;
+}
+.ditem{
+  background:var(--c3);border-radius:14px;
+  padding:12px 14px;display:flex;flex-direction:column;gap:9px;
+  transition:background .2s;
+}
+.ditem:hover{background:var(--c4)}
+.ditem-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ditem-name{font-size:13.5px;font-weight:700;flex:1;line-height:1.3}
+.ditem-price{font-size:14px;font-weight:900;color:var(--gold);white-space:nowrap}
+.ditem-bot{display:flex;align-items:center;justify-content:space-between}
+.ditem-ctrl{display:flex;align-items:center;gap:8px}
+.ctrl-btn{
+  width:30px;height:30px;
+  background:var(--c2);border:1px solid var(--dim);
+  border-radius:8px;color:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .15s;
+}
+.ctrl-btn:hover{border-color:rgba(255,255,255,.2)}
+.del-btn:hover{border-color:var(--red);color:var(--red)}
+.ctrl-qty{font-size:14px;font-weight:800;min-width:22px;text-align:center}
+.drawer-foot{
+  flex-shrink:0;padding:14px 18px 28px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.total-label{font-size:13px;color:var(--muted);font-weight:600}
+.total-num{font-size:26px;font-weight:900;color:var(--gold)}
+.order-btn{
+  width:100%;background:var(--gold);color:#000;
+  border-radius:var(--rm);padding:16px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-weight:800;font-size:15px;
+  transition:opacity .1s,transform .1s;
+}
+.order-btn:active{opacity:.88;transform:scale(.99)}
+
+/* ════════════════════════════════════════════════════════
+   CHECKOUT MODAL
+════════════════════════════════════════════════════════ */
+.modal-bg{
+  position:fixed;inset:0;display:flex;align-items:flex-end;z-index:300;
+  background:rgba(0,0,0,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.modal{
+  background:var(--c1);border-radius:var(--rxl) var(--rxl) 0 0;
+  width:100%;max-width:480px;margin:0 auto;
+  max-height:96vh;overflow-y:auto;
+  animation:mod-in .38s var(--ease);
+}
+@keyframes mod-in{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mod-hdr{
+  display:flex;align-items:center;gap:12px;
+  padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.06);
+  position:sticky;top:0;background:var(--c1);z-index:1;
+}
+.mod-hdr h2{font-family:var(--head);font-size:22px;letter-spacing:.5px;flex:1}
+.mod-body{padding:18px;display:flex;flex-direction:column;gap:20px}
+
+/* Progress steps */
+.steps{display:flex;align-items:center;gap:0;margin-bottom:4px}
+.step{
+  display:flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:var(--muted);flex:1;
+}
+.step.active{color:var(--gold)}
+.step.done{color:var(--green)}
+.step-num{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--c3);border:1.5px solid var(--dim);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;flex-shrink:0;
+}
+.step.active .step-num{background:var(--gold);border-color:var(--gold);color:#000}
+.step.done  .step-num{background:var(--green);border-color:var(--green);color:#000}
+.step-line{flex:1;height:1px;background:var(--dim);margin:0 6px}
+.step-line.done{background:var(--green)}
+
+/* Recap */
+.recap{background:var(--c3);border-radius:16px;padding:14px}
+.recap-title{
+  font-size:10px;font-weight:800;text-transform:uppercase;
+  letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;
+}
+.recap-row{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;padding:4px 0;
+}
+.recap-row .rn{color:var(--muted)}
+.recap-row .rv{font-weight:600;color:var(--gray)}
+.recap-sep{height:1px;background:rgba(255,255,255,.05);margin:8px 0}
+.recap-total{display:flex;justify-content:space-between;font-size:16px;font-weight:900}
+.recap-total span:last-child{color:var(--gold)}
+
+/* Form */
+.fg{display:flex;flex-direction:column;gap:7px}
+.fl{
+  font-size:10.5px;font-weight:800;text-transform:uppercase;
+  letter-spacing:1px;color:var(--muted);
+  display:flex;align-items:center;gap:5px;
+}
+.fi{
+  background:var(--c3);border:1.5px solid var(--dim);
+  border-radius:13px;padding:13px 16px;
+  color:var(--white);font-size:15px;
+  outline:none;transition:border-color .2s,box-shadow .2s;width:100%;
+}
+.fi:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,166,35,.1)}
+.fi.err{border-color:var(--red);box-shadow:0 0 0 3px rgba(255,69,58,.1)}
+.fi::placeholder{color:var(--muted)}
+input[type="time"].fi{color-scheme:dark}
+.ferr{font-size:11px;color:var(--red);font-weight:600}
+.mode-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode-btn{
+  padding:14px 10px;background:var(--c3);
+  border:1.5px solid var(--dim);border-radius:13px;
+  color:var(--muted);font-size:14px;font-weight:700;
+  transition:all .2s;text-align:center;
+}
+.mode-btn.on{background:var(--gold-d);border-color:var(--gold);color:var(--gold)}
+.mod-foot{padding:14px 18px 38px;display:flex;flex-direction:column;gap:10px}
+
+/* Send buttons */
+.wa-btn{
+  width:100%;background:#25D366;color:#fff;border-radius:var(--rm);
+  padding:17px 20px;display:flex;align-items:center;justify-content:center;gap:12px;
+  font-weight:900;font-size:16px;
+  box-shadow:0 8px 28px rgba(37,211,102,.3);transition:opacity .1s,transform .1s;
+}
+.wa-btn:active{opacity:.88;transform:scale(.99)}
+.sms-btn{
+  width:100%;background:transparent;color:var(--muted);
+  border:1px solid var(--dim);border-radius:var(--rm);
+  padding:14px 20px;display:flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:600;font-size:13.5px;transition:border-color .2s;
+}
+.sms-btn:hover{border-color:rgba(255,255,255,.15);color:var(--gray)}
+
+/* Success */
+.success{
+  padding:64px 24px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:18px;
+}
+.suc-ring{
+  width:90px;height:90px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(48,209,88,.2),rgba(48,209,88,.05));
+  border:2px solid rgba(48,209,88,.4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:42px;
+  animation:suc-ring-in .6s var(--ease) both;
+  box-shadow:0 0 40px rgba(48,209,88,.2);
+}
+@keyframes suc-ring-in{from{transform:scale(0) rotate(-20deg)}to{transform:scale(1) rotate(0)}}
+.suc h2{font-family:var(--head);font-size:34px;letter-spacing:1px;animation:h-in .5s ease .3s both}
+.suc-sub{color:var(--muted);font-size:14px;line-height:1.7;max-width:290px;animation:h-in .5s ease .45s both}
+.suc-dot{
+  width:8px;height:8px;background:var(--green);border-radius:50%;
+  animation:suc-pulse 1.8s infinite;
+}
+@keyframes suc-pulse{0%{box-shadow:0 0 0 0 rgba(48,209,88,.5)}70%{box-shadow:0 0 0 12px rgba(48,209,88,0)}100%{box-shadow:0 0 0 0 rgba(48,209,88,0)}}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useReducer, createContext, useContext, useRef, useEffect, useCallback } = React;
+
+/* ══════════════════════════════════
+   INLINE SVG ICONS
+══════════════════════════════════ */
+const I = {
+  Bag:  ({s=20}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>,
+  Plus: ({s=14}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+  Min:  ({s=13}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+  X:    ({s=17}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+  Ok:   ({s=14}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+  Chev: ({s=18}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>,
+  Back: ({s=18}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>,
+  WA:   ({s=20}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>,
+  Tel:  ({s=15}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 014.69 13.71 19.79 19.79 0 011.61 5.18 2 2 0 013.6 3h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 10.09a16 16 0 006 6l.92-.92a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 17.3v-.38z"/></svg>,
+  User: ({s=12}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
+  Pin:  ({s=12}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+  Clk:  ({s=12}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+  Star: ({s=14}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
+};
+
+/* ══════════════════════════════════
+   MENU DATA
+══════════════════════════════════ */
+const CATS = {
+  tacos:    { color:"#FF6B35", grad:"var(--tacos)"   },
+  menus:    { color:"#F5A623", grad:"var(--menus)"   },
+  plats:    { color:"#00C4A7", grad:"var(--plats)"   },
+  boissons: { color:"#7B61FF", grad:"var(--boissons)"},
+};
+
+const MENU = [
+  { id:"tacos", label:"Tacos", emoji:"🌮", items:[
+    { id:1,  name:"Tacos 2 viandes",  price:7.50,  desc:"Sauce maison · Salade · Fromage fondu",          badge:"hot" },
+    { id:2,  name:"Tacos 3 viandes",  price:9.00,  desc:"Sauce maison · Salade · Fromage fondu" },
+    { id:3,  name:"Tacos XXL",        price:11.50, desc:"4 viandes · Format géant · Sauce secrète" },
+    { id:4,  name:"Tacos Chicken",    price:8.50,  desc:"Poulet croustillant · Ranch · Cheddar" },
+  ]},
+  { id:"menus", label:"Menus", emoji:"🍱", items:[
+    { id:5,  name:"Menu Nuggets",     price:8.50,  desc:"6 nuggets croustillants · Frites · Boisson",     badge:"hot" },
+    { id:6,  name:"Menu Burger",      price:10.50, desc:"Double burger · Frites maison · Boisson" },
+    { id:7,  name:"Menu Tacos",       price:11.00, desc:"Tacos 2 viandes · Frites · Boisson" },
+  ]},
+  { id:"plats", label:"Plats", emoji:"🍚", items:[
+    { id:8,  name:"Riz Thaï",         price:8.00,  desc:"Riz sauté · Légumes wok · Sauce thaï",           badge:"hot" },
+    { id:9,  name:"Pâtes Arrabbiata", price:7.50,  desc:"Sauce tomate épicée · Parmesan" },
+    { id:10, name:"Bowl Poulet",      price:9.00,  desc:"Poulet grillé · Riz · Légumes rôtis",             badge:"new" },
+  ]},
+  { id:"boissons", label:"Boissons", emoji:"🥤", items:[
+    { id:11, name:"Coca-Cola 33cl",   price:2.50,  desc:"" },
+    { id:12, name:"Orangina 33cl",    price:2.50,  desc:"" },
+    { id:13, name:"Eau minérale",     price:1.50,  desc:"" },
+    { id:14, name:"Jus d'orange frais",price:3.00, desc:"Pressé à la commande",                            badge:"new" },
+  ]},
+];
+
+const FEATURED = [1, 5, 8, 11]; // ids of hot items in featured strip
+
+/* ══════════════════════════════════
+   CART CONTEXT
+══════════════════════════════════ */
+const CartCtx = createContext(null);
+
+function cartReducer(state, action) {
+  switch(action.type) {
+    case "ADD": {
+      const i = state.findIndex(x => x.id === action.item.id);
+      return i >= 0
+        ? state.map((x,n) => n === i ? {...x, qty:x.qty+1} : x)
+        : [...state, {...action.item, qty:1}];
+    }
+    case "INC": return state.map(x => x.id===action.id ? {...x,qty:x.qty+1} : x);
+    case "DEC": return state.map(x => x.id===action.id ? {...x,qty:x.qty-1} : x).filter(x=>x.qty>0);
+    case "DEL": return state.filter(x => x.id!==action.id);
+    case "CLR": return [];
+    default:    return state;
+  }
+}
+
+function CartProvider({children}) {
+  const [items, dispatch] = useReducer(cartReducer, []);
+  const total = items.reduce((s,i) => s + i.price*i.qty, 0);
+  const count = items.reduce((s,i) => s + i.qty, 0);
+  return <CartCtx.Provider value={{items,dispatch,total,count}}>{children}</CartCtx.Provider>;
+}
+const useCart = () => useContext(CartCtx);
+
+/* ══════════════════════════════════
+   LOADER
+══════════════════════════════════ */
+function Loader({done}) {
+  return (
+    <div className={`loader${done?" out":""}`}>
+      <div className="ldr-ring"><div className="ldr-num">7</div></div>
+      <div className="ldr-label">LE SEPT 7</div>
+      <div className="ldr-sub">Street Food Premium</div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════
+   PROMO BAR
+══════════════════════════════════ */
+const PROMOS = [
+  "⚡ Code SEPT7 : -10% sur ta 1ère commande",
+  "🚀 Prêt en 15 min · Aucun frais",
+  "⭐ 4.9/5 · +500 avis Google",
+  "🌮 Meilleur tacos de la ville",
+  "📱 Commande en 3 clics",
+];
+
+function PromoBanner() {
+  const doubled = [...PROMOS, ...PROMOS];
+  return (
+    <div className="ticker">
+      <div className="ticker-track">
+        {doubled.map((p,i) => (
+          <span key={i} className="ticker-item">
+            {p}<span className="ticker-dot"/>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════
+   HEADER
+══════════════════════════════════ */
+function Header({onCart}) {
+  const {count} = useCart();
+  const [shake, setShake] = useState(false);
+  const prev = useRef(count);
+  useEffect(() => {
+    if (count > prev.current) { setShake(true); setTimeout(()=>setShake(false),450); }
+    prev.current = count;
+  }, [count]);
+  return (
+    <header className="hdr">
+      <div className="hdr-inner">
+        <div className="brand">
+          <div className="brand-mark">7</div>
+          <div>
+            <span className="brand-name">LE SEPT 7</span>
+            <span className="brand-tag">Street Food · Amiens</span>
+          </div>
+        </div>
+        <button className={`cart-btn${shake?" shake":""}`} onClick={onCart} aria-label="Panier">
+          <I.Bag s={20} />
+          {count > 0 && <span className="badge">{count}</span>}
+        </button>
+      </div>
+    </header>
+  );
+}
+
+/* ══════════════════════════════════
+   CATEGORY NAV
+══════════════════════════════════ */
+function CatNav({active, onSelect}) {
+  return (
+    <div className="hdr" style={{top:"64px",borderTop:"1px solid rgba(255,255,255,.04)"}}>
+      <nav className="cat-nav">
+        {MENU.map(cat => (
+          <button key={cat.id}
+            className={`cat-pill${active===cat.id?" on":""}`}
+            onClick={() => onSelect(cat.id)}>
+            <span className="dot"/>
+            {cat.emoji} {cat.label}
+          </button>
+        ))}
+      </nav>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════
+   HERO
+══════════════════════════════════ */
+function Hero({onMenu}) {
+  return (
+    <section className="hero">
+      <div className="hero-orb1"/><div className="hero-orb2"/><div className="hero-orb3"/>
+      <div className="hero-watermark">7</div>
+
+      <div className="hero-eyebrow">
+        <span className="hero-dot"/>
+        Ouvert maintenant · Ferme à 23h
+      </div>
+
+      <h1 className="hero-title">
+        LE <span className="gold-grad">SEPT</span>
+        <span className="line2">7</span>
+      </h1>
+      <div className="hero-divider"/>
+      <p className="hero-sub">
+        <b>Street food premium</b> à son meilleur.<br/>
+        Commande en ligne, prêt en 15 min.
+      </p>
+      <div className="hero-actions">
+        <button className="hero-cta" onClick={onMenu}>
+          Voir la carte
+          <I.Chev s={16}/>
+        </button>
+        <div className="hero-pill-tag">
+          <I.Clk s={13}/> 15 min
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════════════════════════
+   INFO BAR
+══════════════════════════════════ */
+function InfoBar() {
+  return (
+    <div className="info-bar">
+      <div className="info-item hi"><span className="ico">🟢</span> Ouvert aujourd'hui</div>
+      <div className="info-item"><span className="ico">🕐</span> 11h30 – 23h00</div>
+      <div className="info-item"><span className="ico">⚡</span> Prêt en 15 min</div>
+      <div className="info-item"><I.Star s={12} style={{color:"#FFD426"}}/> 4.9/5 · 500+ avis</div>
+      <div className="info-item"><span className="ico">📍</span> Amiens, France</div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════
+   FEATURED SECTION
+══════════════════════════════════ */
+function FeatCard({item, catId}) {
+  const {items, dispatch} = useCart();
+  const [pop, setPop] = useState(false);
+  const ci = items.find(i => i.id === item.id);
+  const cat = CATS[catId];
+
+  function add() {
+    dispatch({type:"ADD", item:{...item, catId}});
+    setPop(true); setTimeout(()=>setPop(false), 450);
+  }
+
+  return (
+    <div className={`hot-card${ci?" incart":""}`} onClick={add}>
+      <div className="hot-img" style={{background:cat.grad}}>
+        {item.id === 11 ? "🥤" : MENU.find(c=>c.id===catId)?.emoji}
+      </div>
+      <div className="hot-info">
+        <div className="hot-name">{item.name}</div>
+        <div className="hot-cat">{MENU.find(c=>c.id===catId)?.label}</div>
+        <div className="hot-foot">
+          <span className="hot-price">{item.price.toFixed(2)}€</span>
+          <button className={`hot-add${ci?" incart":""}${pop?" pop":""}`} onClick={e=>{e.stopPropagation();add()}} type="button">
+            {pop ? <I.Ok s={12}/> : ci ? ci.qty : "+"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FeaturedSection() {
+  const allItems = [];
+  MENU.forEach(cat => cat.items.forEach(item => {
+    if (FEATURED.includes(item.id)) allItems.push({item, catId:cat.id});
+  }));
+
+  return (
+    <div className="hot-section">
+      <div className="hot-header">
+        <h2 className="hot-title">🔥 Les incontournables</h2>
+        <span className="hot-all">Voir tout</span>
+      </div>
+      <div className="hot-scroll">
+        {allItems.map(({item,catId}) => <FeatCard key={item.id} item={item} catId={catId}/>)}
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════
+   PRODUCT CARD
+══════════════════════════════════ */
+function PCard({item, catId}) {
+  const {items, dispatch} = useCart();
+  const [pop, setPop] = useState(false);
+  const ci = items.find(i => i.id === item.id);
+  const cat = CATS[catId];
+
+  function add() {
+    dispatch({type:"ADD", item:{...item, catId}});
+    setPop(true); setTimeout(()=>setPop(false), 450);
+  }
+
+  return (
+    <div className={`pcard ri${ci?" incart":""}`} style={{"--cat-glow":`rgba(${hexToRgb(cat.color)},.06)`}}>
+      {item.badge === "hot" && <span className="pcard-badge hot">🔥 POPULAIRE</span>}
+      {item.badge === "new" && <span className="pcard-badge new">✨ NOUVEAU</span>}
+
+      <div className="pcard-emoji" style={{background:cat.grad}}>
+        {MENU.find(c=>c.id===catId)?.emoji}
+      </div>
+
+      <div className="pcard-body">
+        <div className="pcard-name">{item.name}</div>
+        <div className="pcard-desc">{item.desc || "—"}</div>
+        <div className="pcard-foot">
+          <span className="pcard-price">{item.price.toFixed(2)} €</span>
+          <button
+            className={`pcard-add${ci?" incart":""}${pop?" pop":""}`}
+            onClick={add}
+            aria-label={`Ajouter ${item.name}`}
+            type="button"
+          >
+            {pop
+              ? <I.Ok s={13}/>
+              : ci
+                ? <><I.Plus s={11}/> {ci.qty}</>
+                : <I.Plus s={14}/>
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `${r},${g},${b}`;
+}
+
+/* ══════════════════════════════════
+   CART DRAWER
+══════════════════════════════════ */
+function CartDrawer({open, onClose, onCheckout}) {
+  const {items, dispatch, total} = useCart();
+  return (
+    <>
+      {open && <div className="overlay" onClick={onClose}/>}
+      <div className={`drawer${open?" open":""}`} role="dialog">
+        <div className="drawer-pill"/>
+        <div className="drawer-hdr">
+          <h2>Mon panier</h2>
+          <button className="ico-btn" onClick={onClose}><I.X s={17}/></button>
+        </div>
+
+        {items.length === 0
+          ? <div className="drawer-empty">
+              <I.Bag s={44}/>
+              <p>Panier vide</p>
+              <span>Ajoute tes incontournables<br/>pour passer commande 🌮</span>
+            </div>
+          : <>
+              <ul className="drawer-list">
+                {items.map(it => (
+                  <li key={it.id} className="ditem">
+                    <div className="ditem-top">
+                      <span className="ditem-name">{it.name}</span>
+                      <span className="ditem-price">{(it.price*it.qty).toFixed(2)}€</span>
+                    </div>
+                    <div className="ditem-bot">
+                      <div className="ditem-ctrl">
+                        <button className="ctrl-btn" onClick={()=>dispatch({type:"DEC",id:it.id})}><I.Min s={12}/></button>
+                        <span className="ctrl-qty">{it.qty}</span>
+                        <button className="ctrl-btn" onClick={()=>dispatch({type:"INC",id:it.id})}><I.Plus s={12}/></button>
+                      </div>
+                      <button className="ctrl-btn del-btn" onClick={()=>dispatch({type:"DEL",id:it.id})}><I.X s={12}/></button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div className="drawer-foot">
+                <div className="total-row">
+                  <span className="total-label">Total commande</span>
+                  <span className="total-num">{total.toFixed(2)}€</span>
+                </div>
+                <button className="order-btn" onClick={()=>{onClose();setTimeout(onCheckout,330)}}>
+                  <span>Commander maintenant</span>
+                  <I.Chev s={18}/>
+                </button>
+              </div>
+            </>
+        }
+      </div>
+    </>
+  );
+}
+
+/* ══════════════════════════════════
+   CHECKOUT MODAL
+══════════════════════════════════ */
+const IF = {name:"",phone:"",mode:"sur_place",time:""};
+
+function Checkout({open, onClose}) {
+  const {items, total, dispatch} = useCart();
+  const [form, setForm]     = useState(IF);
+  const [errs, setErrs]     = useState({});
+  const [done, setDone]     = useState(false);
+
+  function val() {
+    const e = {};
+    if (!form.name.trim())  e.name  = "Requis";
+    if (!form.phone.trim()) e.phone = "Requis";
+    if (!form.time)         e.time  = "Requis";
+    setErrs(e); return !Object.keys(e).length;
+  }
+
+  function buildMsg() {
+    const ml = form.mode==="sur_place"?"Sur place 🪑":"À emporter 🥡";
+    const lines = items.map(i=>`• ${i.qty}x ${i.name} — ${(i.price*i.qty).toFixed(2)}€`).join("\n");
+    return `🍽️ Nouvelle commande — Le Sept 7\n\n👤 Nom : ${form.name}\n📞 Tél : ${form.phone}\n\n📋 Commande :\n${lines}\n\n💰 Total : ${total.toFixed(2)}€\n\n🏠 Mode : ${ml}\n⏰ Heure : ${form.time}`;
+  }
+
+  function after() {
+    setDone(true);
+    setTimeout(()=>{dispatch({type:"CLR"});setDone(false);setForm(IF);onClose();}, 3500);
+  }
+
+  function sendWA()  { if(!val()) return; window.open(`https://wa.me/33763676191?text=${encodeURIComponent(buildMsg())}`, "_blank"); after(); }
+  function sendSMS() { if(!val()) return; window.open(`sms:0763676191?body=${encodeURIComponent(buildMsg())}`, "_blank");          after(); }
+  function set(k,v)  { setForm(f=>({...f,[k]:v})); setErrs(e=>({...e,[k]:""})); }
+
+  if (!open) return null;
+
+  return (
+    <div className="modal-bg" onClick={e=>e.target===e.currentTarget&&onClose()}>
+      <div className="modal">
+        {done
+          ? <div className="success suc">
+              <div className="suc-ring">🎉</div>
+              <h2>Commande envoyée !</h2>
+              <div className="suc-dot"/>
+              <p className="suc-sub">Le restaurant confirme votre commande dans quelques minutes. À très vite au Sept 7 !</p>
+            </div>
+          : <>
+              <div className="mod-hdr">
+                <button className="ico-btn" onClick={onClose}><I.Back s={18}/></button>
+                <h2>Finaliser la commande</h2>
+              </div>
+
+              <div className="mod-body">
+                {/* Steps */}
+                <div className="steps">
+                  <div className="step done"><span className="step-num"><I.Ok s={11}/></span> Panier</div>
+                  <div className="step-line done"/>
+                  <div className="step active"><span className="step-num">2</span> Infos</div>
+                  <div className="step-line"/>
+                  <div className="step"><span className="step-num">3</span> Envoi</div>
+                </div>
+
+                {/* Recap */}
+                <div className="recap">
+                  <p className="recap-title">Ta commande</p>
+                  {items.map(i=>(
+                    <div key={i.id} className="recap-row">
+                      <span className="rn">{i.qty}× {i.name}</span>
+                      <span className="rv">{(i.price*i.qty).toFixed(2)}€</span>
+                    </div>
+                  ))}
+                  <div className="recap-sep"/>
+                  <div className="recap-total"><span>Total</span><span>{total.toFixed(2)}€</span></div>
+                </div>
+
+                {/* Nom */}
+                <div className="fg">
+                  <label className="fl"><I.User s={11}/>Prénom &amp; Nom</label>
+                  <input className={`fi${errs.name?" err":""}`} placeholder="Ex : Jean Dupont"
+                    value={form.name} onChange={e=>set("name",e.target.value)}/>
+                  {errs.name && <span className="ferr">{errs.name}</span>}
+                </div>
+
+                {/* Téléphone */}
+                <div className="fg">
+                  <label className="fl"><I.Tel s={11}/>Téléphone</label>
+                  <input className={`fi${errs.phone?" err":""}`} placeholder="06 12 34 56 78"
+                    type="tel" value={form.phone} onChange={e=>set("phone",e.target.value)}/>
+                  {errs.phone && <span className="ferr">{errs.phone}</span>}
+                </div>
+
+                {/* Mode */}
+                <div className="fg">
+                  <label className="fl"><I.Pin s={11}/>Mode de récupération</label>
+                  <div className="mode-row">
+                    <button className={`mode-btn${form.mode==="sur_place"?" on":""}`}
+                      onClick={()=>set("mode","sur_place")} type="button">🪑 Sur place</button>
+                    <button className={`mode-btn${form.mode==="emporter"?" on":""}`}
+                      onClick={()=>set("mode","emporter")} type="button">🥡 À emporter</button>
+                  </div>
+                </div>
+
+                {/* Heure */}
+                <div className="fg">
+                  <label className="fl"><I.Clk s={11}/>Heure souhaitée</label>
+                  <input className={`fi${errs.time?" err":""}`} type="time"
+                    value={form.time} onChange={e=>set("time",e.target.value)}/>
+                  {errs.time && <span className="ferr">{errs.time}</span>}
+                </div>
+              </div>
+
+              <div className="mod-foot">
+                <button className="wa-btn" onClick={sendWA} type="button">
+                  <I.WA s={20}/> Commander via WhatsApp
+                </button>
+                <button className="sms-btn" onClick={sendSMS} type="button">
+                  <I.Tel s={15}/> Envoyer par SMS
+                </button>
+              </div>
+            </>
+        }
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════
+   PAGE CONTENT
+══════════════════════════════════ */
+function Page() {
+  const {count, total} = useCart();
+  const [loaderDone,  setLoaderDone]  = useState(false);
+  const [cartOpen,    setCartOpen]    = useState(false);
+  const [checkOpen,   setCheckOpen]   = useState(false);
+  const [activeCat,   setActiveCat]   = useState("tacos");
+  const refs   = useRef({});
+  const menuEl = useRef(null);
+
+  // Loader
+  useEffect(()=>{ setTimeout(()=>setLoaderDone(true), 1700); }, []);
+
+  // Scroll reveal
+  useEffect(()=>{
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add("vis");obs.unobserve(e.target);} }),
+      {threshold:.06}
+    );
+    const els = document.querySelectorAll('.ri');
+    els.forEach(el=>obs.observe(el));
+    return ()=>obs.disconnect();
+  }, [loaderDone]);
+
+  // Active category on scroll
+  useEffect(()=>{
+    const catObs = {};
+    MENU.forEach(cat=>{
+      const el = refs.current[cat.id];
+      if(!el) return;
+      const o = new IntersectionObserver(
+        ([e])=>{ if(e.isIntersecting) setActiveCat(cat.id); },
+        {rootMargin:"-40% 0px -55% 0px"}
+      );
+      o.observe(el); catObs[cat.id]=o;
+    });
+    return ()=>Object.values(catObs).forEach(o=>o.disconnect());
+  }, [loaderDone]);
+
+  function goTo(id) {
+    setActiveCat(id);
+    const el = refs.current[id];
+    if(el) el.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  function scrollToMenu() {
+    menuEl.current?.scrollIntoView({behavior:"smooth"});
+  }
+
+  return (
+    <>
+      <Loader done={loaderDone}/>
+
+      <div style={{opacity:loaderDone?1:0,transition:"opacity .6s ease .4s"}}>
+        <PromoBanner/>
+        <Header onCart={()=>setCartOpen(true)}/>
+        <CatNav active={activeCat} onSelect={goTo}/>
+
+        <Hero onMenu={scrollToMenu}/>
+        <InfoBar/>
+        <FeaturedSection/>
+
+        {/* divider */}
+        <div style={{height:"1px",background:"linear-gradient(to right,transparent,rgba(255,255,255,.05),transparent)",margin:"8px 0"}}/>
+
+        <main className="menu-wrap" ref={menuEl}>
+          {MENU.map(cat=>(
+            <section
+              key={cat.id} id={cat.id} className="msec"
+              ref={el=>refs.current[cat.id]=el}
+              aria-label={cat.label}
+            >
+              <div className="msec-head">
+                <h2 className="msec-title">{cat.emoji} {cat.label}</h2>
+                <div className="msec-line"/>
+                <span className="msec-count">{cat.items.length} items</span>
+              </div>
+              <div className="prods-grid">
+                {cat.items.map(item=>(
+                  <PCard key={item.id} item={item} catId={cat.id}/>
+                ))}
+              </div>
+            </section>
+          ))}
+        </main>
+
+        <div style={{height:96}}/>
+
+        {/* Sticky CTA */}
+        {count > 0 && (
+          <div className="sticky-cta">
+            <button className="scta" onClick={()=>setCartOpen(true)}>
+              <div className="scta-l">
+                <span className="scta-count">{count}</span>
+                <span>Voir mon panier</span>
+              </div>
+              <span className="scta-total">{total.toFixed(2)} €</span>
+            </button>
+          </div>
+        )}
+
+        <CartDrawer
+          open={cartOpen}
+          onClose={()=>setCartOpen(false)}
+          onCheckout={()=>setCheckOpen(true)}
+        />
+        <Checkout
+          open={checkOpen}
+          onClose={()=>setCheckOpen(false)}
+        />
+      </div>
+    </>
+  );
+}
+
+function App() {
+  return <CartProvider><Page/></CartProvider>;
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
