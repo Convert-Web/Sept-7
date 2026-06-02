@@ -1,862 +1,484 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#0A0A0A">
-  <meta name="description" content="Le Sept 7 — Street Food Premium. Commandez en ligne !">
-  <title>Le Sept 7 — Commande en ligne</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:     #0A0A0A;
-      --bg2:    #111111;
-      --bg3:    #1A1A1A;
-      --bg4:    #242424;
-      --gold:   #F5A623;
-      --gold-d: rgba(245,166,35,.14);
-      --gold-b: rgba(245,166,35,.28);
-      --white:  #FFFFFF;
-      --muted:  #6B7280;
-      --dim:    #2A2A2A;
-      --green:  #25D366;
-      --red:    #EF4444;
-      --r:      10px;
-      --rm:     14px;
-      --rxl:    24px;
-      --font:   'Barlow', -apple-system, sans-serif;
-      --head:   'Bebas Neue', 'Impact', sans-serif;
-    }
-
-    html, body {
-      background: var(--bg);
-      color: var(--white);
-      font-family: var(--font);
-      overscroll-behavior: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    button { cursor: pointer; font-family: var(--font); border: none; background: none; color: inherit; }
-    input  { font-family: var(--font); }
-
-    /* ── APP ── */
-    .app {
-      max-width: 480px; margin: 0 auto;
-      min-height: 100vh; background: var(--bg);
-      overflow-x: hidden; position: relative;
-    }
-
-    /* ── HEADER ── */
-    .hdr {
-      position: sticky; top: 0; z-index: 50;
-      background: rgba(10,10,10,.94);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
-      border-bottom: 1px solid var(--dim);
-    }
-    .hdr-inner {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 14px 16px 10px;
-    }
-    .brand { display: flex; align-items: center; gap: 10px; }
-    .brand-num {
-      width: 40px; height: 40px; background: var(--gold); color: #000;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--head); font-size: 27px;
-      border-radius: 10px; flex-shrink: 0;
-    }
-    .brand-name {
-      font-family: var(--head); font-size: 22px;
-      letter-spacing: 1.5px; line-height: 1; display: block;
-    }
-    .brand-sub { font-size: 10px; color: var(--muted); letter-spacing: .5px; margin-top: 1px; }
-
-    .cart-icon-btn {
-      position: relative; width: 42px; height: 42px;
-      background: var(--bg3); border: 1px solid var(--dim);
-      border-radius: var(--r); color: var(--white);
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color .2s;
-    }
-    .cart-icon-btn:hover { border-color: var(--gold); }
-    .cart-badge {
-      position: absolute; top: -7px; right: -7px;
-      background: var(--gold); color: #000;
-      font-size: 10px; font-weight: 900;
-      width: 19px; height: 19px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      border: 2px solid var(--bg);
-    }
-
-    /* ── CAT NAV ── */
-    .cat-nav {
-      display: flex; gap: 8px;
-      padding: 0 16px 12px;
-      overflow-x: auto; scrollbar-width: none;
-    }
-    .cat-nav::-webkit-scrollbar { display: none; }
-    .cat-btn {
-      flex-shrink: 0; padding: 6px 14px;
-      background: var(--bg3); border: 1px solid var(--dim);
-      border-radius: 20px; color: var(--muted);
-      font-size: 13px; font-weight: 600;
-      transition: all .2s; white-space: nowrap;
-    }
-    .cat-btn.active { background: var(--gold); border-color: var(--gold); color: #000; }
-
-    /* ── HERO ── */
-    .hero {
-      padding: 26px 20px 30px;
-      background: linear-gradient(135deg, #190f00 0%, #0A0A0A 65%);
-      display: flex; align-items: center;
-      justify-content: space-between;
-      overflow: hidden; position: relative;
-    }
-    .hero::before {
-      content: ''; position: absolute; bottom: -60px; left: -60px;
-      width: 220px; height: 220px;
-      background: radial-gradient(circle, rgba(245,166,35,.07) 0%, transparent 70%);
-      border-radius: 50%; pointer-events: none;
-    }
-    .hero-pill {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: var(--gold-d); border: 1px solid var(--gold-b);
-      color: var(--gold); font-size: 12px; font-weight: 600;
-      padding: 4px 10px; border-radius: 20px; margin-bottom: 10px;
-    }
-    .hero-title {
-      font-family: var(--head); font-size: 46px;
-      line-height: .88; letter-spacing: 1px; margin-bottom: 10px;
-    }
-    .hero-sub { color: var(--muted); font-size: 13px; font-weight: 500; }
-    .hero-emoji {
-      font-size: 82px; line-height: 1;
-      animation: float 3s ease-in-out infinite;
-      user-select: none;
-    }
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-10px); }
-    }
-
-    /* ── MENU ── */
-    .menu-container { padding: 8px 16px 0; }
-    .menu-section   { padding-top: 16px; margin-bottom: 28px; scroll-margin-top: 130px; }
-    .section-title  { font-family: var(--head); font-size: 26px; letter-spacing: 1px; margin-bottom: 14px; }
-    .products-list  { display: flex; flex-direction: column; gap: 10px; }
-
-    /* ── PRODUCT CARD ── */
-    .pc {
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--bg2); border: 1px solid var(--dim);
-      border-radius: var(--r); padding: 14px; gap: 12px;
-      transition: border-color .25s;
-    }
-    .pc.in-cart { border-color: var(--gold-b); }
-    .pc-info    { flex: 1; min-width: 0; }
-    .pc-name    { font-weight: 700; font-size: 14px; margin-bottom: 3px; line-height: 1.3; }
-    .pc-desc    {
-      font-size: 12px; color: var(--muted);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      margin-bottom: 6px;
-    }
-    .pc-price   { font-size: 15px; font-weight: 800; color: var(--gold); }
-    .pc-add {
-      width: 36px; height: 36px; min-width: 36px;
-      background: var(--bg3); border: 1.5px solid var(--dim);
-      border-radius: 9px; color: var(--white);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 800; transition: all .18s;
-    }
-    .pc-add:hover    { border-color: var(--gold); color: var(--gold); }
-    .pc-add.in-cart  { background: var(--gold-d); border-color: var(--gold); color: var(--gold); }
-    .pc-add.pop      { background: var(--gold); border-color: var(--gold); color: #000; transform: scale(1.22); }
-
-    /* ── STICKY CTA ── */
-    .sticky-cta {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      padding: 10px 16px 20px;
-      background: linear-gradient(to top, rgba(10,10,10,1) 50%, rgba(10,10,10,0));
-      z-index: 49; pointer-events: none;
-    }
-    .cta-btn {
-      pointer-events: all; width: 100%; max-width: 448px; margin: 0 auto;
-      display: flex; background: var(--gold); color: #000;
-      border-radius: var(--rm); padding: 15px 20px;
-      align-items: center; justify-content: space-between;
-      font-weight: 800; font-size: 15px;
-      box-shadow: 0 8px 32px rgba(245,166,35,.38);
-      transition: transform .1s; animation: cta-in .32s ease;
-    }
-    .cta-btn:active { transform: scale(.98); }
-    @keyframes cta-in {
-      from { transform: translateY(64px); opacity: 0; }
-      to   { transform: translateY(0);    opacity: 1; }
-    }
-    .cta-left  { display: flex; align-items: center; gap: 10px; }
-    .cta-badge {
-      background: rgba(0,0,0,.22); width: 28px; height: 28px;
-      border-radius: 7px; display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 900;
-    }
-    .cta-total { font-size: 15px; font-weight: 900; }
-
-    /* ── SHARED: ICON BTN ── */
-    .icon-btn {
-      width: 36px; height: 36px; flex-shrink: 0;
-      background: var(--bg3); border: 1px solid var(--dim);
-      border-radius: 9px; color: var(--white);
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color .2s;
-    }
-    .icon-btn:hover { border-color: var(--muted); }
-
-    /* ── CART OVERLAY ── */
-    .cart-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,.78);
-      z-index: 199; backdrop-filter: blur(7px);
-      -webkit-backdrop-filter: blur(7px); animation: fade-in .22s;
-    }
-    @keyframes fade-in { from{opacity:0} to{opacity:1} }
-
-    /* ── CART DRAWER ── */
-    .cart-drawer {
-      position: fixed; bottom: 0; left: 50%;
-      transform: translateX(-50%) translateY(100%);
-      width: 100%; max-width: 480px;
-      background: var(--bg2);
-      border-radius: var(--rxl) var(--rxl) 0 0;
-      border-top: 1px solid var(--dim);
-      z-index: 200; display: flex; flex-direction: column;
-      max-height: 88vh;
-      transition: transform .38s cubic-bezier(.32,.72,0,1);
-    }
-    .cart-drawer.open { transform: translateX(-50%) translateY(0); }
-    .cart-pill {
-      width: 36px; height: 4px; background: var(--bg4);
-      border-radius: 2px; margin: 12px auto 6px; flex-shrink: 0;
-    }
-    .cart-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 8px 18px 14px; flex-shrink: 0;
-    }
-    .cart-header h2 { font-family: var(--head); font-size: 22px; letter-spacing: 1px; }
-    .cart-empty {
-      flex: 1; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 48px 20px; color: var(--muted); gap: 12px;
-    }
-    .cart-empty p    { font-size: 15px; font-weight: 700; color: var(--white); }
-    .cart-empty span { font-size: 13px; text-align: center; }
-    .cart-list {
-      flex: 1; overflow-y: auto;
-      padding: 4px 18px; display: flex; flex-direction: column;
-      gap: 10px; list-style: none;
-    }
-    .cart-item {
-      background: var(--bg3); border-radius: var(--r);
-      padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;
-    }
-    .ci-row  { display: flex; align-items: center; justify-content: space-between; }
-    .ci-name { font-size: 13px; font-weight: 700; flex: 1; padding-right: 8px; }
-    .ci-price { font-size: 14px; font-weight: 800; color: var(--gold); white-space: nowrap; }
-    .ci-controls { display: flex; align-items: center; gap: 8px; }
-    .ci-btn {
-      width: 28px; height: 28px; background: var(--bg2);
-      border: 1px solid var(--dim); border-radius: 7px; color: var(--white);
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color .15s;
-    }
-    .ci-btn:hover    { border-color: var(--muted); }
-    .ci-del:hover    { border-color: var(--red); color: var(--red); }
-    .ci-qty { font-size: 14px; font-weight: 800; min-width: 20px; text-align: center; }
-    .cart-footer {
-      flex-shrink: 0; padding: 14px 18px 28px;
-      border-top: 1px solid var(--dim);
-    }
-    .cart-total-row {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 14px; font-size: 14px; color: var(--muted);
-    }
-    .cart-total-num { font-size: 24px; font-weight: 900; color: var(--gold); }
-    .checkout-btn {
-      width: 100%; background: var(--gold); color: #000;
-      border-radius: var(--rm); padding: 15px 20px;
-      display: flex; align-items: center; justify-content: space-between;
-      font-weight: 800; font-size: 15px; transition: opacity .1s;
-    }
-    .checkout-btn:active { opacity: .85; }
-
-    /* ── MODAL ── */
-    .modal-wrap {
-      position: fixed; inset: 0; display: flex;
-      align-items: flex-end; z-index: 300;
-      background: rgba(0,0,0,.82);
-      backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
-    }
-    .modal {
-      background: var(--bg2);
-      border-radius: var(--rxl) var(--rxl) 0 0;
-      width: 100%; max-width: 480px; margin: 0 auto;
-      max-height: 95vh; overflow-y: auto;
-      animation: slide-up .36s cubic-bezier(.32,.72,0,1);
-    }
-    @keyframes slide-up {
-      from { transform: translateY(100%); }
-      to   { transform: translateY(0); }
-    }
-    .modal-header {
-      display: flex; align-items: center; gap: 12px;
-      padding: 18px 18px 14px; border-bottom: 1px solid var(--dim);
-      position: sticky; top: 0; background: var(--bg2); z-index: 1;
-    }
-    .modal-header h2 {
-      font-family: var(--head); font-size: 20px; letter-spacing: .5px; flex: 1;
-    }
-    .modal-body { padding: 18px; display: flex; flex-direction: column; gap: 18px; }
-
-    /* RECAP */
-    .recap { background: var(--bg3); border-radius: var(--r); padding: 14px; }
-    .recap-label {
-      font-size: 10px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 1.2px;
-      color: var(--muted); margin-bottom: 10px;
-    }
-    .recap-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
-    .recap-row span:first-child { color: var(--muted); }
-    .recap-row span:last-child  { font-weight: 600; }
-    .recap-total {
-      display: flex; justify-content: space-between;
-      font-size: 15px; font-weight: 800;
-      padding-top: 10px; margin-top: 8px;
-      border-top: 1px solid var(--dim); color: var(--gold);
-    }
-
-    /* FORM */
-    .form-group { display: flex; flex-direction: column; gap: 6px; }
-    .form-label {
-      font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .9px;
-      color: var(--muted); display: flex; align-items: center; gap: 5px;
-    }
-    .form-input {
-      background: var(--bg3); border: 1.5px solid var(--dim);
-      border-radius: var(--r); padding: 13px 15px;
-      color: var(--white); font-size: 15px;
-      outline: none; transition: border-color .2s; width: 100%;
-    }
-    .form-input:focus { border-color: var(--gold); }
-    .form-input.err   { border-color: var(--red); }
-    .form-input::placeholder { color: var(--muted); }
-    input[type="time"].form-input { color-scheme: dark; }
-    .form-error { font-size: 11px; color: var(--red); }
-
-    /* MODE GRID */
-    .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .mode-option {
-      padding: 13px 8px; background: var(--bg3);
-      border: 1.5px solid var(--dim); border-radius: var(--r);
-      color: var(--muted); font-size: 14px; font-weight: 600;
-      transition: all .2s; text-align: center;
-    }
-    .mode-option.active { background: var(--gold-d); border-color: var(--gold); color: var(--gold); }
-
-    /* MODAL FOOTER */
-    .modal-footer { padding: 12px 18px 36px; display: flex; flex-direction: column; gap: 10px; }
-    .wa-btn {
-      width: 100%; background: #25D366; color: #fff;
-      border-radius: var(--rm); padding: 16px 20px;
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      font-weight: 800; font-size: 16px;
-      box-shadow: 0 6px 24px rgba(37,211,102,.28); transition: opacity .1s;
-    }
-    .wa-btn:active { opacity: .88; }
-    .sms-btn {
-      width: 100%; background: transparent; color: var(--muted);
-      border: 1px solid var(--dim); border-radius: var(--rm);
-      padding: 13px 20px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      font-weight: 600; font-size: 14px; transition: border-color .2s;
-    }
-    .sms-btn:hover { border-color: var(--muted); }
-
-    /* SUCCESS */
-    .success {
-      padding: 64px 24px; text-align: center;
-      display: flex; flex-direction: column; align-items: center; gap: 16px;
-    }
-    .success-icon { font-size: 72px; animation: pop-in .5s cubic-bezier(.175,.885,.32,1.275); }
-    @keyframes pop-in {
-      0%   { transform: scale(0) rotate(-15deg); }
-      100% { transform: scale(1) rotate(0); }
-    }
-    .success h2  { font-family: var(--head); font-size: 32px; letter-spacing: 1px; }
-    .success p   { color: var(--muted); font-size: 14px; line-height: 1.6; max-width: 280px; }
-    .success-dot {
-      width: 8px; height: 8px; background: var(--green);
-      border-radius: 50%; animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0    rgba(37,211,102,.4); }
-      70%  { box-shadow: 0 0 0 10px rgba(37,211,102,0);  }
-      100% { box-shadow: 0 0 0 0    rgba(37,211,102,0);  }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Sept 7 — Street Food Premium | Montereau-Fault-Yonne</title>
+  <meta name="description" content="Le Sept 7 — Le QG street food de Montereau. Kebabs, Tacos, Paninis, Tikka & Wings. Saveurs authentiques, ambiance urbaine. Commandez en ligne." />
+  <meta name="keywords" content="kebab montereau, tacos montereau, fast food montereau, le sept 7, street food, panini, tikka" />
+  <meta property="og:title" content="Le Sept 7 — Street Food Premium" />
+  <meta property="og:description" content="Le QG street food de Montereau. Kebabs, Tacos, Paninis & Wings." />
+  <meta property="og:type" content="website" />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌯</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <div id="root"></div>
 
-  <script type="text/babel">
-    const { useState, useReducer, createContext, useContext, useRef, useEffect } = React;
+<!-- ==================== LOADER ==================== -->
+<div id="loader">
+  <div class="loader-logo">SEPT 7</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  <div class="loader-text">Chargement en cours...</div>
+</div>
 
-    /* ══════════════════════════════════════
-       SVG ICONS (remplace lucide-react)
-    ══════════════════════════════════════ */
-    const IcoBag  = ({s=20}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>;
-    const IcoPlus = ({s=14}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>;
-    const IcoMin  = ({s=12}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>;
-    const IcoX    = ({s=18}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
-    const IcoOk   = ({s=14}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>;
-    const IcoR    = ({s=18}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>;
-    const IcoL    = ({s=18}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>;
-    const IcoWa   = ({s=20}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>;
-    const IcoTel  = ({s=16}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>;
-    const IcoUser = ({s=12}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
-    const IcoMap  = ({s=12}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>;
-    const IcoClock= ({s=12}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
+<!-- ==================== CUSTOM CURSOR ==================== -->
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
 
-    /* ══════════════════════════════════════
-       MENU DATA — modifie ici tes produits
-    ══════════════════════════════════════ */
-    const MENU = [
-      {
-        id: "tacos", label: "Tacos", emoji: "🌮",
-        items: [
-          { id: 1,  name: "Tacos 2 viandes",  price: 7.50,  desc: "Sauce maison · Salade · Fromage fondu" },
-          { id: 2,  name: "Tacos 3 viandes",  price: 9.00,  desc: "Sauce maison · Salade · Fromage fondu" },
-          { id: 3,  name: "Tacos XXL",        price: 11.50, desc: "4 viandes · Format géant · Sauce secrète" },
-          { id: 4,  name: "Tacos Chicken",    price: 8.50,  desc: "Poulet croustillant · Ranch · Cheddar" },
-        ],
-      },
-      {
-        id: "menus", label: "Menus", emoji: "🍱",
-        items: [
-          { id: 5, name: "Menu Nuggets", price: 8.50,  desc: "6 pièces croustillantes · Frites · Boisson" },
-          { id: 6, name: "Menu Burger",  price: 10.50, desc: "Double burger · Frites maison · Boisson" },
-          { id: 7, name: "Menu Tacos",   price: 11.00, desc: "Tacos 2 viandes · Frites · Boisson" },
-        ],
-      },
-      {
-        id: "plats", label: "Plats", emoji: "🍚",
-        items: [
-          { id: 8,  name: "Riz Thaï",         price: 8.00, desc: "Riz sauté · Légumes wok · Sauce thaï" },
-          { id: 9,  name: "Pâtes Arrabbiata", price: 7.50, desc: "Sauce tomate épicée · Parmesan" },
-          { id: 10, name: "Bowl Poulet",       price: 9.00, desc: "Poulet grillé · Riz · Légumes rôtis" },
-        ],
-      },
-      {
-        id: "boissons", label: "Boissons", emoji: "🥤",
-        items: [
-          { id: 11, name: "Coca-Cola 33cl",     price: 2.50, desc: "" },
-          { id: 12, name: "Orangina 33cl",       price: 2.50, desc: "" },
-          { id: 13, name: "Eau minérale",        price: 1.50, desc: "" },
-          { id: 14, name: "Jus d'orange frais",  price: 3.00, desc: "Pressé à la commande" },
-        ],
-      },
-    ];
+<!-- ==================== NAVBAR ==================== -->
+<nav class="navbar" role="navigation" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo" aria-label="Le Sept 7 - Accueil">SEPT 7</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="pages/menu.html">Menu</a></li>
+    <li><a href="pages/galerie.html">Galerie</a></li>
+    <li><a href="pages/ambiance.html">Ambiance</a></li>
+    <li>
+      <a href="pages/commande.html" class="nav-cta">
+        Commander
+        <span class="cart-badge" style="display:none;background:white;color:var(--violet);border-radius:50%;width:18px;height:18px;font-size:10px;align-items:center;justify-content:center;margin-left:4px;">0</span>
+      </a>
+    </li>
+  </ul>
+  <button class="hamburger" aria-label="Menu mobile" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-    /* ══════════════════════════════════════
-       CART CONTEXT
-    ══════════════════════════════════════ */
-    const CartCtx = createContext(null);
+<!-- Mobile Drawer -->
+<div class="drawer-overlay"></div>
+<nav class="nav-drawer" aria-label="Navigation mobile">
+  <a href="index.html">🏠 Accueil</a>
+  <a href="pages/menu.html">🍔 Menu</a>
+  <a href="pages/galerie.html">📸 Galerie</a>
+  <a href="pages/ambiance.html">🎭 Ambiance</a>
+  <a href="pages/commande.html">🛒 Commander</a>
+</nav>
 
-    function cartReducer(state, action) {
-      switch (action.type) {
-        case "ADD": {
-          const i = state.findIndex(x => x.id === action.item.id);
-          return i >= 0
-            ? state.map((x, n) => n === i ? { ...x, qty: x.qty + 1 } : x)
-            : [...state, { ...action.item, qty: 1 }];
-        }
-        case "INC":   return state.map(x => x.id === action.id ? { ...x, qty: x.qty + 1 } : x);
-        case "DEC":   return state.map(x => x.id === action.id ? { ...x, qty: x.qty - 1 } : x).filter(x => x.qty > 0);
-        case "DEL":   return state.filter(x => x.id !== action.id);
-        case "CLEAR": return [];
-        default:      return state;
-      }
-    }
+<!-- ==================== HERO ==================== -->
+<section id="hero" aria-label="Bannière principale">
+  <div class="hero-video-wrap">
+    <canvas id="heroCanvas" aria-hidden="true"></canvas>
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-side-gradient" aria-hidden="true"></div>
 
-    function CartProvider({ children }) {
-      const [items, dispatch] = useReducer(cartReducer, []);
-      const total = items.reduce((s, i) => s + i.price * i.qty, 0);
-      const count = items.reduce((s, i) => s + i.qty, 0);
-      return (
-        <CartCtx.Provider value={{ items, dispatch, total, count }}>
-          {children}
-        </CartCtx.Provider>
-      );
-    }
+  <div class="hero-content">
+    <div class="hero-badge">
+      🔥 Le QG Street Food · Montereau
+    </div>
+    <h1 class="hero-title">
+      LA <span class="accent">VRAIE</span><br>
+      STREET<br>
+      <span class="accent-red">FOOD.</span>
+    </h1>
+    <p class="hero-sub">Kebabs, Tacos, Paninis, Tikka &amp; Wings. Fait pour ceux qui savent.</p>
+    <div class="hero-actions">
+      <a href="pages/commande.html" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Commander maintenant
+      </a>
+      <a href="pages/menu.html" class="btn btn-outline">Voir le menu</a>
+    </div>
+  </div>
 
-    function useCart() { return useContext(CartCtx); }
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="hero-scroll-line"></div>
+    <span>SCROLL</span>
+  </div>
 
-    /* ══════════════════════════════════════
-       PRODUCT CARD
-    ══════════════════════════════════════ */
-    function ProductCard({ item }) {
-      const { items, dispatch } = useCart();
-      const [pop, setPop] = useState(false);
-      const cartItem = items.find(i => i.id === item.id);
+  <div class="hero-location" aria-hidden="true">Montereau-Fault-Yonne · 77130</div>
+</section>
 
-      function add() {
-        dispatch({ type: "ADD", item });
-        setPop(true);
-        setTimeout(() => setPop(false), 460);
-      }
+<!-- ==================== MARQUEE ==================== -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">KEBAB</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">TACOS</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">PANINI</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">TIKKA</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">WINGS</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">MONTEREAU</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">KEBAB</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">TACOS</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">PANINI</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">TIKKA</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">WINGS</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">MONTEREAU</span>
+    <span class="marquee-item">·</span>
+  </div>
+</div>
 
-      return (
-        <div className={`pc${cartItem ? " in-cart" : ""}`}>
-          <div className="pc-info">
-            <p className="pc-name">{item.name}</p>
-            {item.desc && <p className="pc-desc">{item.desc}</p>}
-            <p className="pc-price">{item.price.toFixed(2)}€</p>
-          </div>
-          <button
-            className={`pc-add${cartItem ? " in-cart" : ""}${pop ? " pop" : ""}`}
-            onClick={add}
-            aria-label={`Ajouter ${item.name}`}
-          >
-            {pop ? <IcoOk s={14} /> : cartItem ? cartItem.qty : <IcoPlus s={14} />}
-          </button>
+<!-- ==================== PLATS POPULAIRES ==================== -->
+<section id="populaires" aria-label="Nos plats populaires">
+  <div class="container">
+    <div class="populaires-header">
+      <div>
+        <p class="section-label" data-reveal>Nos incontournables</p>
+        <h2 class="section-title" data-reveal data-reveal-delay="1">LES <em>HITS</em><br>DU MOMENT</h2>
+      </div>
+      <a href="pages/menu.html" class="btn btn-outline" data-reveal data-reveal-delay="2">Voir tout le menu</a>
+    </div>
+
+    <div class="plats-grid">
+
+      <!-- Plat 1 -->
+      <div class="plat-card" data-reveal data-reveal-delay="1">
+        <div class="plat-img-wrap">
+          <img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80&auto=format&fit=crop" alt="Kebab Géant Le Sept 7" loading="lazy" />
+          <span class="plat-badge hot">🔥 Best-seller</span>
         </div>
-      );
-    }
-
-    /* ══════════════════════════════════════
-       CART DRAWER
-    ══════════════════════════════════════ */
-    function CartDrawer({ open, onClose, onCheckout }) {
-      const { items, dispatch, total } = useCart();
-
-      return (
-        <>
-          {open && <div className="cart-overlay" onClick={onClose} />}
-          <div className={`cart-drawer${open ? " open" : ""}`} role="dialog" aria-label="Panier">
-            <div className="cart-pill" />
-            <div className="cart-header">
-              <h2>Mon Panier</h2>
-              <button className="icon-btn" onClick={onClose}><IcoX s={18} /></button>
-            </div>
-
-            {items.length === 0 ? (
-              <div className="cart-empty">
-                <IcoBag s={42} />
-                <p>Panier vide</p>
-                <span>Ajoute tes produits pour commander</span>
-              </div>
-            ) : (
-              <>
-                <ul className="cart-list">
-                  {items.map(it => (
-                    <li key={it.id} className="cart-item">
-                      <div className="ci-row">
-                        <span className="ci-name">{it.name}</span>
-                        <span className="ci-price">{(it.price * it.qty).toFixed(2)}€</span>
-                      </div>
-                      <div className="ci-row">
-                        <div className="ci-controls">
-                          <button className="ci-btn" onClick={() => dispatch({ type:"DEC", id:it.id })}><IcoMin s={12} /></button>
-                          <span className="ci-qty">{it.qty}</span>
-                          <button className="ci-btn" onClick={() => dispatch({ type:"INC", id:it.id })}><IcoPlus s={12} /></button>
-                        </div>
-                        <button className="ci-btn ci-del" onClick={() => dispatch({ type:"DEL", id:it.id })}><IcoX s={12} /></button>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <div className="cart-footer">
-                  <div className="cart-total-row">
-                    <span>Total commande</span>
-                    <span className="cart-total-num">{total.toFixed(2)}€</span>
-                  </div>
-                  <button className="checkout-btn" onClick={() => { onClose(); setTimeout(onCheckout, 330); }}>
-                    <span>Passer la commande</span>
-                    <IcoR s={18} />
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        </>
-      );
-    }
-
-    /* ══════════════════════════════════════
-       CHECKOUT MODAL
-    ══════════════════════════════════════ */
-    const INIT = { name: "", phone: "", mode: "sur_place", time: "" };
-
-    function Checkout({ open, onClose }) {
-      const { items, total, dispatch } = useCart();
-      const [form,   setForm]   = useState(INIT);
-      const [errors, setErrors] = useState({});
-      const [done,   setDone]   = useState(false);
-
-      function validate() {
-        const e = {};
-        if (!form.name.trim())  e.name  = "Champ requis";
-        if (!form.phone.trim()) e.phone = "Champ requis";
-        if (!form.time)         e.time  = "Champ requis";
-        setErrors(e);
-        return !Object.keys(e).length;
-      }
-
-      function buildMsg() {
-        const ml    = form.mode === "sur_place" ? "Sur place 🪑" : "À emporter 🥡";
-        const lines = items.map(i => `• ${i.qty}x ${i.name} — ${(i.price*i.qty).toFixed(2)}€`).join("\n");
-        return (
-          `🍽️ Nouvelle commande — Le Sept 7\n\n` +
-          `👤 Nom : ${form.name}\n📞 Tél : ${form.phone}\n\n` +
-          `📋 Commande :\n${lines}\n\n` +
-          `💰 Total : ${total.toFixed(2)}€\n\n` +
-          `🏠 Mode : ${ml}\n⏰ Heure : ${form.time}`
-        );
-      }
-
-      function afterSend() {
-        setDone(true);
-        setTimeout(() => {
-          dispatch({ type: "CLEAR" });
-          setDone(false); setForm(INIT); onClose();
-        }, 3200);
-      }
-
-      function sendWA()  {
-        if (!validate()) return;
-        window.open(`https://wa.me/33763676191?text=${encodeURIComponent(buildMsg())}`, "_blank");
-        afterSend();
-      }
-      function sendSMS() {
-        if (!validate()) return;
-        window.open(`sms:0763676191?body=${encodeURIComponent(buildMsg())}`, "_blank");
-        afterSend();
-      }
-
-      function set(k, v) { setForm(f => ({...f, [k]:v})); setErrors(e => ({...e, [k]:""})); }
-
-      if (!open) return null;
-
-      return (
-        <div className="modal-wrap" onClick={e => e.target===e.currentTarget && onClose()}>
-          <div className="modal">
-            {done ? (
-              <div className="success">
-                <div className="success-icon">🎉</div>
-                <h2>Commande envoyée !</h2>
-                <div className="success-dot" />
-                <p>Le restaurant va confirmer votre commande rapidement. À très vite !</p>
-              </div>
-            ) : (
-              <>
-                <div className="modal-header">
-                  <button className="icon-btn" onClick={onClose}><IcoL s={18} /></button>
-                  <h2>Finaliser ma commande</h2>
-                </div>
-
-                <div className="modal-body">
-                  {/* Récap */}
-                  <div className="recap">
-                    <p className="recap-label">Récapitulatif</p>
-                    {items.map(i => (
-                      <div key={i.id} className="recap-row">
-                        <span>{i.qty}× {i.name}</span>
-                        <span>{(i.price*i.qty).toFixed(2)}€</span>
-                      </div>
-                    ))}
-                    <div className="recap-total">
-                      <span>Total</span><span>{total.toFixed(2)}€</span>
-                    </div>
-                  </div>
-
-                  {/* Nom */}
-                  <div className="form-group">
-                    <label className="form-label"><IcoUser s={12} /> Prénom &amp; Nom</label>
-                    <input className={`form-input${errors.name ? " err" : ""}`}
-                      placeholder="Ex : Jean Dupont"
-                      value={form.name} onChange={e => set("name", e.target.value)} />
-                    {errors.name && <span className="form-error">{errors.name}</span>}
-                  </div>
-
-                  {/* Téléphone */}
-                  <div className="form-group">
-                    <label className="form-label"><IcoTel s={12} /> Téléphone</label>
-                    <input className={`form-input${errors.phone ? " err" : ""}`}
-                      placeholder="06 12 34 56 78" type="tel"
-                      value={form.phone} onChange={e => set("phone", e.target.value)} />
-                    {errors.phone && <span className="form-error">{errors.phone}</span>}
-                  </div>
-
-                  {/* Mode */}
-                  <div className="form-group">
-                    <label className="form-label"><IcoMap s={12} /> Mode</label>
-                    <div className="mode-grid">
-                      <button className={`mode-option${form.mode==="sur_place"?" active":""}`}
-                        onClick={() => set("mode","sur_place")}>🪑 Sur place</button>
-                      <button className={`mode-option${form.mode==="emporter"?" active":""}`}
-                        onClick={() => set("mode","emporter")}>🥡 À emporter</button>
-                    </div>
-                  </div>
-
-                  {/* Heure */}
-                  <div className="form-group">
-                    <label className="form-label"><IcoClock s={12} /> Heure souhaitée</label>
-                    <input className={`form-input${errors.time ? " err" : ""}`}
-                      type="time" value={form.time}
-                      onChange={e => set("time", e.target.value)} />
-                    {errors.time && <span className="form-error">{errors.time}</span>}
-                  </div>
-                </div>
-
-                <div className="modal-footer">
-                  <button className="wa-btn"  onClick={sendWA}><IcoWa  s={20} /> Commander via WhatsApp</button>
-                  <button className="sms-btn" onClick={sendSMS}><IcoTel s={16} /> Envoyer par SMS</button>
-                </div>
-              </>
-            )}
+        <div class="plat-info">
+          <div class="plat-name">Kebab Géant</div>
+          <p class="plat-desc">Viande grillée, sauce maison, légumes frais, pain artisanal. La référence.</p>
+          <div class="plat-footer">
+            <span class="plat-price">7,50€</span>
+            <button class="plat-add" aria-label="Ajouter au panier"
+              data-add-to-cart data-item-id="keb-geant" data-item-name="Kebab Géant"
+              data-item-price="7.50" data-item-emoji="🌯">+</button>
           </div>
         </div>
-      );
-    }
+      </div>
 
-    /* ══════════════════════════════════════
-       PAGE PRINCIPALE
-    ══════════════════════════════════════ */
-    function PageContent() {
-      const { count, total } = useCart();
-      const [cartOpen,     setCartOpen]     = useState(false);
-      const [checkoutOpen, setCheckoutOpen] = useState(false);
-      const [activeSection, setActiveSection] = useState("tacos");
-      const refs = useRef({});
-
-      useEffect(() => {
-        const obs = {};
-        MENU.forEach(cat => {
-          const el = refs.current[cat.id];
-          if (!el) return;
-          const o = new IntersectionObserver(
-            ([e]) => { if (e.isIntersecting) setActiveSection(cat.id); },
-            { rootMargin: "-40% 0px -55% 0px" }
-          );
-          o.observe(el); obs[cat.id] = o;
-        });
-        return () => Object.values(obs).forEach(o => o.disconnect());
-      }, []);
-
-      function scrollTo(id) {
-        setActiveSection(id);
-        const el = refs.current[id];
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-
-      return (
-        <div className="app">
-
-          {/* HEADER */}
-          <header className="hdr">
-            <div className="hdr-inner">
-              <div className="brand">
-                <div className="brand-num">7</div>
-                <div>
-                  <span className="brand-name">Le Sept</span>
-                  <span className="brand-sub">Street Food Premium</span>
-                </div>
-              </div>
-              <button className="cart-icon-btn" onClick={() => setCartOpen(true)} aria-label="Panier">
-                <IcoBag s={20} />
-                {count > 0 && <span className="cart-badge">{count}</span>}
-              </button>
-            </div>
-            <nav className="cat-nav">
-              {MENU.map(cat => (
-                <button key={cat.id}
-                  className={`cat-btn${activeSection===cat.id?" active":""}`}
-                  onClick={() => scrollTo(cat.id)}>
-                  {cat.emoji} {cat.label}
-                </button>
-              ))}
-            </nav>
-          </header>
-
-          {/* HERO */}
-          <section className="hero">
-            <div>
-              <div className="hero-pill">⚡ Commande rapide</div>
-              <h1 className="hero-title">Street<br />Food</h1>
-              <p className="hero-sub">Prêt en 15 min · 7j/7</p>
-            </div>
-            <div className="hero-emoji">🌮</div>
-          </section>
-
-          {/* MENU */}
-          <main className="menu-container">
-            {MENU.map(cat => (
-              <section key={cat.id} id={cat.id} className="menu-section"
-                ref={el => refs.current[cat.id] = el}>
-                <h2 className="section-title">{cat.emoji} {cat.label}</h2>
-                <div className="products-list">
-                  {cat.items.map(item => <ProductCard key={item.id} item={item} />)}
-                </div>
-              </section>
-            ))}
-          </main>
-
-          <div style={{height:88}} />
-
-          {/* CTA STICKY */}
-          {count > 0 && (
-            <div className="sticky-cta">
-              <button className="cta-btn" onClick={() => setCartOpen(true)}>
-                <div className="cta-left">
-                  <span className="cta-badge">{count}</span>
-                  <span>Voir mon panier</span>
-                </div>
-                <span className="cta-total">{total.toFixed(2)}€</span>
-              </button>
-            </div>
-          )}
-
-          <CartDrawer
-            open={cartOpen}
-            onClose={() => setCartOpen(false)}
-            onCheckout={() => setCheckoutOpen(true)}
-          />
-          <Checkout
-            open={checkoutOpen}
-            onClose={() => setCheckoutOpen(false)}
-          />
+      <!-- Plat 2 -->
+      <div class="plat-card" data-reveal data-reveal-delay="2">
+        <div class="plat-img-wrap">
+          <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80&auto=format&fit=crop" alt="Tacos Poulet Grillé" loading="lazy" />
+          <span class="plat-badge new">✨ Nouveau</span>
         </div>
-      );
-    }
+        <div class="plat-info">
+          <div class="plat-name">Tacos Poulet Fumé</div>
+          <p class="plat-desc">Poulet grillé, fromage fondu, sauce algérienne, frites dedans. Niveau ultime.</p>
+          <div class="plat-footer">
+            <span class="plat-price">8,00€</span>
+            <button class="plat-add" aria-label="Ajouter au panier"
+              data-add-to-cart data-item-id="tacos-poulet" data-item-name="Tacos Poulet Fumé"
+              data-item-price="8.00" data-item-emoji="🌮">+</button>
+          </div>
+        </div>
+      </div>
 
-    function App() {
-      return (
-        <CartProvider>
-          <PageContent />
-        </CartProvider>
-      );
-    }
+      <!-- Plat 3 -->
+      <div class="plat-card" data-reveal data-reveal-delay="3">
+        <div class="plat-img-wrap">
+          <img src="https://images.unsplash.com/photo-1626082896492-766af4eb6501?w=600&q=80&auto=format&fit=crop" alt="Wings Sauce BBQ" loading="lazy" />
+          <span class="plat-badge" style="background:var(--gold);color:#000">⭐ Top</span>
+        </div>
+        <div class="plat-info">
+          <div class="plat-name">Wings BBQ x6</div>
+          <p class="plat-desc">Ailes croustillantes, marinade BBQ maison. Sauce au choix. Addiction garantie.</p>
+          <div class="plat-footer">
+            <span class="plat-price">6,50€</span>
+            <button class="plat-add" aria-label="Ajouter au panier"
+              data-add-to-cart data-item-id="wings-bbq" data-item-name="Wings BBQ x6"
+              data-item-price="6.50" data-item-emoji="🍗">+</button>
+          </div>
+        </div>
+      </div>
 
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-  </script>
+      <!-- Plat 4 -->
+      <div class="plat-card" data-reveal data-reveal-delay="1">
+        <div class="plat-img-wrap">
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80&auto=format&fit=crop" alt="Burger Maison" loading="lazy" />
+          <span class="plat-badge hot">🌶️ Épicé</span>
+        </div>
+        <div class="plat-info">
+          <div class="plat-name">Smash Burger</div>
+          <p class="plat-desc">Double steak écrasé, cheddar fondu, oignons caramélisés, sauce secrète.</p>
+          <div class="plat-footer">
+            <span class="plat-price">9,00€</span>
+            <button class="plat-add" aria-label="Ajouter au panier"
+              data-add-to-cart data-item-id="smash-burger" data-item-name="Smash Burger"
+              data-item-price="9.00" data-item-emoji="🍔">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plat 5 -->
+      <div class="plat-card" data-reveal data-reveal-delay="2">
+        <div class="plat-img-wrap">
+          <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=600&q=80&auto=format&fit=crop" alt="Panini Poulet" loading="lazy" />
+        </div>
+        <div class="plat-info">
+          <div class="plat-name">Panini Tikka</div>
+          <p class="plat-desc">Pain grillé croustillant, poulet tikka masala, mozzarella, légumes marinés.</p>
+          <div class="plat-footer">
+            <span class="plat-price">6,00€</span>
+            <button class="plat-add" aria-label="Ajouter au panier"
+              data-add-to-cart data-item-id="panini-tikka" data-item-name="Panini Tikka"
+              data-item-price="6.00" data-item-emoji="🥖">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plat 6 — Menu -->
+      <div class="plat-card" data-reveal data-reveal-delay="3" style="border-color:var(--gold);box-shadow:0 0 30px rgba(212,160,23,0.15);">
+        <div class="plat-img-wrap">
+          <img src="https://images.unsplash.com/photo-1619881590738-a111d176d906?w=600&q=80&auto=format&fit=crop" alt="Menu Complet" loading="lazy" />
+          <span class="plat-badge new" style="background:var(--gold);color:#000">💎 Menu</span>
+        </div>
+        <div class="plat-info">
+          <div class="plat-name">Menu Sept 7</div>
+          <p class="plat-desc">1 plat au choix + frites + boisson. Le combo ultime du QG.</p>
+          <div class="plat-footer">
+            <span class="plat-price">11,50€</span>
+            <button class="plat-add" aria-label="Ajouter au panier"
+              data-add-to-cart data-item-id="menu-sept7" data-item-name="Menu Sept 7"
+              data-item-price="11.50" data-item-emoji="🍽️"
+              style="background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#000">+</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== GALERIE STRIP ==================== -->
+<section id="galerie-strip" aria-label="Galerie photos">
+  <div class="container">
+    <p class="section-label" data-reveal>L'ambiance</p>
+    <h2 class="section-title" data-reveal data-reveal-delay="1" style="margin-bottom:40px;">LA <em>VIBE</em><br>DU SEPT 7</h2>
+    <div class="galerie-grid" data-reveal data-reveal-delay="2">
+      <div class="galerie-item">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80&auto=format&fit=crop" alt="Street food plats" loading="lazy" />
+      </div>
+      <div class="galerie-item">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80&auto=format&fit=crop" alt="Restaurant ambiance" loading="lazy" />
+      </div>
+      <div class="galerie-item">
+        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&q=80&auto=format&fit=crop" alt="Cuisine street food" loading="lazy" />
+      </div>
+      <div class="galerie-item">
+        <img src="https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?w=600&q=80&auto=format&fit=crop" alt="Plats appétissants" loading="lazy" />
+      </div>
+      <div class="galerie-item">
+        <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&q=80&auto=format&fit=crop" alt="Fast food" loading="lazy" />
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;" data-reveal>
+      <a href="pages/galerie.html" class="btn btn-outline">Voir toute la galerie</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== AVIS CLIENTS ==================== -->
+<section id="avis" aria-label="Avis clients">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:60px;">
+      <p class="section-label" data-reveal style="justify-content:center;">Ce qu'ils disent</p>
+      <h2 class="section-title" data-reveal data-reveal-delay="1" style="text-align:center;">ILS <em>APPROUVENT</em></h2>
+    </div>
+    <div class="avis-grid">
+
+      <div class="avis-card" data-reveal data-reveal-delay="1">
+        <div class="avis-stars">★★★★★</div>
+        <p class="avis-text">"Le meilleur kebab du coin, sans aucun doute. La sauce maison c'est un truc de dingue. J'y vais au moins 2 fois par semaine."</p>
+        <div class="avis-author">
+          <div class="avis-avatar">K</div>
+          <div>
+            <div class="avis-name">Karim B.</div>
+            <div class="avis-date">Google Maps · il y a 1 semaine</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="avis-card" data-reveal data-reveal-delay="2">
+        <div class="avis-stars">★★★★★</div>
+        <p class="avis-text">"Les tacos sont généreux, bien garnis, chauds. Le service est rapide et sympa. C'est clairement le QG street food de Montereau."</p>
+        <div class="avis-author">
+          <div class="avis-avatar">S</div>
+          <div>
+            <div class="avis-name">Sarah M.</div>
+            <div class="avis-date">Google Maps · il y a 3 jours</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="avis-card" data-reveal data-reveal-delay="3">
+        <div class="avis-stars">★★★★★</div>
+        <p class="avis-text">"Le panini tikka c'est une masterpiece. Pain grillé nickel, poulet tendre, fromage bien fondu. On revient forcément."</p>
+        <div class="avis-author">
+          <div class="avis-avatar">Y</div>
+          <div>
+            <div class="avis-name">Youssef A.</div>
+            <div class="avis-date">Google Maps · il y a 5 jours</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== AMBIANCE CTA ==================== -->
+<section id="ambiance-cta">
+  <div class="ambiance-bg" aria-hidden="true"></div>
+  <div class="ambiance-grid-lines" aria-hidden="true"></div>
+  <div class="container">
+    <div class="ambiance-content">
+      <p class="section-label" data-reveal style="justify-content:center;">Notre univers</p>
+      <h2 class="section-title" data-reveal data-reveal-delay="1">LE <em>QG</em><br>STREET FOOD</h2>
+      <p data-reveal data-reveal-delay="2">Montereau a son adresse incontournable. Ambiance urbaine, saveurs authentiques, équipe qui assure. Le Sept 7 c'est plus qu'un resto, c'est un état d'esprit.</p>
+
+      <div class="ambiance-stats" data-reveal data-reveal-delay="3">
+        <div class="stat">
+          <span class="stat-num" data-counter="500" data-suffix="+">0+</span>
+          <span class="stat-label">Clients / Semaine</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-counter="4" data-suffix=".9★">0★</span>
+          <span class="stat-label">Note Google</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-counter="12" data-suffix=" Ans">0</span>
+          <span class="stat-label">D'expérience</span>
+        </div>
+      </div>
+
+      <div data-reveal data-reveal-delay="4">
+        <a href="pages/ambiance.html" class="btn btn-primary" style="margin-right:12px;">Découvrir l'ambiance</a>
+        <a href="pages/commande.html" class="btn btn-gold">Commander en ligne</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTACT / MAP ==================== -->
+<section id="contact" aria-label="Contact et adresse">
+  <div class="container">
+    <p class="section-label" data-reveal>Nous trouver</p>
+    <h2 class="section-title" data-reveal data-reveal-delay="1" style="margin-bottom:0">OÙ <em>ON EST</em></h2>
+
+    <div class="contact-grid">
+      <div class="contact-info" data-reveal data-reveal-delay="2">
+
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Adresse</div>
+            <div class="contact-val">7 Rue de la Paix<br>77130 Montereau-Fault-Yonne</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Téléphone / WhatsApp</div>
+            <div class="contact-val">
+              <a href="tel:0763676191" style="color:var(--white);text-decoration:none;">07 63 67 61 91</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-label">Horaires</div>
+            <div class="contact-val">
+              Lun–Sam : 11h00 – 23h00<br>
+              Dimanche : 12h00 – 22h00
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">💬</div>
+          <div>
+            <div class="contact-label">Commander via WhatsApp</div>
+            <div style="margin-top:8px;">
+              <a href="https://wa.me/33763676191" target="_blank" rel="noopener" class="btn btn-primary" style="padding:12px 24px;font-size:13px;">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="map-placeholder" data-reveal data-reveal-delay="3">
+        <iframe
+          title="Localisation Le Sept 7"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=2.936,48.374,2.956,48.384&layer=mapnik&marker=48.379,2.946"
+          loading="lazy"
+          aria-label="Carte de localisation du restaurant Le Sept 7"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">SEPT 7</a>
+        <p>Le QG street food de Montereau-Fault-Yonne. Saveurs authentiques, ambiance urbaine.</p>
+        <div class="social-links" style="margin-top:20px;">
+          <a href="#" class="social-link" aria-label="Instagram">IG</a>
+          <a href="#" class="social-link" aria-label="Facebook">FB</a>
+          <a href="https://wa.me/33763676191" class="social-link" aria-label="WhatsApp" target="_blank" rel="noopener">WA</a>
+          <a href="https://maps.google.com" class="social-link" aria-label="Google Maps" target="_blank" rel="noopener">📍</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Menu</div>
+        <div class="footer-links">
+          <a href="pages/menu.html#burgers">Burgers</a>
+          <a href="pages/menu.html#tacos">Tacos</a>
+          <a href="pages/menu.html#kebabs">Kebabs</a>
+          <a href="pages/menu.html#wings">Wings</a>
+          <a href="pages/menu.html#menus">Menus</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Navigation</div>
+        <div class="footer-links">
+          <a href="index.html">Accueil</a>
+          <a href="pages/galerie.html">Galerie</a>
+          <a href="pages/ambiance.html">Ambiance</a>
+          <a href="pages/commande.html">Commander</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-links">
+          <a href="tel:0763676191">07 63 67 61 91</a>
+          <a href="https://wa.me/33763676191" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="#">7 Rue de la Paix</a>
+          <a href="#">77130 Montereau</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 Le Sept 7 · Tous droits réservés</span>
+      <span style="display:flex;align-items:center;gap:8px;">
+        <span>Fait avec</span>
+        <span style="color:var(--red);">❤</span>
+        <span>à Montereau</span>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
 </body>
 </html>
