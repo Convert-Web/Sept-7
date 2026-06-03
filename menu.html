@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu — Le Sept 7 · Kebabs, Tacos, Wings · Montereau</title>
+  <meta name="description" content="Le menu complet du Sept 7 : kebabs, tacos, sandwichs, wings, menus et boissons. Commandez en ligne ou par WhatsApp.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>7️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,700&family=Rajdhani:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/menu.css">
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-logo">MENU</div>
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+  <div class="loader-tag">Le Sept 7 · Street Food</div>
+</div>
+
+<!-- NAV -->
+<nav class="navbar">
+  <a href="../index.html" class="nav-logo">SEPT<span>7</span></a>
+  <div class="nav-links">
+    <a href="../index.html">Accueil</a>
+    <a href="menu.html" class="active">Menu</a>
+    <a href="galerie.html">Galerie</a>
+    <a href="ambiance.html">Ambiance</a>
+    <a href="commande.html" class="nav-cta">Commander</a>
+  </div>
+  <div class="nav-burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+<div class="nav-mobile" id="mobile-nav">
+  <a href="../index.html">Accueil</a>
+  <a href="menu.html">Menu</a>
+  <a href="galerie.html">Galerie</a>
+  <a href="ambiance.html">Ambiance</a>
+  <a href="commande.html" style="color:var(--violet-glow)">Commander →</a>
+</div>
+
+<!-- HERO -->
+<div class="menu-hero">
+  <div class="menu-hero-content">
+    <span class="section-label">Notre carte</span>
+    <h1 class="section-title">LE MENU<br>SEPT 7</h1>
+    <p style="color:var(--white-dim);font-size:16px;max-width:480px;margin:0 auto;">
+      Tout est fait avec passion. Chaque produit est sélectionné. Chaque recette est pensée pour toi.
+    </p>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="menu-tabs">
+  <div class="tabs-inner">
+    <button class="tab-btn active" data-tab="kebabs"><span class="tab-icon">🥙</span> Kebabs</button>
+    <button class="tab-btn" data-tab="tacos"><span class="tab-icon">🌮</span> Tacos</button>
+    <button class="tab-btn" data-tab="sandwichs"><span class="tab-icon">🥖</span> Sandwichs</button>
+    <button class="tab-btn" data-tab="wings"><span class="tab-icon">🍗</span> Wings</button>
+    <button class="tab-btn" data-tab="menus"><span class="tab-icon">🍱</span> Menus</button>
+    <button class="tab-btn" data-tab="boissons"><span class="tab-icon">🥤</span> Boissons</button>
+  </div>
+</div>
+
+<!-- MENU CONTENT -->
+<div class="menu-content">
+
+  <!-- ── KEBABS ──────────────────────────────── -->
+  <section class="menu-section active" id="kebabs">
+    <div class="menu-section-header">
+      <span class="section-label">🥙 Kebabs</span>
+      <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">NOS KEBABS</h2>
+      <p class="section-sub">Viande marinée, pain artisanal, sauces maison. Le classique réinventé.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=500&q=80" alt="Kebab Normal" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+          <div class="menu-item-badges"><span class="badge badge-violet">Classic</span></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">KEBAB NORMAL</div>
+          <div class="menu-item-desc">Pain pita, viande grillée, salade, tomate, oignon, sauce au choix.</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">6,50 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="kebab-normal" data-name="Kebab Normal" data-price="6.50">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1622289970580-2c68e8c6e0e2?w=500&q=80" alt="Kebab XL" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+          <div class="menu-item-badges"><span class="badge badge-gold">⭐ Signature</span></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">KEBAB XL</div>
+          <div class="menu-item-desc">Double viande, pain XL, légumes frais, sauce secrète Sept 7.</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">8,50 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="kebab-xl" data-name="Kebab XL" data-price="8.50">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1561043433-aaf687c4cf04?w=500&q=80" alt="Kebab Assiette" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">ASSIETTE KEBAB</div>
+          <div class="menu-item-desc">Viande grillée, frites maison, salade, tomate, sauce fromagère.</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">10,00 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="assiette-kebab" data-name="Assiette Kebab" data-price="10.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TACOS ──────────────────────────────── -->
+  <section class="menu-section" id="tacos">
+    <div class="menu-section-header">
+      <span class="section-label">🌮 Tacos</span>
+      <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">LES TACOS</h2>
+      <p class="section-sub">Sauce fromagère, tortilla croustillante, viandes généreuses. L'original à la française.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=500&q=80" alt="Tacos Simple" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+          <div class="menu-item-badges"><span class="badge badge-violet">S</span></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">TACOS SIMPLE</div>
+          <div class="menu-item-desc">1 viande, sauce fromagère, légumes, tortilla grillée.</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">7,00 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="tacos-s" data-name="Tacos Simple" data-price="7.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1600803907087-f56d462fd26b?w=500&q=80" alt="Tacos Double" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+          <div class="menu-item-badges"><span class="badge badge-red">M</span></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">TACOS DOUBLE</div>
+          <div class="menu-item-desc">2 viandes au choix, double sauce, légumes, tortilla XXL.</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">9,00 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="tacos-m" data-name="Tacos Double" data-price="9.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=500&q=80" alt="Tacos Triple" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+          <div class="menu-item-badges"><span class="badge badge-gold">XL 🔥</span></div>
+          <div class="menu-item-new">Best seller</div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">TACOS TRIPLE XL</div>
+          <div class="menu-item-desc">3 viandes, sauce fromagère + harissa, fromage fondu, tortilla XL.</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">11,00 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="tacos-xl" data-name="Tacos Triple XL" data-price="11.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SANDWICHS ──────────────────────────── -->
+  <section class="menu-section" id="sandwichs">
+    <div class="menu-section-header">
+      <span class="section-label">🥖 Sandwichs & Paninis</span>
+      <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">SANDWICHS</h2>
+      <p class="section-sub">Pain grillé, garnitures généreuses, sauces du chef.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=500&q=80" alt="Panini Mozza" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+          <div class="menu-item-badges"><span class="badge badge-gold">✨ Nouveau</span></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">PANINI MOZZA</div>
+          <div class="menu-item-desc">Jambon cru, mozzarella, pesto maison, tomates séchées.</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">7,00 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="panini-mozza" data-name="Panini Mozza" data-price="7.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1528736235302-52922df5c122?w=500&q=80" alt="Sandwich Poulet" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">SANDWICH POULET</div>
+          <div class="menu-item-desc">Escalope de poulet grillé, mayo maison, salade, tomate, cornichons.</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">7,50 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="sandwich-poulet" data-name="Sandwich Poulet" data-price="7.50">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=500&q=80" alt="Sandwich Mixte" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">SANDWICH MIXTE</div>
+          <div class="menu-item-desc">Thon, œuf dur, olives, salade, tomate, vinaigrette.</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">6,50 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="sandwich-mixte" data-name="Sandwich Mixte" data-price="6.50">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WINGS ──────────────────────────────── -->
+  <section class="menu-section" id="wings">
+    <div class="menu-section-header">
+      <span class="section-label">🍗 Wings</span>
+      <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">WINGS</h2>
+      <p class="section-sub">Croustillantes, juteuses, avec les meilleures sauces de la ville.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=500&q=80" alt="Wings x6" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+          <div class="menu-item-badges"><span class="badge badge-violet">6 pièces</span></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">WINGS x6</div>
+          <div class="menu-item-desc">6 ailes croustillantes, sauce au choix : buffalo, honey mustard, BBQ.</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">6,50 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="wings-6" data-name="Wings x6" data-price="6.50">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1587131782738-de30ea91a542?w=500&q=80" alt="Wings x12" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+          <div class="menu-item-badges"><span class="badge badge-gold">12 pièces</span></div>
+          <div class="menu-item-new">Meilleure valeur</div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">WINGS x12</div>
+          <div class="menu-item-desc">12 ailes, 2 sauces au choix, idéal pour partager.</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">11,00 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="wings-12" data-name="Wings x12" data-price="11.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1639024471283-03518883512d?w=500&q=80" alt="Chicken Strips" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+          <div class="menu-item-badges"><span class="badge badge-red">🔥 Spicy</span></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">CHICKEN STRIPS</div>
+          <div class="menu-item-desc">Tenders de poulet panés maison, sauce pimentée, dip ranch.</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">7,50 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="strips" data-name="Chicken Strips" data-price="7.50">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MENUS ──────────────────────────────── -->
+  <section class="menu-section" id="menus">
+    <div class="menu-section-header">
+      <span class="section-label">🍱 Menus complets</span>
+      <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">LES MENUS</h2>
+      <p class="section-sub">Plat + frites + boisson. Le meilleur rapport qualité-prix de Montereau.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item full">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600&q=80" alt="Menu Kebab" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+          <div class="menu-item-badges"><span class="badge badge-violet">Menu</span></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">MENU KEBAB</div>
+          <div class="menu-item-desc">Kebab (normal ou XL) + frites maison + boisson (33cl)</div>
+          <div class="menu-include">
+            <span class="include-tag">🥙 Kebab au choix</span>
+            <span class="include-tag">🍟 Frites maison</span>
+            <span class="include-tag">🥤 Boisson 33cl</span>
+            <span class="include-tag">🥫 Sauce au choix</span>
+          </div>
+          <div class="menu-item-footer" style="margin-top:20px">
+            <span class="menu-item-price">10,00 € <small style="font-size:13px;color:var(--white-dim);font-weight:400">/ Normal · 12,00 € XL</small></span>
+            <button class="menu-add-btn" data-add-cart data-id="menu-kebab" data-name="Menu Kebab" data-price="10.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item full">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80" alt="Menu Tacos" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+          <div class="menu-item-badges"><span class="badge badge-red">Menu</span></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">MENU TACOS</div>
+          <div class="menu-item-desc">Tacos (simple, double ou triple) + frites + boisson</div>
+          <div class="menu-include">
+            <span class="include-tag">🌮 Tacos au choix</span>
+            <span class="include-tag">🍟 Frites maison</span>
+            <span class="include-tag">🥤 Boisson 33cl</span>
+          </div>
+          <div class="menu-item-footer" style="margin-top:20px">
+            <span class="menu-item-price">11,00 € <small style="font-size:13px;color:var(--white-dim);font-weight:400">/ à partir de</small></span>
+            <button class="menu-add-btn" data-add-cart data-id="menu-tacos" data-name="Menu Tacos" data-price="11.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item full">
+        <div class="menu-item-img">
+          <img src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=600&q=80" alt="Menu Wings" loading="lazy">
+          <div class="menu-item-img-overlay"></div>
+          <div class="menu-item-badges"><span class="badge badge-gold">Menu</span></div>
+        </div>
+        <div class="menu-item-body">
+          <div class="menu-item-name">MENU WINGS</div>
+          <div class="menu-item-desc">Wings x6 + frites + boisson + sauce dip</div>
+          <div class="menu-include">
+            <span class="include-tag">🍗 Wings x6</span>
+            <span class="include-tag">🍟 Frites</span>
+            <span class="include-tag">🥤 Boisson</span>
+            <span class="include-tag">🥫 Dip au choix</span>
+          </div>
+          <div class="menu-item-footer" style="margin-top:20px">
+            <span class="menu-item-price">11,00 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="menu-wings" data-name="Menu Wings" data-price="11.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BOISSONS ───────────────────────────── -->
+  <section class="menu-section" id="boissons">
+    <div class="menu-section-header">
+      <span class="section-label">🥤 Boissons</span>
+      <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">BOISSONS</h2>
+      <p class="section-sub">Fraîches, pétillantes, pour accompagner ton repas.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-body" style="padding:28px">
+          <div class="menu-item-name">COCA-COLA 33cl</div>
+          <div class="menu-item-desc">Original, Zéro, Light</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">2,00 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="coca-33" data-name="Coca-Cola 33cl" data-price="2.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-body" style="padding:28px">
+          <div class="menu-item-name">JUS DE FRUITS 33cl</div>
+          <div class="menu-item-desc">Orange, Pomme, Mangue, Fraise</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">2,00 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="jus-33" data-name="Jus de fruits 33cl" data-price="2.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-body" style="padding:28px">
+          <div class="menu-item-name">EAU MINÉRALE 50cl</div>
+          <div class="menu-item-desc">Plate ou gazeuse</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">1,50 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="eau" data-name="Eau Minérale 50cl" data-price="1.50">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-body" style="padding:28px">
+          <div class="menu-item-name">AYRAN 25cl</div>
+          <div class="menu-item-desc">Yaourt turc salé, traditionnel</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">2,00 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="ayran" data-name="Ayran 25cl" data-price="2.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-body" style="padding:28px">
+          <div class="menu-item-name">LIMONADE MAISON</div>
+          <div class="menu-item-desc">Citron menthe, framboise, fruits rouges</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">3,00 €</span>
+            <button class="menu-add-btn" data-add-cart data-id="limonade" data-name="Limonade Maison" data-price="3.00">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /menu-content -->
+
+<!-- CTA commande -->
+<div style="text-align:center;padding:40px 24px 80px;background:var(--black-2);border-top:1px solid var(--glass-border)">
+  <p style="color:var(--white-dim);margin-bottom:20px;font-size:16px">Tu as repéré tes plats favoris ?</p>
+  <a href="commande.html" class="btn btn-primary" style="font-size:14px">
+    🔥 Commander maintenant via WhatsApp
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-text">SEPT<span>7</span></div>
+      <p>Le QG street food de Montereau. Commande, mange, reviens.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-icon" aria-label="Instagram">📸</a>
+        <a href="#" class="social-icon" aria-label="TikTok">🎵</a>
+        <a href="https://wa.me/33763676191" class="social-icon" aria-label="WhatsApp" target="_blank" rel="noopener">💬</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="../index.html">Accueil</a></li>
+        <li><a href="galerie.html">Galerie</a></li>
+        <li><a href="ambiance.html">Ambiance</a></li>
+        <li><a href="commande.html">Commander</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:0763676191">07 63 67 61 91</a></li>
+        <li><a href="https://wa.me/33763676191" target="_blank" rel="noopener">WhatsApp</a></li>
+        <li><a href="#">Montereau-Fault-Yonne</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Horaires</h4>
+      <ul>
+        <li><a href="#">Lun–Sam 11h–23h</a></li>
+        <li><a href="#">Dimanche 12h–22h</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Le Sept 7 · Montereau-Fault-Yonne</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script src="../js/cart.js"></script>
+<script src="../js/menu.js"></script>
+<script>
+  document.getElementById('burger').addEventListener('click', () => {
+    document.getElementById('burger').classList.toggle('open');
+    document.getElementById('mobile-nav').classList.toggle('open');
+  });
+</script>
+</body>
+</html>
