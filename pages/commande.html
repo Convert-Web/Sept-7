@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commander — Le Sept 7 · Livraison & Emporter · Montereau</title>
+<meta name="description" content="Commandez en ligne chez Le Sept 7. Livraison ou à emporter à Montereau-Fault-Yonne.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍖</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,700&family=Rajdhani:wght@400;500;600;700&display=swap">
+<style>
+:root{--black:#06060a;--black-2:#0d0d14;--black-3:#141420;--violet:#8b2bff;--vglow:#a855f7;--vdim:#4c1d95;--red:#c0392b;--rglow:#ff4136;--gold:#f0a500;--gsoft:#fbbf24;--white:#f2f0eb;--wdim:#a09e99;--glass:rgba(255,255,255,.04);--gborder:rgba(255,255,255,.08);--tr:.35s cubic-bezier(.4,0,.2,1);--r:6px;--rl:16px;--fd:"Bebas Neue",sans-serif;--fb:"Rajdhani",sans-serif;--fa:"Barlow Condensed",sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--black);color:var(--white);font-family:var(--fb);font-weight:500;overflow-x:hidden;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}img{display:block;max-width:100%}ul{list-style:none}::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--black-2)}::-webkit-scrollbar-thumb{background:var(--vdim);border-radius:2px}
+#loader{position:fixed;inset:0;background:var(--black);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;transition:opacity .6s,visibility .6s}#loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.ld-logo{font-family:var(--fd);font-size:clamp(48px,10vw,90px);letter-spacing:.08em;color:var(--white);text-shadow:0 0 40px var(--violet),0 0 80px var(--vglow);animation:pulseGlow 1.5s ease-in-out infinite alternate}
+.ld-bar{width:200px;height:2px;background:var(--gborder);border-radius:2px;overflow:hidden}.ld-prog{height:100%;background:linear-gradient(90deg,var(--violet),var(--rglow));width:0;border-radius:2px;animation:loadBar 2s ease forwards}.ld-tag{font-family:var(--fa);font-size:11px;letter-spacing:.3em;color:var(--wdim);text-transform:uppercase}
+@keyframes loadBar{to{width:100%}}@keyframes pulseGlow{from{text-shadow:0 0 30px var(--violet),0 0 60px var(--vglow)}to{text-shadow:0 0 60px var(--violet),0 0 120px var(--vglow),0 0 200px var(--red)}}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;transition:var(--tr)}
+.navbar.scrolled{background:rgba(6,6,10,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding:14px 40px;border-bottom:1px solid var(--gborder)}
+.nav-logo{font-family:var(--fd);font-size:28px;letter-spacing:.05em;text-shadow:0 0 20px var(--violet)}.nav-logo span{color:var(--vglow)}
+.nav-links{display:flex;align-items:center;gap:36px}.nav-links a{font-family:var(--fa);font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--wdim);transition:var(--tr);position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--rglow));transition:width var(--tr)}
+.nav-links a:hover{color:var(--white)}.nav-links a:hover::after,.nav-links a.active::after{width:100%}.nav-links a.active{color:var(--white)}
+.nav-cta{background:linear-gradient(135deg,var(--violet),var(--red))!important;color:var(--white)!important;padding:10px 22px;border-radius:var(--r);box-shadow:0 4px 20px rgba(139,43,255,.4)}.nav-cta::after{display:none!important}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;z-index:1001}.nav-burger span{display:block;width:24px;height:2px;background:var(--white);transition:var(--tr)}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}.nav-burger.open span:nth-child(2){opacity:0}.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-mobile{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--black-2);z-index:998;padding:100px 40px 40px;flex-direction:column;gap:28px;transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);display:flex}.nav-mobile.open{transform:translateX(0)}.nav-mobile a{font-family:var(--fd);font-size:48px;letter-spacing:.04em;color:var(--wdim);transition:var(--tr)}.nav-mobile a:hover{color:var(--vglow)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;font-family:var(--fa);font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;border-radius:var(--r);border:none;cursor:pointer;transition:var(--tr);text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--violet),var(--red));color:var(--white);box-shadow:0 6px 30px rgba(139,43,255,.35)}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 40px rgba(139,43,255,.55)}
+.btn-outline{background:transparent;color:var(--white);border:1px solid var(--gborder)}.btn-outline:hover{background:var(--glass);border-color:var(--vglow);color:var(--vglow)}
+.btn-wa{background:#25D366;color:#fff;box-shadow:0 6px 24px rgba(37,211,102,.35)}.btn-wa:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(37,211,102,.55)}
+.sec-label{font-family:var(--fa);font-size:11px;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:var(--vglow);margin-bottom:16px;display:block}
+.sec-title{font-family:var(--fd);font-size:clamp(38px,6vw,68px);line-height:.95;letter-spacing:.02em;color:var(--white);margin-bottom:16px}
+/* ORDER PAGE */
+.order-hero{padding:130px 40px 50px;text-align:center;background:var(--black-2);border-bottom:1px solid var(--gborder)}
+.order-layout{display:grid;grid-template-columns:1fr 380px;gap:32px;max-width:1200px;margin:0 auto;padding:40px 40px 100px;align-items:start}
+.order-cat-title{font-family:var(--fd);font-size:30px;letter-spacing:.04em;color:var(--white);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.order-cat-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gborder),transparent)}
+.order-categories{display:flex;flex-direction:column;gap:48px}
+.order-items-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.order-item{display:flex;gap:14px;padding:16px;background:var(--black-2);border:1px solid var(--gborder);border-radius:var(--rl);transition:var(--tr);cursor:pointer}
+.order-item:hover{border-color:var(--vdim);box-shadow:0 8px 32px rgba(139,43,255,.12)}
+.order-item-img{width:80px;height:80px;border-radius:10px;overflow:hidden;flex-shrink:0}.order-item-img img{width:100%;height:100%;object-fit:cover}
+.order-item-info{flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.order-item-name{font-family:var(--fa);font-size:15px;font-weight:700;letter-spacing:.05em}
+.order-item-desc{font-size:12px;color:var(--wdim);line-height:1.5;margin-top:4px}
+.order-item-footer{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.order-item-price{font-family:var(--fa);font-size:17px;font-weight:700;color:var(--gsoft)}
+.add-btn{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--red));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;transition:var(--tr);box-shadow:0 3px 12px rgba(139,43,255,.35);line-height:1}
+.add-btn:hover{transform:scale(1.15);box-shadow:0 5px 20px rgba(139,43,255,.55)}
+/* CART */
+.cart-sidebar{position:sticky;top:100px;background:var(--black-2);border:1px solid var(--gborder);border-radius:var(--rl);overflow:hidden}
+.cart-header{padding:24px;border-bottom:1px solid var(--gborder);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(139,43,255,.08),rgba(192,57,43,.05))}
+.cart-title{font-family:var(--fd);font-size:26px;letter-spacing:.04em;display:flex;align-items:center;gap:10px}
+.cart-count{background:linear-gradient(135deg,var(--violet),var(--red));color:#fff;font-size:12px;font-family:var(--fa);font-weight:700;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .25s}
+.cart-clear{font-family:var(--fa);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--wdim);background:none;border:none;cursor:pointer;transition:var(--tr)}.cart-clear:hover{color:var(--rglow)}
+.cart-empty{padding:60px 24px;text-align:center}.cart-empty-icon{font-size:48px;margin-bottom:16px;opacity:.4}.cart-empty p{font-size:14px;color:var(--wdim);line-height:1.7}
+.cart-items{padding:16px;max-height:340px;overflow-y:auto}.cart-items::-webkit-scrollbar{width:3px}.cart-items::-webkit-scrollbar-thumb{background:var(--vdim);border-radius:2px}
+.cart-item{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--gborder)}.cart-item:last-child{border-bottom:none}
+.cart-item-name{flex:1;font-family:var(--fa);font-size:14px;font-weight:700}
+.cart-item-price{font-size:14px;color:var(--gsoft);font-weight:600;white-space:nowrap}
+.cart-qty{display:flex;align-items:center;gap:8px}
+.qty-btn{width:26px;height:26px;border-radius:50%;background:var(--glass);border:1px solid var(--gborder);color:var(--white);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);line-height:1}.qty-btn:hover{background:rgba(139,43,255,.2);border-color:var(--vglow)}
+.qty-num{font-family:var(--fa);font-size:14px;font-weight:700;min-width:20px;text-align:center}
+.cart-footer{padding:20px 24px;border-top:1px solid var(--gborder);background:rgba(0,0,0,.2)}
+.cart-row{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;color:var(--wdim)}
+.cart-total-row{display:flex;justify-content:space-between;padding:14px 0;margin:10px 0 16px;border-top:1px solid var(--gborder);border-bottom:1px solid var(--gborder)}
+.cart-total-row span{font-family:var(--fa);font-size:13px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--white)}
+.cart-total-row strong{font-family:var(--fd);font-size:28px;color:var(--gsoft)}
+.type-sel{display:flex;gap:8px;margin-bottom:16px}
+.type-btn{flex:1;padding:10px 8px;text-align:center;background:var(--glass);border:1px solid var(--gborder);border-radius:var(--r);cursor:pointer;font-family:var(--fa);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--wdim);transition:var(--tr)}.type-btn.active{background:rgba(139,43,255,.15);border-color:var(--vglow);color:var(--vglow)}
+.cart-note{width:100%;background:var(--glass);border:1px solid var(--gborder);border-radius:var(--r);padding:10px 14px;color:var(--white);font-family:var(--fb);font-size:14px;resize:none;margin-bottom:16px;outline:none;transition:border-color var(--tr)}.cart-note:focus{border-color:var(--vglow)}.cart-note::placeholder{color:var(--wdim)}
+.order-modal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(6,6,10,.85);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:24px}.order-modal.open{display:flex}
+.modal-box{background:var(--black-2);border:1px solid var(--gborder);border-radius:var(--rl);padding:40px;max-width:480px;width:100%;text-align:center;animation:modalPop .35s cubic-bezier(.4,0,.2,1)}
+@keyframes modalPop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-icon{font-size:56px;margin-bottom:16px}.modal-title{font-family:var(--fd);font-size:36px;letter-spacing:.03em;margin-bottom:12px}.modal-text{font-size:15px;color:var(--wdim);line-height:1.7;margin-bottom:32px}.modal-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+footer{background:var(--black-2);border-top:1px solid var(--gborder);padding:60px 40px 30px}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;max-width:1200px;margin:0 auto 48px}
+.footer-logo{font-family:var(--fd);font-size:40px;letter-spacing:.05em;text-shadow:0 0 20px var(--violet);margin-bottom:16px}.footer-logo span{color:var(--vglow)}
+.footer-brand p{color:var(--wdim);font-size:14px;line-height:1.7;margin-bottom:24px}.footer-socials{display:flex;gap:12px}
+.soc-icon{width:40px;height:40px;background:var(--glass);border:1px solid var(--gborder);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;transition:var(--tr)}.soc-icon:hover{border-color:var(--vglow);background:rgba(139,43,255,.15);transform:translateY(-2px)}
+.footer-col h4{font-family:var(--fa);font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--vglow);margin-bottom:20px}.footer-col ul{display:flex;flex-direction:column;gap:10px}.footer-col ul li a{font-size:14px;color:var(--wdim);transition:var(--tr)}.footer-col ul li a:hover{color:var(--white);padding-left:6px}
+.footer-bot{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(--gborder);max-width:1200px;margin:0 auto}.footer-bot p{font-size:12px;color:var(--wdim)}
+@media(max-width:900px){.order-layout{grid-template-columns:1fr}.cart-sidebar{position:static}.order-items-grid{grid-template-columns:1fr}.order-layout{padding:24px 24px 80px}.navbar{padding:16px 24px}.nav-links{display:none}.nav-burger{display:flex}.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:500px){.footer-grid{grid-template-columns:1fr}.footer-bot{flex-direction:column;gap:8px;text-align:center}.order-hero{padding:110px 24px 40px}}
+</style>
+</head>
+<body>
+
+<div id="loader"><div class="ld-logo">ORDER</div><div class="ld-bar"><div class="ld-prog"></div></div><div class="ld-tag">Le Sept 7 · Commande rapide</div></div>
+
+<nav class="navbar" id="navbar">
+  <a href="../index.html" class="nav-logo">SEPT<span>7</span></a>
+  <div class="nav-links">
+    <a href="../index.html">Accueil</a><a href="menu.html">Menu</a><a href="galerie.html">Galerie</a><a href="ambiance.html">Ambiance</a>
+    <a href="commande.html" class="nav-cta active">Commander</a>
+  </div>
+  <div class="nav-burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+<div class="nav-mobile" id="mobile-nav">
+  <a href="../index.html">Accueil</a><a href="menu.html">Menu</a><a href="galerie.html">Galerie</a><a href="ambiance.html">Ambiance</a>
+  <a href="commande.html" style="color:var(--vglow)">Commander →</a>
+</div>
+
+<div class="order-hero">
+  <span class="sec-label">Commande en ligne</span>
+  <h1 class="sec-title">PASSE TA<br>COMMANDE</h1>
+  <p style="color:var(--wdim);max-width:460px;margin:12px auto 0;font-size:15px">Choisis tes plats — on génère le message WhatsApp automatiquement. Simple, rapide, <strong style="color:var(--gsoft)">direct.</strong></p>
+</div>
+
+<div class="order-layout">
+  <!-- PRODUCTS -->
+  <div class="order-categories">
+
+    <div>
+      <div class="order-cat-title">🥙 Kebabs</div>
+      <div class="order-items-grid">
+        <div class="order-item"><div class="order-item-img"><img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=200&q=75" alt="Kebab Normal" loading="lazy"></div><div class="order-item-info"><div class="order-item-name">Kebab Normal</div><div class="order-item-desc">Pain pita, viande grillée, sauce au choix</div><div class="order-item-footer"><span class="order-item-price">6,50 €</span><button class="add-btn" onclick="Cart.add('kebab-normal','Kebab Normal',6.50)">+</button></div></div></div>
+        <div class="order-item"><div class="order-item-img"><img src="https://images.unsplash.com/photo-1622289970580-2c68e8c6e0e2?w=200&q=75" alt="Kebab XL" loading="lazy"></div><div class="order-item-info"><div class="order-item-name">Kebab XL ⭐</div><div class="order-item-desc">Double viande, sauce secrète Sept 7</div><div class="order-item-footer"><span class="order-item-price">8,50 €</span><button class="add-btn" onclick="Cart.add('kebab-xl','Kebab XL',8.50)">+</button></div></div></div>
+        <div class="order-item"><div class="order-item-img"><img src="https://images.unsplash.com/photo-1561043433-aaf687c4cf04?w=200&q=75" alt="Assiette Kebab" loading="lazy"></div><div class="order-item-info"><div class="order-item-name">Assiette Kebab</div><div class="order-item-desc">Viande + frites + salade</div><div class="order-item-footer"><span class="order-item-price">10,00 €</span><button class="add-btn" onclick="Cart.add('assiette-kebab','Assiette Kebab',10.00)">+</button></div></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="order-cat-title">🌮 Tacos</div>
+      <div class="order-items-grid">
+        <div class="order-item"><div class="order-item-img"><img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=200&q=75" alt="Tacos Simple" loading="lazy"></div><div class="order-item-info"><div class="order-item-name">Tacos Simple</div><div class="order-item-desc">1 viande, sauce fromagère</div><div class="order-item-footer"><span class="order-item-price">7,00 €</span><button class="add-btn" onclick="Cart.add('tacos-s','Tacos Simple',7.00)">+</button></div></div></div>
+        <div class="order-item"><div class="order-item-img"><img src="https://images.unsplash.com/photo-1600803907087-f56d462fd26b?w=200&q=75" alt="Tacos Double" loading="lazy"></div><div class="order-item-info"><div class="order-item-name">Tacos Double</div><div class="order-item-desc">2 viandes, double sauce fromagère</div><div class="order-item-footer"><span class="order-item-price">9,00 €</span><button class="add-btn" onclick="Cart.add('tacos-m','Tacos Double',9.00)">+</button></div></div></div>
+        <div class="order-item"><div class="order-item-img"><img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=200&q=75" alt="Tacos Triple XL" loading="lazy"></div><div class="order-item-info"><div class="order-item-name">Tacos Triple XL 🔥</div><div class="order-item-desc">3 viandes, fromage fondu, XL</div><div class="order-item-footer"><span class="order-item-price">11,00 €</span><button class="add-btn" onclick="Cart.add('tacos-xl','Tacos Triple XL',11.00)">+</button></div></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="order-cat-title">🍗 Wings & Sandwichs</div>
+      <div class="order-items-grid">
+        <div class="order-item"><div class="order-item-img"><img src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=200&q=75" alt="Wings x6" loading="lazy"></div><div class="order-item-info"><div class="order-item-name">Wings x6</div><div class="order-item-desc">Buffalo, BBQ ou honey mustard</div><div class="order-item-footer"><span class="order-item-price">6,50 €</span><button class="add-btn" onclick="Cart.add('wings-6','Wings x6',6.50)">+</button></div></div></div>
+        <div class="order-item"><div class="order-item-img"><img src="https://images.unsplash.com/photo-1587131782738-de30ea91a542?w=200&q=75" alt="Wings x12" loading="lazy"></div><div class="order-item-info"><div class="order-item-name">Wings x12</div><div class="order-item-desc">2 sauces au choix</div><div class="order-item-footer"><span class="order-item-price">11,00 €</span><button class="add-btn" onclick="Cart.add('wings-12','Wings x12',11.00)">+</button></div></div></div>
+        <div class="order-item"><div class="order-item-img"><img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=200&q=75" alt="Panini Mozza" loading="lazy"></div><div class="order-item-info"><div class="order-item-name">Panini Mozza ✨</div><div class="order-item-desc">Jambon, mozzarella, pesto</div><div class="order-item-footer"><span class="order-item-price">7,00 €</span><button class="add-btn" onclick="Cart.add('panini-mozza','Panini Mozza',7.00)">+</button></div></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="order-cat-title">🍱 Tikka & Menus</div>
+      <div class="order-items-grid">
+        <div class="order-item"><div class="order-item-img"><img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=200&q=75" alt="Tikka Masala" loading="lazy"></div><div class="order-item-info"><div class="order-item-name">Tikka Masala</div><div class="order-item-desc">Poulet épicé, riz basmati</div><div class="order-item-footer"><span class="order-item-price">10,00 €</span><button class="add-btn" onclick="Cart.add('tikka','Tikka Masala',10.00)">+</button></div></div></div>
+        <div class="order-item"><div class="order-item-img"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=200&q=75" alt="Menu Kebab" loading="lazy"></div><div class="order-item-info"><div class="order-item-name">Menu Kebab</div><div class="order-item-desc">Kebab + frites + boisson</div><div class="order-item-footer"><span class="order-item-price">10,00 €</span><button class="add-btn" onclick="Cart.add('menu-kebab','Menu Kebab',10.00)">+</button></div></div></div>
+        <div class="order-item"><div class="order-item-img"><img src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=200&q=75" alt="Menu Wings" loading="lazy"></div><div class="order-item-info"><div class="order-item-name">Menu Wings</div><div class="order-item-desc">Wings x6 + frites + boisson</div><div class="order-item-footer"><span class="order-item-price">11,00 €</span><button class="add-btn" onclick="Cart.add('menu-wings','Menu Wings',11.00)">+</button></div></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="order-cat-title">🥤 Boissons</div>
+      <div class="order-items-grid">
+        <div class="order-item"><div class="order-item-info"><div class="order-item-name">Coca-Cola 33cl</div><div class="order-item-desc">Original, Zéro ou Light</div><div class="order-item-footer"><span class="order-item-price">2,00 €</span><button class="add-btn" onclick="Cart.add('coca','Coca-Cola 33cl',2.00)">+</button></div></div></div>
+        <div class="order-item"><div class="order-item-info"><div class="order-item-name">Jus de fruits 33cl</div><div class="order-item-desc">Orange, Pomme, Mangue</div><div class="order-item-footer"><span class="order-item-price">2,00 €</span><button class="add-btn" onclick="Cart.add('jus','Jus de fruits',2.00)">+</button></div></div></div>
+        <div class="order-item"><div class="order-item-info"><div class="order-item-name">Eau Minérale 50cl</div><div class="order-item-desc">Plate ou gazeuse</div><div class="order-item-footer"><span class="order-item-price">1,50 €</span><button class="add-btn" onclick="Cart.add('eau','Eau Minérale',1.50)">+</button></div></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CART -->
+  <aside class="cart-sidebar">
+    <div class="cart-header">
+      <div class="cart-title">🛒 Panier <span class="cart-count" id="cart-count">0</span></div>
+      <button class="cart-clear" id="cart-clear">Vider</button>
+    </div>
+    <div class="cart-empty" id="cart-empty"><div class="cart-empty-icon">🛒</div><p>Ton panier est vide.<br>Ajoute des plats !</p></div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-row"><span>Sous-total</span><span id="cart-sub">0,00 €</span></div>
+      <div class="cart-row"><span>Livraison</span><span style="color:var(--gsoft)">Nous contacter</span></div>
+      <div class="cart-total-row"><span>Total estimé</span><strong id="cart-total">0,00 €</strong></div>
+      <div class="type-sel">
+        <button class="type-btn active" id="type-emporter" onclick="setType('emporter')">🏃 À emporter</button>
+        <button class="type-btn" id="type-livraison" onclick="setType('livraison')">🛵 Livraison</button>
+      </div>
+      <textarea class="cart-note" id="order-note" rows="2" placeholder="Note : sans sauce harissa, etc."></textarea>
+      <button class="btn btn-wa" id="order-btn" style="width:100%;justify-content:center;font-size:14px;opacity:.4;" disabled onclick="Cart.send()">
+        💬 Envoyer sur WhatsApp
+      </button>
+      <p style="font-size:11px;color:var(--wdim);text-align:center;margin-top:10px;line-height:1.5">Tu seras redirigé vers WhatsApp<br>avec ta commande prête à envoyer.</p>
+    </div>
+  </aside>
+</div>
+
+<!-- MODAL -->
+<div class="order-modal" id="order-modal">
+  <div class="modal-box">
+    <div class="modal-icon">🎉</div>
+    <div class="modal-title">Commande envoyée !</div>
+    <p class="modal-text">Ton message WhatsApp a été ouvert avec ta commande.<br>Envoie-le pour que l'équipe puisse la préparer.<br><strong style="color:var(--gsoft)">Paiement sur place.</strong></p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="Cart.closeModal()">Fermer</button>
+      <a href="../index.html" class="btn btn-primary">Retour accueil</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="footer-logo">SEPT<span>7</span></div><p>07 63 67 61 91 · Montereau-Fault-Yonne</p><div class="footer-socials"><a href="#" class="soc-icon">📸</a><a href="#" class="soc-icon">🎵</a><a href="https://wa.me/33763676191" class="soc-icon" target="_blank" rel="noopener">💬</a></div></div>
+    <div class="footer-col"><h4>Pages</h4><ul><li><a href="../index.html">Accueil</a></li><li><a href="menu.html">Menu</a></li><li><a href="galerie.html">Galerie</a></li></ul></div>
+    <div class="footer-col"><h4>Horaires</h4><ul><li><a href="#">Lun–Sam 11h–23h</a></li><li><a href="#">Dimanche 12h–22h</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:0763676191">07 63 67 61 91</a></li><li><a href="https://wa.me/33763676191" target="_blank" rel="noopener">WhatsApp</a></li></ul></div>
+  </div>
+  <div class="footer-bot"><p>© 2025 Le Sept 7 · Montereau-Fault-Yonne</p></div>
+</footer>
+
+<script>
+// LOADER
+const loader=document.getElementById('loader');
+document.body.style.overflow='hidden';
+setTimeout(()=>{loader.classList.add('hidden');document.body.style.overflow='';},2200);
+
+// NAVBAR
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>40),{passive:true});
+
+// BURGER
+const burger=document.getElementById('burger'),mobileNav=document.getElementById('mobile-nav');
+burger.addEventListener('click',()=>{burger.classList.toggle('open');mobileNav.classList.toggle('open');document.body.style.overflow=mobileNav.classList.contains('open')?'hidden':'';});
+mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger.classList.remove('open');mobileNav.classList.remove('open');document.body.style.overflow='';}));
+
+// ORDER TYPE
+let orderType='emporter';
+function setType(t){
+  orderType=t;
+  document.getElementById('type-emporter').classList.toggle('active',t==='emporter');
+  document.getElementById('type-livraison').classList.toggle('active',t==='livraison');
+}
+
+// CART
+const Cart=(()=>{
+  let items=[];
+  const add=(id,name,price)=>{
+    const ex=items.find(i=>i.id===id);
+    if(ex)ex.qty++;else items.push({id,name,price:parseFloat(price),qty:1});
+    render(); bounce();
+  };
+  const remove=(id)=>{items=items.filter(i=>i.id!==id);render();};
+  const updateQty=(id,delta)=>{
+    const item=items.find(i=>i.id===id);
+    if(!item)return;
+    item.qty+=delta;
+    if(item.qty<=0)remove(id);else render();
+  };
+  const clear=()=>{items=[];render();};
+  const getTotal=()=>items.reduce((s,i)=>s+i.price*i.qty,0);
+  const getCount=()=>items.reduce((s,i)=>s+i.qty,0);
+  const render=()=>{
+    const count=getCount(),total=getTotal();
+    const countEl=document.getElementById('cart-count');
+    const emptyEl=document.getElementById('cart-empty');
+    const itemsEl=document.getElementById('cart-items');
+    const subEl=document.getElementById('cart-sub');
+    const totEl=document.getElementById('cart-total');
+    const btnEl=document.getElementById('order-btn');
+    if(countEl)countEl.textContent=count;
+    if(emptyEl)emptyEl.style.display=count===0?'block':'none';
+    if(subEl)subEl.textContent=total.toFixed(2)+' €';
+    if(totEl)totEl.textContent=total.toFixed(2)+' €';
+    if(btnEl){btnEl.disabled=count===0;btnEl.style.opacity=count===0?'.4':'1';}
+    if(itemsEl)itemsEl.innerHTML=items.map(i=>`
+      <div class="cart-item">
+        <div class="cart-item-name">${i.name}</div>
+        <div class="cart-qty">
+          <button class="qty-btn" onclick="Cart.updateQty('${i.id}',-1)">−</button>
+          <span class="qty-num">${i.qty}</span>
+          <button class="qty-btn" onclick="Cart.updateQty('${i.id}',+1)">+</button>
+        </div>
+        <div class="cart-item-price">${(i.price*i.qty).toFixed(2)} €</div>
+      </div>`).join('');
+  };
+  const send=()=>{
+    if(!items.length)return;
+    const note=document.getElementById('order-note')?.value||'';
+    const typeLabel=orderType==='livraison'?'🛵 Livraison':'🏃 À emporter';
+    let msg=`Bonjour Le Sept 7 ! 👋\n\nJe souhaite commander :\n\n`;
+    items.forEach(i=>{msg+=`• ${i.qty}x ${i.name} — ${(i.price*i.qty).toFixed(2)} €\n`;});
+    msg+=`\n💰 Total : ${getTotal().toFixed(2)} €`;
+    msg+=`\n📦 Mode : ${typeLabel}`;
+    if(note.trim())msg+=`\n📝 Note : ${note.trim()}`;
+    msg+=`\n\nMerci ! 🙏`;
+    window.open(`https://wa.me/33763676191?text=${encodeURIComponent(msg)}`,'_blank');
+    document.getElementById('order-modal').classList.add('open');
+    document.body.style.overflow='hidden';
+  };
+  const closeModal=()=>{
+    document.getElementById('order-modal').classList.remove('open');
+    document.body.style.overflow='';
+  };
+  const bounce=()=>{
+    const el=document.getElementById('cart-count');
+    if(!el)return;
+    el.style.transform='scale(1.6)';
+    setTimeout(()=>el.style.transform='scale(1)',250);
+  };
+  render();
+  document.getElementById('cart-clear')?.addEventListener('click',clear);
+  document.getElementById('order-modal')?.addEventListener('click',e=>{if(e.target===document.getElementById('order-modal'))closeModal();});
+  return{add,remove,updateQty,clear,send,closeModal};
+})();
+</script>
+</body>
+</html>
