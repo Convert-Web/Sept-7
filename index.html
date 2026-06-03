@@ -860,7 +860,7 @@ function submitOrder() {
   if (!name || !phone || !type || !time) { showToast('Veuillez remplir tous les champs'); return; }
   const items = CART.map(i => `• ${i.name} x${i.qty} — ${(i.price*i.qty).toFixed(2).replace('.',',')}€`).join('\n');
   const msg = ['🔥 NOUVELLE COMMANDE – LE SEPT 7','','👤 Nom : '+name,'📞 Téléphone : '+phone,'📍 Type : '+(type==='A emporter'?'🛍️ A emporter':'🍴 Sur place'),'⏰ Heure : '+time,'','🛒 COMMANDE :',items,'','💰 Total : '+getTotal().toFixed(2).replace('.',',')+'€'].join('\n');
-  window.open('https://wa.me/33763686191?text='+encodeURIComponent(msg), '_blank');
+  window.open('https://wa.me/33763676191?text='+encodeURIComponent(msg), '_blank');
   closeOrderForm(); CART.length = 0; updateCartUI(); showToast('✅ Commande envoyée ! Merci !');
 }
 let toastTimer; function showToast(m) { const t = document.getElementById('toast'); clearTimeout(toastTimer); t.textContent = m; t.classList.add('show'); toastTimer = setTimeout(() => t.classList.remove('show'), 2600); }
