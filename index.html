@@ -1577,7 +1577,7 @@ function submitOrder(){
   if(!name||!phone||!type||!time){showToast('Veuillez remplir tous les champs');return;}
   const items=CART.map(i=>`\u2022 ${i.name} x${i.qty} \u2014 ${(i.price*i.qty).toFixed(2).replace('.',',')}\u20AC`).join('\n');
   const msg=['\uD83D\uDD25 NOUVELLE COMMANDE \u2013 LE SEPT 7','','\uD83D\uDC64 Nom : '+name,'\uD83D\uDCDE T\u00E9l\u00E9phone : '+phone,'\uD83D\uDCCD Type : '+(type==='A emporter'?'\uD83D\uDECD\uFE0F A emporter':'\uD83C\uDF74 Sur place'),'\u23F0 Heure : '+time,'','\uD83D\uDED2 COMMANDE :',items,'','\uD83D\uDCB0 Total : '+getTotal().toFixed(2).replace('.',',')+'\u20AC'].join('\n');
-  window.open('https://wa.me/33763686191?text='+encodeURIComponent(msg),'_blank');
+  window.open('https://wa.me/33763676191?text='+encodeURIComponent(msg),'_blank');
   closeOrderForm();CART.length=0;updateCartUI();showToast('\u2705 Commande envoy\u00E9e ! Merci !');
 }
 let toastTimer;
