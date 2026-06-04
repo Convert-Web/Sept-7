@@ -2,504 +2,209 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Le Sept 7 — Street Food · Montereau-Fault-Yonne</title>
-<meta name="description" content="Le Sept 7, le QG street food de Montereau. Kebabs, tacos, paninis, tikka. Ouvert 7j/7.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050505">
+<meta name="description" content="Le Sept 7 — Le vrai street food de Montereau. Tacos, Kebabs, Wings. Commande en 1 clic via WhatsApp.">
 <meta property="og:title" content="Le Sept 7 — Street Food Montereau">
-<meta property="og:description" content="Kebabs, tacos, paninis, tikka. Le QG de Montereau.">
-<meta name="theme-color" content="#111111">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23111'/><text y='.85em' font-size='72' font-family='serif' font-weight='900' fill='white' x='12'>7</text></svg>">
+<meta property="og:description" content="Tacos · Kebabs · Wings. Chaud devant.">
+<title>Le Sept 7 — Street Food · Montereau</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=Barlow+Condensed:wght@600;700;800;900&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════
-   SEPT 7 — IDENTITÉ RUE / QUARTIER FR
-   Sobre. Solide. Authentique.
-   ═══════════════════════════════════════ */
-
-:root {
-  --noir:     #0f0f0f;
-  --noir-2:   #1a1a1a;
-  --noir-3:   #242424;
-  --noir-4:   #2e2e2e;
-  --blanc:    #f5f2ed;
-  --blanc-2:  #d4cfc8;
-  --blanc-3:  #8a857d;
-  --rouge:    #c41e1e;
-  --rouge-2:  #a01515;
-  --kaki:     #6b6b4a;
-  --kaki-2:   #4a4a30;
-  --beige:    #c8b89a;
-  --tr:       0.28s ease;
-  --fd:       'Oswald', sans-serif;
-  --fb:       'DM Sans', sans-serif;
-  --fc:       'Barlow Condensed', sans-serif;
+:root{
+  --bk:#050505;--bk2:#0A0A0A;--bk3:#111;--bk4:#181818;--bk5:#1E1E1E;
+  --red:#FF1A1A;--red2:#FF4444;--rdb:rgba(255,26,26,.14);--rdg:rgba(255,26,26,.32);
+  --yel:#FFD426;--ora:#FF6500;
+  --wh:#F5F5F0;--gr:#888;--gr2:#555;--dm:#252525;--brd:rgba(255,255,255,.07);
+  --gn:#25D366;
+  --fn:'Barlow Condensed',-apple-system,sans-serif;
+  --fh:'Bebas Neue','Impact',sans-serif;
+  --tr:.28s cubic-bezier(.4,0,.2,1);
 }
-
-/* ── RESET ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:16px}
-body{background:var(--noir);color:var(--blanc);font-family:var(--fb);font-weight:400;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth}
+body{background:var(--bk);color:var(--wh);font-family:var(--fn);font-weight:500;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-ul{list-style:none}
+img{display:block;max-width:100%;height:auto}
 ::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:var(--noir-2)}
-::-webkit-scrollbar-thumb{background:var(--blanc-3)}
+::-webkit-scrollbar-track{background:var(--bk2)}
+::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
 
-/* ── GRAIN TEXTURE OVERLAY ── */
-body::after {
-  content:'';
-  position:fixed;inset:0;
-  pointer-events:none;z-index:9990;
-  opacity:.035;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:256px;
-}
+/* ══ LOADER ══ */
+#loader{position:fixed;inset:0;background:var(--bk);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;transition:opacity .6s ease,visibility .6s ease}
+#loader.out{opacity:0;visibility:hidden;pointer-events:none}
+.ld-ring{position:relative;width:88px;height:88px;display:flex;align-items:center;justify-content:center}
+.ld-ring::before{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:var(--red);border-right-color:var(--ora);animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ld-num{font-family:var(--fh);font-size:50px;line-height:1;color:var(--wh);text-shadow:0 0 20px var(--red),0 0 40px var(--rdg);position:relative;z-index:1}
+.ld-name{font-family:var(--fh);font-size:22px;letter-spacing:5px;color:var(--wh);animation:fup .5s ease .4s both}
+.ld-bar{width:200px;height:2px;background:var(--dm);border-radius:2px;overflow:hidden}
+.ld-prog{height:100%;background:linear-gradient(90deg,var(--red),var(--ora));width:0;animation:lp 2s ease forwards}
+@keyframes lp{to{width:100%}}
+.ld-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gr);animation:fup .5s ease .7s both}
+@keyframes fup{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── LOADER ── */
-#loader {
-  position:fixed;inset:0;background:var(--noir);z-index:9999;
-  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;
-  transition:opacity .5s ease, visibility .5s ease;
-}
-#loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
-.ld-inner{text-align:center}
-.ld-number {
-  font-family:var(--fd);font-weight:700;
-  font-size:clamp(120px,25vw,260px);
-  line-height:1;letter-spacing:-.02em;
-  color:var(--blanc);
-  animation:ldPulse 1.8s ease forwards;
-}
-.ld-label {
-  font-family:var(--fc);font-size:13px;font-weight:700;
-  letter-spacing:.4em;text-transform:uppercase;
-  color:var(--blanc-3);margin-top:8px;
-  animation:ldFade 1.8s ease .2s forwards;opacity:0;
-}
-.ld-bar-wrap{width:180px;height:1px;background:var(--noir-4);margin:32px auto 0;overflow:hidden}
-.ld-bar{height:1px;background:var(--blanc);width:0;animation:ldBar 1.8s ease forwards}
-@keyframes ldPulse{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
-@keyframes ldFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-@keyframes ldBar{to{width:100%}}
+/* ══ NAV ══ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;transition:var(--tr)}
+.nav.sc{background:rgba(5,5,5,.95);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding:13px 48px;border-bottom:1px solid var(--brd)}
+.nav-logo{font-family:var(--fh);font-size:26px;letter-spacing:.05em}
+.nav-logo em{color:var(--red);font-style:normal;text-shadow:0 0 12px var(--rdg)}
+.nav-links{display:flex;align-items:center;gap:36px}
+.nav-links a{font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--gr);transition:color var(--tr)}
+.nav-links a:hover,.nav-links a.on{color:var(--wh)}
+.nav-cta{background:var(--red)!important;color:var(--wh)!important;padding:9px 20px;border-radius:3px;letter-spacing:.18em!important;box-shadow:0 4px 16px var(--rdg);transition:var(--tr)!important}
+.nav-cta:hover{box-shadow:0 7px 28px var(--rdg)!important;transform:translateY(-1px)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.burger span{width:22px;height:2px;background:var(--wh);display:block;transition:var(--tr)}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mnav{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bk2);z-index:998;display:flex;flex-direction:column;justify-content:center;padding:0 40px;gap:28px;transform:translateX(100%);transition:transform .42s cubic-bezier(.4,0,.2,1)}
+.mnav.open{transform:translateX(0)}
+.mnav a{font-family:var(--fh);font-size:clamp(44px,10vw,64px);letter-spacing:.04em;color:var(--gr);transition:color var(--tr)}
+.mnav a:hover,.mnav .mn-hot{color:var(--red)}
+.mnav-line{width:40px;height:2px;background:var(--red);margin-bottom:8px}
 
-/* ── NAVBAR ── */
-.navbar {
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  padding:24px 48px;
-  display:flex;align-items:center;justify-content:space-between;
-  transition:var(--tr);
-}
-.navbar.scrolled {
-  background:rgba(15,15,15,.96);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  padding:16px 48px;
-  border-bottom:1px solid rgba(255,255,255,.07);
-}
-.nav-logo {
-  font-family:var(--fd);font-weight:700;font-size:22px;
-  letter-spacing:.06em;text-transform:uppercase;
-  color:var(--blanc);
-  display:flex;align-items:center;gap:10px;
-}
-.nav-logo-num {
-  font-size:28px;font-weight:700;color:var(--rouge);
-  border:2px solid var(--rouge);
-  width:36px;height:36px;
-  display:flex;align-items:center;justify-content:center;
-  line-height:1;
-}
-.nav-links{display:flex;align-items:center;gap:40px}
-.nav-links a {
-  font-family:var(--fc);font-size:13px;font-weight:700;
-  letter-spacing:.22em;text-transform:uppercase;
-  color:var(--blanc-3);transition:color var(--tr);
-}
-.nav-links a:hover,.nav-links a.active{color:var(--blanc)}
-.nav-cta {
-  background:var(--rouge) !important;color:var(--blanc) !important;
-  padding:10px 24px;letter-spacing:.15em !important;
-}
-.nav-cta:hover{background:var(--rouge-2) !important}
-.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
-.nav-burger span{display:block;width:26px;height:2px;background:var(--blanc);transition:var(--tr)}
-.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.nav-burger.open span:nth-child(2){opacity:0}
-.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.nav-mobile {
-  position:fixed;inset:0;background:var(--noir);z-index:998;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:80px 40px;gap:8px;
-  transform:translateX(100%);
-  transition:transform .4s cubic-bezier(.4,0,.2,1);
-}
-.nav-mobile.open{transform:translateX(0)}
-.nav-mobile a {
-  font-family:var(--fd);font-size:clamp(36px,8vw,56px);
-  font-weight:700;letter-spacing:.03em;text-transform:uppercase;
-  color:var(--blanc-3);transition:color var(--tr);
-  border-bottom:1px solid rgba(255,255,255,.06);
-  padding:16px 0;
-}
-.nav-mobile a:hover{color:var(--blanc)}
-.nav-mobile a:last-child{border-bottom:none;color:var(--rouge)}
+/* ══ BUTTONS ══ */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;font-family:var(--fn);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;border-radius:3px;border:none;cursor:pointer;transition:var(--tr);text-decoration:none;white-space:nowrap}
+.btn-red{background:var(--red);color:var(--wh);box-shadow:0 6px 24px var(--rdg)}
+.btn-red:hover{transform:translateY(-2px);box-shadow:0 10px 36px var(--rdg)}
+.btn-red:active{transform:scale(.97)}
+.btn-ghost{background:transparent;color:var(--wh);border:1px solid rgba(255,255,255,.14)}
+.btn-ghost:hover{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.04)}
+.btn-wa{background:var(--gn);color:#fff;box-shadow:0 6px 24px rgba(37,211,102,.28)}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(37,211,102,.45)}
 
-/* ── BUTTONS ── */
-.btn {
-  display:inline-flex;align-items:center;gap:10px;
-  padding:14px 32px;
-  font-family:var(--fc);font-size:13px;font-weight:700;
-  letter-spacing:.2em;text-transform:uppercase;
-  border:none;cursor:pointer;transition:var(--tr);
-  text-decoration:none;
-}
-.btn-rouge{background:var(--rouge);color:var(--blanc)}
-.btn-rouge:hover{background:var(--rouge-2)}
-.btn-ghost{background:transparent;color:var(--blanc);border:1px solid rgba(255,255,255,.2)}
-.btn-ghost:hover{border-color:var(--blanc);background:rgba(255,255,255,.05)}
-.btn-blanc{background:var(--blanc);color:var(--noir)}
-.btn-blanc:hover{background:var(--blanc-2)}
-.btn-wa{background:#25D366;color:#fff}
-.btn-wa:hover{background:#1da851}
+/* ══ REVEAL ══ */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
 
-/* ── REVEAL ── */
-.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}
+/* ══ TICKER ══ */
+.ticker{background:var(--red);padding:8px 0;overflow:hidden;position:relative;z-index:50}
+.ttrack{display:flex;width:max-content;animation:tk 22s linear infinite}
+.titem{padding:0 32px;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:14px;color:#fff}
+.titem span{width:4px;height:4px;background:rgba(255,255,255,.45);border-radius:50%;flex-shrink:0}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ── LABEL / TITLE / SUB ── */
-.label {
-  font-family:var(--fc);font-size:11px;font-weight:700;
-  letter-spacing:.45em;text-transform:uppercase;
-  color:var(--blanc-3);margin-bottom:14px;display:block;
-}
-.label-rouge{color:var(--rouge)}
-.big-title {
-  font-family:var(--fd);font-weight:700;
-  font-size:clamp(44px,7vw,92px);
-  line-height:.92;letter-spacing:-.01em;text-transform:uppercase;
-  color:var(--blanc);
-}
-.sub {
-  font-family:var(--fb);font-size:16px;font-weight:300;
-  line-height:1.75;color:var(--blanc-3);
-}
-.container{max-width:1200px;margin:0 auto}
+/* ══ HERO ══ */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(170deg,#0a0000 0%,var(--bk) 45%)}
+.hero-glow{position:absolute;bottom:-80px;left:50%;transform:translateX(-50%);width:120%;height:70vh;background:radial-gradient(ellipse 90% 60% at 50% 100%,rgba(255,26,26,.14) 0%,transparent 65%);pointer-events:none;animation:hgp 5s ease-in-out infinite alternate}
+@keyframes hgp{from{opacity:.7}to{opacity:1}}
+.hero-noise{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");pointer-events:none}
+.hero-wm{position:absolute;right:-60px;bottom:-60px;font-family:var(--fh);font-size:clamp(250px,45vw,380px);line-height:1;color:rgba(255,26,26,.03);pointer-events:none;user-select:none;letter-spacing:-5px}
+.hero-c{position:relative;z-index:2;max-width:800px}
+.hero-eye{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--red);margin-bottom:22px;animation:fup .7s ease .3s both}
+.eye-dot{width:7px;height:7px;border-radius:50%;background:var(--gn);box-shadow:0 0 8px var(--gn);animation:ep 2s infinite}
+@keyframes ep{0%,100%{box-shadow:0 0 8px var(--gn)}50%{box-shadow:0 0 16px var(--gn),0 0 24px rgba(48,209,88,.3)}}
+.hero-title{font-family:var(--fh);line-height:.84;margin-bottom:22px}
+.ht-sm{display:block;font-size:clamp(50px,12vw,90px);color:rgba(245,245,240,.12);letter-spacing:2px;animation:fup .7s ease .45s both}
+.ht-big{display:block;font-size:clamp(88px,22vw,160px);letter-spacing:1px;color:var(--wh);animation:fup .7s ease .55s both}
+.ht-big em{color:var(--red);font-style:normal;text-shadow:0 0 30px var(--rdg),0 0 60px rgba(255,26,26,.2)}
+.hero-line{width:60px;height:3px;background:linear-gradient(90deg,var(--red),transparent);margin-bottom:18px;animation:fup .7s ease .65s both}
+.hero-sub{font-size:18px;font-weight:600;color:var(--gr);letter-spacing:.5px;margin-bottom:36px;line-height:1.5;animation:fup .7s ease .75s both}
+.hero-sub strong{color:var(--wh);font-weight:700}
+.hero-acts{display:flex;gap:14px;flex-wrap:wrap;animation:fup .7s ease .9s both}
+.hero-floats{position:absolute;right:80px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:22px;z-index:2;pointer-events:none}
+.hf{font-size:54px;animation:hfl 3.5s ease-in-out infinite}
+.hf:nth-child(2){animation-delay:.8s;font-size:40px}
+.hf:nth-child(3){animation-delay:1.6s;font-size:34px}
+@keyframes hfl{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-16px) rotate(4deg)}}
+.hero-scroll{position:absolute;bottom:32px;left:48px;z-index:2;display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gr2);animation:fup .7s ease 1.1s both}
+.scroll-line{width:40px;height:1px;background:var(--gr2)}
 
-/* ── DIVIDER ── */
-.divider{height:1px;background:rgba(255,255,255,.08);margin:0 48px}
+/* ══ SECTION SYSTEM ══ */
+.sec{padding:90px 48px}
+.sec-inner{max-width:1200px;margin:0 auto}
+.sec-eye{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:14px}
+.sec-eye::before{content:'';width:24px;height:2px;background:var(--red);flex-shrink:0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;flex-wrap:wrap;gap:14px}
+.sec-title{font-family:var(--fh);font-size:clamp(42px,7vw,72px);letter-spacing:.02em;line-height:.9}
+.sec-more{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);border-bottom:1px solid var(--rdg);padding-bottom:2px;transition:color var(--tr)}
+.sec-more:hover{color:var(--red2)}
 
-/* ── HERO ── */
-.hero {
-  position:relative;min-height:100vh;
-  display:flex;align-items:flex-end;
-  overflow:hidden;
-}
-.hero-bg {
-  position:absolute;inset:0;z-index:0;
-}
-.hero-bg img {
-  width:100%;height:100%;object-fit:cover;object-position:center 40%;
-  filter:brightness(.38) contrast(1.1);
-}
-/* Béton texture overlay */
-.hero-bg::after {
-  content:'';position:absolute;inset:0;
-  background:
-    linear-gradient(180deg, rgba(15,15,15,.1) 0%, rgba(15,15,15,.55) 60%, rgba(15,15,15,.98) 100%),
-    linear-gradient(90deg, rgba(15,15,15,.5) 0%, transparent 50%);
-}
-.hero-content {
-  position:relative;z-index:2;
-  padding:0 48px 80px;
-  max-width:900px;
-  width:100%;
-}
-.hero-tag {
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--rouge);
-  font-family:var(--fc);font-size:11px;font-weight:700;
-  letter-spacing:.3em;text-transform:uppercase;
-  color:var(--blanc);padding:6px 14px;
-  margin-bottom:28px;
-  animation:fadeUp .7s ease 2.2s both;
-}
-.hero-h1 {
-  font-family:var(--fd);font-weight:700;
-  font-size:clamp(60px,13vw,148px);
-  line-height:.88;letter-spacing:-.01em;text-transform:uppercase;
-  color:var(--blanc);
-  margin-bottom:24px;
-  animation:fadeUp .8s ease 2.4s both;
-}
-.hero-h1 .rouge{color:var(--rouge)}
-.hero-h1 .stroke {
-  -webkit-text-stroke:2px var(--blanc);
-  color:transparent;
-}
-.hero-sub {
-  font-family:var(--fb);font-size:clamp(15px,1.8vw,18px);
-  font-weight:300;line-height:1.7;color:var(--blanc-2);
-  max-width:480px;margin-bottom:36px;
-  animation:fadeUp .8s ease 2.6s both;
-}
-.hero-actions {
-  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
-  animation:fadeUp .8s ease 2.8s both;
-}
-/* Stat band */
-.hero-stats {
-  position:absolute;right:48px;bottom:80px;z-index:2;
-  display:flex;flex-direction:column;gap:2px;
-  animation:fadeLeft .8s ease 3s both;
-}
-.hs-item {
-  background:var(--noir-2);border-left:2px solid var(--rouge);
-  padding:12px 20px;min-width:140px;
-}
-.hs-num {
-  font-family:var(--fd);font-size:28px;font-weight:700;
-  color:var(--blanc);line-height:1;
-}
-.hs-lbl {
-  font-family:var(--fc);font-size:10px;font-weight:700;
-  letter-spacing:.2em;text-transform:uppercase;
-  color:var(--blanc-3);margin-top:2px;
-}
+/* ══ HITS (BESTSELLERS) ══ */
+.hits-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.hit{background:var(--bk3);border:1px solid var(--brd);border-radius:6px;overflow:hidden;transition:var(--tr);cursor:pointer}
+.hit:hover{border-color:rgba(255,26,26,.25);transform:translateY(-6px);box-shadow:0 16px 50px rgba(255,26,26,.12)}
+.hit-img{position:relative;overflow:hidden;aspect-ratio:4/3}
+.hit-img img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease}
+.hit:hover .hit-img img{transform:scale(1.08)}
+.hit-ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(5,5,5,.85) 100%)}
+.hit-bdg{position:absolute;top:12px;left:12px;background:var(--red);color:#fff;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:3px 10px;border-radius:2px}
+.hit-new{position:absolute;top:12px;right:12px;background:var(--yel);color:#000;font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:3px 10px;border-radius:2px}
+.hit-body{padding:18px}
+.hit-name{font-family:var(--fh);font-size:22px;letter-spacing:.03em;margin-bottom:6px}
+.hit-desc{font-size:13px;color:var(--gr);line-height:1.5;margin-bottom:16px}
+.hit-foot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--brd);padding-top:14px}
+.hit-price{font-family:var(--fn);font-size:19px;font-weight:700;color:var(--yel)}
+.hit-btn{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);transition:color var(--tr)}
+.hit-btn:hover{color:var(--red2)}
 
-/* ── MARQUEE ── */
-.marquee-wrap {
-  background:var(--rouge);overflow:hidden;
-  padding:0;border-top:none;
-}
-.marquee-track {
-  display:flex;animation:scroll 20s linear infinite;width:max-content;
-}
-.marquee-item {
-  display:flex;align-items:center;gap:20px;
-  padding:14px 28px;
-  font-family:var(--fd);font-size:17px;font-weight:600;
-  letter-spacing:.08em;text-transform:uppercase;
-  color:var(--blanc);white-space:nowrap;
-}
-.marquee-sep{color:rgba(255,255,255,.4);font-size:8px}
-@keyframes scroll{to{transform:translateX(-50%)}}
+/* ══ CATEGORIES ══ */
+.cats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.cat{position:relative;background:var(--bk3);border:1px solid var(--brd);border-radius:6px;padding:36px 24px;overflow:hidden;transition:var(--tr);text-align:center;cursor:pointer}
+.cat::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--ora));transform:scaleX(0);transition:transform .3s ease;transform-origin:left}
+.cat:hover::before{transform:scaleX(1)}
+.cat:hover{border-color:rgba(255,26,26,.2);transform:translateY(-4px)}
+.cat-ico{display:block;font-size:40px;margin-bottom:14px}
+.cat-name{font-family:var(--fh);font-size:22px;letter-spacing:.05em;margin-bottom:6px}
+.cat-count{font-size:11px;color:var(--gr);letter-spacing:.15em;text-transform:uppercase}
 
-/* ── STRIP INFO ── */
-.strip {
-  background:var(--noir-2);
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.strip-inner {
-  display:flex;max-width:1200px;margin:0 auto;
-}
-.strip-item {
-  flex:1;display:flex;align-items:center;gap:16px;
-  padding:24px 32px;
-  border-right:1px solid rgba(255,255,255,.06);
-}
-.strip-item:last-child{border-right:none}
-.s-icon{font-size:20px;flex-shrink:0}
-.s-label{font-family:var(--fc);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--blanc);display:block}
-.s-val{font-size:13px;color:var(--blanc-3);margin-top:1px}
+/* ══ STATS STRIP ══ */
+.stats{background:var(--bk2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);padding:60px 48px}
+.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.stat{text-align:center;padding:0 24px;border-right:1px solid var(--brd)}
+.stat:last-child{border-right:none}
+.stat-num{font-family:var(--fh);font-size:clamp(48px,6vw,68px);line-height:1;color:var(--wh)}
+.stat-acc{font-family:var(--fh);font-size:clamp(32px,4vw,48px);color:var(--red)}
+.stat-lbl{font-size:12px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gr);margin-top:8px}
 
-/* ── PLATS SECTION ── */
-.plats-sec{padding:100px 48px;background:var(--noir)}
-.plats-header {
-  display:flex;align-items:flex-end;justify-content:space-between;
-  margin-bottom:56px;max-width:1200px;margin-left:auto;margin-right:auto;
-}
-.plats-grid {
-  display:grid;grid-template-columns:repeat(12,1fr);
-  gap:2px;max-width:1200px;margin:0 auto;
-}
-/* Featured card — 5 cols */
-.plat-card {
-  background:var(--noir-2);overflow:hidden;
-  position:relative;cursor:pointer;
-  transition:var(--tr);
-}
-.plat-card:hover .plat-img img{transform:scale(1.04)}
-.plat-card.large{grid-column:span 5;grid-row:span 2}
-.plat-card.med{grid-column:span 4}
-.plat-card.small{grid-column:span 3}
-.plat-img{overflow:hidden;position:relative}
-.plat-card.large .plat-img{aspect-ratio:3/4}
-.plat-card.med .plat-img{aspect-ratio:4/3}
-.plat-card.small .plat-img{aspect-ratio:4/3}
-.plat-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;filter:brightness(.88)}
-.plat-img-ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(15,15,15,.92) 100%)}
-.plat-info{padding:20px 22px 22px;background:var(--noir-2)}
-.plat-card.large .plat-info{padding:24px 28px 28px}
-.plat-cat{font-family:var(--fc);font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--rouge);margin-bottom:6px}
-.plat-name{font-family:var(--fd);font-weight:700;font-size:clamp(18px,2.2vw,26px);letter-spacing:.02em;text-transform:uppercase;color:var(--blanc);line-height:1.1}
-.plat-card.large .plat-name{font-size:clamp(26px,3.5vw,38px)}
-.plat-desc{font-size:13px;color:var(--blanc-3);line-height:1.6;margin-top:8px}
-.plat-footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
-.plat-prix{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--blanc)}
-.plat-add {
-  width:34px;height:34px;background:var(--rouge);border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;font-weight:700;color:#fff;transition:var(--tr);line-height:1;
-}
-.plat-add:hover{background:var(--rouge-2)}
+/* ══ PROMO BAND ══ */
+.promo{background:var(--yel);padding:20px 48px}
+.promo-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.promo-txt{font-family:var(--fh);font-size:clamp(22px,3.5vw,32px);letter-spacing:.03em;color:#000}
+.promo-txt em{font-style:normal;text-decoration:underline;text-decoration-thickness:3px}
+.promo-sub{font-size:14px;font-weight:600;color:rgba(0,0,0,.55);letter-spacing:.05em}
+.promo-act .btn{background:#000;color:var(--yel)}
+.promo-act .btn:hover{transform:translateY(-2px)}
 
-/* ── IDENTITÉ / ABOUT ── */
-.about-sec{
-  padding:100px 48px;
-  background:var(--noir-2);
-  position:relative;overflow:hidden;
-}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto}
-.about-img-wrap{position:relative}
-.about-img-main{
-  aspect-ratio:4/5;overflow:hidden;
-  border:1px solid rgba(255,255,255,.08);
-}
-.about-img-main img{width:100%;height:100%;object-fit:cover;filter:brightness(.85) contrast(1.05) grayscale(.15)}
-.about-img-tag {
-  position:absolute;bottom:-1px;right:-1px;
-  background:var(--rouge);
-  padding:16px 20px;
-  font-family:var(--fd);font-size:13px;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--blanc);
-  line-height:1.3;max-width:180px;
-}
-.about-text .big-title{margin-bottom:24px}
-.about-text .sub{margin-bottom:32px}
-.about-list{display:flex;flex-direction:column;gap:0;margin-bottom:36px}
-.about-item {
-  display:flex;align-items:flex-start;gap:16px;
-  padding:16px 0;
-  border-bottom:1px solid rgba(255,255,255,.07);
-}
-.about-item:last-child{border-bottom:none}
-.about-num{font-family:var(--fd);font-size:32px;font-weight:700;color:var(--rouge);line-height:1;flex-shrink:0;width:36px}
-.about-item-text strong{font-family:var(--fc);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blanc);display:block;margin-bottom:2px}
-.about-item-text span{font-size:13px;color:var(--blanc-3)}
+/* ══ FOOTER ══ */
+footer{background:var(--bk2);border-top:1px solid var(--brd);padding:70px 48px 32px}
+.ft-inner{max-width:1200px;margin:0 auto}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px}
+.ft-logo{font-family:var(--fh);font-size:38px;letter-spacing:.05em;margin-bottom:16px}
+.ft-logo em{color:var(--red);font-style:normal}
+.ft-brand p{font-size:14px;color:var(--gr);line-height:1.8;margin-bottom:24px;max-width:280px}
+.ft-soc{display:flex;gap:10px}
+.soc{width:40px;height:40px;background:var(--bk3);border:1px solid var(--brd);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:16px;transition:var(--tr)}
+.soc:hover{border-color:var(--red);background:var(--rdb);transform:translateY(-2px)}
+.ft-col h4{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--red);margin-bottom:20px}
+.ft-col ul{display:flex;flex-direction:column;gap:10px}
+.ft-col ul li a,.ft-col ul li{font-size:14px;color:var(--gr);line-height:1.6;transition:color var(--tr)}
+.ft-col ul li a:hover{color:var(--wh);padding-left:6px}
+.ft-bot{display:flex;align-items:center;justify-content:space-between;padding-top:28px;border-top:1px solid var(--brd);flex-wrap:wrap;gap:14px}
+.ft-bot p{font-size:12px;color:var(--gr2)}
 
-/* ── AVIS ── */
-.avis-sec{padding:100px 48px;background:var(--noir)}
-.avis-header{max-width:1200px;margin:0 auto 52px}
-.avis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1200px;margin:0 auto}
-.avis-card{background:var(--noir-2);padding:32px;transition:var(--tr)}
-.avis-card:hover{background:var(--noir-3)}
-.avis-stars{color:var(--rouge);font-size:12px;letter-spacing:3px;margin-bottom:16px}
-.avis-text{font-size:15px;line-height:1.75;color:var(--blanc-2);margin-bottom:24px;font-weight:300}
-.avis-author{display:flex;align-items:center;gap:14px;border-top:1px solid rgba(255,255,255,.07);padding-top:20px}
-.avis-avatar{
-  width:38px;height:38px;background:var(--noir-4);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--fd);font-size:16px;font-weight:700;color:var(--blanc);
-  flex-shrink:0;
+/* ══ RESPONSIVE ══ */
+@media(max-width:1100px){.hits-grid{grid-template-columns:repeat(2,1fr)}.cats-grid{grid-template-columns:repeat(2,1fr)}.stats-inner{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:none}.stat:nth-child(3){border-top:1px solid var(--brd);padding-top:40px;margin-top:40px}.stat:nth-child(4){border-top:1px solid var(--brd);padding-top:40px;margin-top:40px}.ft-grid{grid-template-columns:1fr 1fr;gap:40px}}
+@media(max-width:768px){
+  .nav{padding:16px 20px}.nav.sc{padding:12px 20px}
+  .nav-links{display:none}.burger{display:flex}
+  .hero{padding:100px 20px 60px}.hero-floats{right:20px}.hf{font-size:36px}
+  .sec{padding:60px 20px}.promo{padding:20px 20px}.stats{padding:48px 20px}
+  .hits-grid{grid-template-columns:1fr}.cats-grid{grid-template-columns:1fr 1fr}
+  .stats-inner{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:none}.stat:nth-child(3){border-right:1px solid var(--brd);border-top:none;padding-top:0;margin-top:0}.stat:nth-child(3):after{display:none}
+  .ft-grid{grid-template-columns:1fr;gap:32px}.ft-bot{flex-direction:column;align-items:flex-start}
+  .promo-inner{flex-direction:column;text-align:center}
+  .sec-head{flex-direction:column;align-items:flex-start}
 }
-.avis-name{font-family:var(--fc);font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--blanc)}
-.avis-plat{font-size:12px;color:var(--blanc-3);margin-top:1px}
-
-/* ── CONTACT ── */
-.contact-sec{padding:100px 48px;background:var(--noir-2)}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;max-width:1200px;margin:0 auto}
-.map-block{position:relative;background:var(--noir-3)}
-.map-block iframe{width:100%;height:400px;border:none;display:block;filter:grayscale(1) invert(1) brightness(.7)}
-.map-tag{
-  position:absolute;top:0;left:0;
-  background:var(--rouge);padding:10px 16px;
-  font-family:var(--fc);font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--blanc);
-}
-.contact-list{display:flex;flex-direction:column;gap:0;margin-top:36px}
-.c-item{display:flex;align-items:flex-start;gap:20px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.07)}
-.c-item:last-child{border-bottom:none}
-.c-num{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--blanc-3);letter-spacing:.2em;min-width:24px;padding-top:3px}
-.c-content strong{font-family:var(--fc);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--rouge);display:block;margin-bottom:4px}
-.c-content span{font-size:15px;color:var(--blanc-2);line-height:1.6}
-
-/* ── FOOTER ── */
-footer{
-  background:var(--noir);
-  border-top:1px solid rgba(255,255,255,.07);
-  padding:60px 48px 32px;
-}
-.footer-top{
-  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;
-  max-width:1200px;margin:0 auto 48px;
-}
-.footer-brand .fl{
-  font-family:var(--fd);font-weight:700;font-size:36px;
-  letter-spacing:.04em;text-transform:uppercase;
-  margin-bottom:16px;
-  display:flex;align-items:center;gap:10px;
-}
-.footer-brand .fl-num{
-  font-size:40px;color:var(--blanc);
-  border:2px solid var(--rouge);
-  width:44px;height:44px;display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.footer-brand p{font-size:14px;font-weight:300;color:var(--blanc-3);line-height:1.7;margin-bottom:24px;max-width:280px}
-.f-socials{display:flex;gap:10px}
-.f-soc{
-  width:38px;height:38px;
-  border:1px solid rgba(255,255,255,.12);
-  display:flex;align-items:center;justify-content:center;
-  font-size:15px;transition:var(--tr);
-}
-.f-soc:hover{border-color:var(--blanc);background:rgba(255,255,255,.06)}
-.footer-col h4{
-  font-family:var(--fc);font-size:11px;font-weight:700;
-  letter-spacing:.35em;text-transform:uppercase;
-  color:var(--rouge);margin-bottom:20px;
-}
-.footer-col ul{display:flex;flex-direction:column;gap:10px}
-.footer-col ul li a{font-size:14px;font-weight:300;color:var(--blanc-3);transition:color var(--tr)}
-.footer-col ul li a:hover{color:var(--blanc)}
-.footer-bottom{
-  display:flex;align-items:center;justify-content:space-between;
-  padding-top:24px;border-top:1px solid rgba(255,255,255,.07);
-  max-width:1200px;margin:0 auto;
-}
-.footer-bottom p{font-size:12px;color:var(--blanc-3);font-weight:300}
-
-/* ── KEYFRAMES ── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeLeft{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
-
-/* ── RESPONSIVE ── */
-@media(max-width:1024px){
-  .navbar{padding:18px 28px}.navbar.scrolled{padding:14px 28px}
-  .hero-content{padding:0 28px 64px}
-  .hero-stats{right:28px;bottom:64px}
-  .plats-sec{padding:80px 28px}
-  .about-sec{padding:80px 28px}
-  .avis-sec{padding:80px 28px}
-  .contact-sec{padding:80px 28px}
-  footer{padding:56px 28px 28px}
-  .plats-grid{grid-template-columns:1fr 1fr;gap:2px}
-  .plat-card.large{grid-column:span 2;grid-row:span 1}
-  .plat-card.large .plat-img{aspect-ratio:16/9}
-  .plat-card.med,.plat-card.small{grid-column:span 1}
-  .about-grid{grid-template-columns:1fr;gap:48px}
-  .avis-grid{grid-template-columns:1fr}
-  .contact-grid{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
-  .strip-inner{flex-wrap:wrap}
-  .strip-item{flex:0 0 50%;border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
-  .strip-item:nth-child(2n-1){border-right:1px solid rgba(255,255,255,.06)}
-  .plats-header{flex-direction:column;gap:20px;align-items:flex-start}
-}
-@media(max-width:700px){
-  .nav-links{display:none}.nav-burger{display:flex}
-  .hero-stats{display:none}
-  .plats-grid{grid-template-columns:1fr}
-  .plat-card.large,.plat-card.med,.plat-card.small{grid-column:span 1;grid-row:span 1}
-  .plat-card.large .plat-img{aspect-ratio:4/3}
-  .hero-h1{font-size:clamp(56px,16vw,90px)}
-  .strip-item{flex:0 0 100%;border-right:none}
-  .strip-item:nth-child(2n-1){border-right:none}
-  .footer-top{grid-template-columns:1fr;gap:28px}
-  .footer-bottom{flex-direction:column;gap:8px;text-align:center}
-  .divider{margin:0 28px}
+@media(max-width:480px){
+  .cats-grid{grid-template-columns:1fr 1fr}.stats-inner{grid-template-columns:1fr 1fr}
+  .hero-floats{display:none}
 }
 </style>
 </head>
@@ -507,409 +212,278 @@ footer{
 
 <!-- LOADER -->
 <div id="loader">
-  <div class="ld-inner">
-    <div class="ld-number">7</div>
-    <div class="ld-label">Montereau-Fault-Yonne · Street Food</div>
-    <div class="ld-bar-wrap"><div class="ld-bar"></div></div>
-  </div>
+  <div class="ld-ring"><div class="ld-num">7</div></div>
+  <div class="ld-name">LE SEPT 7</div>
+  <div class="ld-bar"><div class="ld-prog"></div></div>
+  <div class="ld-sub">Street Food · Montereau · 77130</div>
 </div>
 
 <!-- NAV -->
-<nav class="navbar" id="navbar">
-  <a href="index.html" class="nav-logo">
-    <div class="nav-logo-num">7</div>
-    Le Sept
-  </a>
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">SEPT<em>7</em></a>
   <div class="nav-links">
-    <a href="index.html" class="active">Accueil</a>
+    <a href="index.html" class="on">Accueil</a>
     <a href="pages/menu.html">Menu</a>
     <a href="pages/galerie.html">Galerie</a>
-    <a href="pages/ambiance.html">Notre histoire</a>
-    <a href="pages/commande.html" class="nav-cta">Commander</a>
+    <a href="pages/ambiance.html">Ambiance</a>
+    <a href="pages/commande.html" class="nav-cta">🔥 Commander</a>
   </div>
-  <div class="nav-burger" id="burger">
-    <span></span><span></span><span></span>
-  </div>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
 </nav>
-<div class="nav-mobile" id="mobile-nav">
+
+<div class="mnav" id="mnav">
+  <div class="mnav-line"></div>
   <a href="index.html">Accueil</a>
   <a href="pages/menu.html">Menu</a>
   <a href="pages/galerie.html">Galerie</a>
-  <a href="pages/ambiance.html">Notre histoire</a>
-  <a href="pages/commande.html">Commander →</a>
+  <a href="pages/ambiance.html">Ambiance</a>
+  <a href="pages/commande.html" class="mn-hot">Commander →</a>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ttrack">
+    <span class="titem">🔥 Le vrai street food de Montereau<span></span></span>
+    <span class="titem">📍 72 rue Jean Jaurès · 77130<span></span></span>
+    <span class="titem">📲 Commander via WhatsApp<span></span></span>
+    <span class="titem">⭐ 4.5/5 · 253 avis Google<span></span></span>
+    <span class="titem">⚡ Prêt en 15 min · 7j/7<span></span></span>
+    <span class="titem">🌮 Tacos · Kebabs · Wings · Sandwichs<span></span></span>
+    <span class="titem">🔥 Le vrai street food de Montereau<span></span></span>
+    <span class="titem">📍 72 rue Jean Jaurès · 77130<span></span></span>
+    <span class="titem">📲 Commander via WhatsApp<span></span></span>
+    <span class="titem">⭐ 4.5/5 · 253 avis Google<span></span></span>
+    <span class="titem">⚡ Prêt en 15 min · 7j/7<span></span></span>
+    <span class="titem">🌮 Tacos · Kebabs · Wings · Sandwichs<span></span></span>
+  </div>
 </div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg">
-    <!-- Image urbaine de nuit — remplacer par une vraie photo du resto / rue -->
-    <img
-      src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&q=85"
-      alt="Street food Le Sept 7 Montereau"
-      loading="eager"
-    >
-  </div>
-
-  <div class="hero-content">
-    <div class="hero-tag">📍 Montereau-Fault-Yonne — 77130</div>
-    <h1 class="hero-h1">
-      <span class="rouge">LE</span><br>
-      SEPT<br>
-      <span class="stroke">7</span>
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-wm">7</div>
+  <div class="hero-c">
+    <div class="hero-eye"><span class="eye-dot"></span>Le vrai street food de Montereau</div>
+    <h1 class="hero-title">
+      <span class="ht-sm">LE</span>
+      <span class="ht-big">SEPT<em>7</em></span>
     </h1>
-    <p class="hero-sub">
-      Le QG street food de Montereau. Kebabs, tacos, tikka, wings.
-      Fait maison. Servi chaud. Pas de compromis.
-    </p>
-    <div class="hero-actions">
-      <a href="pages/commande.html" class="btn btn-rouge">Commander maintenant</a>
-      <a href="pages/menu.html" class="btn btn-ghost">Voir le menu</a>
+    <div class="hero-line"></div>
+    <p class="hero-sub">Tacos · Kebabs · Wings · Sandwichs<br><strong>Chaque bouchée, une claque.</strong></p>
+    <div class="hero-acts">
+      <a href="pages/commande.html" class="btn btn-red">🔥 Commander maintenant</a>
+      <a href="pages/menu.html" class="btn btn-ghost">📋 Voir le menu</a>
     </div>
   </div>
+  <div class="hero-floats" aria-hidden="true">
+    <span class="hf">🌮</span>
+    <span class="hf">🍗</span>
+    <span class="hf">🔥</span>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
 
-  <div class="hero-stats">
-    <div class="hs-item">
-      <div class="hs-num">+200</div>
-      <div class="hs-lbl">Avis 5★</div>
+<!-- HITS -->
+<section class="sec" id="hits">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <div>
+        <div class="sec-eye rv">Les incontournables</div>
+        <h2 class="sec-title rv d1">NOS CLASSIQUES</h2>
+      </div>
+      <a href="pages/menu.html" class="sec-more rv d2">Tout le menu →</a>
     </div>
-    <div class="hs-item">
-      <div class="hs-num">5 ans</div>
-      <div class="hs-lbl">En activité</div>
-    </div>
-    <div class="hs-item">
-      <div class="hs-num">7j/7</div>
-      <div class="hs-lbl">Ouvert</div>
+    <div class="hits-grid">
+
+      <div class="hit rv">
+        <div class="hit-img">
+          <img src="https://images.unsplash.com/photo-1622289970580-2c68e8c6e0e2?w=600&q=80" alt="Kebab XL" loading="lazy">
+          <div class="hit-ov"></div>
+          <span class="hit-bdg">⭐ Signature</span>
+        </div>
+        <div class="hit-body">
+          <h3 class="hit-name">KEBAB XL</h3>
+          <p class="hit-desc">Double viande, pain XL, légumes frais, sauce secrète Sept 7.</p>
+          <div class="hit-foot">
+            <span class="hit-price">8,50 €</span>
+            <a href="pages/commande.html" class="hit-btn">Commander →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hit rv d1">
+        <div class="hit-img">
+          <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=600&q=80" alt="Tacos Triple XL" loading="lazy">
+          <div class="hit-ov"></div>
+          <span class="hit-bdg">🔥 Best seller</span>
+        </div>
+        <div class="hit-body">
+          <h3 class="hit-name">TACOS TRIPLE XL</h3>
+          <p class="hit-desc">3 viandes, sauce fromagère, fromage fondu, tortilla XL grillée.</p>
+          <div class="hit-foot">
+            <span class="hit-price">11,00 €</span>
+            <a href="pages/commande.html" class="hit-btn">Commander →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hit rv d2">
+        <div class="hit-img">
+          <img src="https://images.unsplash.com/photo-1587131782738-de30ea91a542?w=600&q=80" alt="Wings x12" loading="lazy">
+          <div class="hit-ov"></div>
+          <span class="hit-bdg">🍗 12 pcs</span>
+          <span class="hit-new">BEST VALUE</span>
+        </div>
+        <div class="hit-body">
+          <h3 class="hit-name">WINGS x12</h3>
+          <p class="hit-desc">12 ailes croustillantes, 2 sauces au choix. Parfait pour partager.</p>
+          <div class="hit-foot">
+            <span class="hit-price">11,00 €</span>
+            <a href="pages/commande.html" class="hit-btn">Commander →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hit rv d3">
+        <div class="hit-img">
+          <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600&q=80" alt="Menu Tacos" loading="lazy">
+          <div class="hit-ov"></div>
+          <span class="hit-bdg">🍱 Menu complet</span>
+        </div>
+        <div class="hit-body">
+          <h3 class="hit-name">MENU TACOS</h3>
+          <p class="hit-desc">Tacos au choix + frites maison + boisson 33cl. Le combo gagnant.</p>
+          <div class="hit-foot">
+            <span class="hit-price">11,00 €</span>
+            <a href="pages/commande.html" class="hit-btn">Commander →</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee-wrap" aria-hidden="true">
-  <div class="marquee-track">
-    <div class="marquee-item">Kebab XL<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Tacos Triple<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Wings Crispy<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Tikka Masala<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Panini Mozza<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Menus Complets<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Livraison Montereau<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Ouvert 7j/7<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Kebab XL<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Tacos Triple<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Wings Crispy<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Tikka Masala<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Panini Mozza<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Menus Complets<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Livraison Montereau<span class="marquee-sep">◆</span></div>
-    <div class="marquee-item">Ouvert 7j/7<span class="marquee-sep">◆</span></div>
+<!-- CATEGORIES -->
+<section class="sec" style="padding-top:0">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <div>
+        <div class="sec-eye rv">Notre carte</div>
+        <h2 class="sec-title rv d1">EXPLORE LE MENU</h2>
+      </div>
+    </div>
+    <div class="cats-grid">
+      <a href="pages/menu.html#kebabs" class="cat rv">
+        <span class="cat-ico">🥙</span>
+        <div class="cat-name">KEBABS</div>
+        <div class="cat-count">3 plats · dès 6,50€</div>
+      </a>
+      <a href="pages/menu.html#tacos" class="cat rv d1">
+        <span class="cat-ico">🌮</span>
+        <div class="cat-name">TACOS</div>
+        <div class="cat-count">3 formats · dès 7,00€</div>
+      </a>
+      <a href="pages/menu.html#wings" class="cat rv d2">
+        <span class="cat-ico">🍗</span>
+        <div class="cat-name">WINGS</div>
+        <div class="cat-count">3 formules · dès 6,50€</div>
+      </a>
+      <a href="pages/menu.html#menus" class="cat rv d3">
+        <span class="cat-ico">🍱</span>
+        <div class="cat-name">MENUS</div>
+        <div class="cat-count">Plat + frites + boisson</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat rv">
+      <div><span class="stat-num" data-val="500">0</span><span class="stat-acc">+</span></div>
+      <div class="stat-lbl">Commandes / semaine</div>
+    </div>
+    <div class="stat rv d1">
+      <div><span class="stat-num">15</span><span class="stat-acc"> min</span></div>
+      <div class="stat-lbl">Temps de préparation</div>
+    </div>
+    <div class="stat rv d2">
+      <div><span class="stat-num">4.5</span><span class="stat-acc">★</span></div>
+      <div class="stat-lbl">253 avis Google</div>
+    </div>
+    <div class="stat rv d3">
+      <div><span class="stat-num">7j</span><span class="stat-acc">/7</span></div>
+      <div class="stat-lbl">On est là pour toi</div>
+    </div>
   </div>
 </div>
 
-<!-- STRIP INFO -->
-<div class="strip">
-  <div class="strip-inner">
-    <div class="strip-item reveal">
-      <span class="s-icon">⏰</span>
-      <div>
-        <span class="s-label">Horaires</span>
-        <span class="s-val">Lun–Sam 11h–23h · Dim 12h–22h</span>
-      </div>
+<!-- PROMO BAND -->
+<div class="promo">
+  <div class="promo-inner">
+    <div>
+      <div class="promo-txt">Commande direct<br><em>via WhatsApp</em></div>
+      <div class="promo-sub">Prêt en 15 min · Sur place ou à emporter</div>
     </div>
-    <div class="strip-item reveal d1">
-      <span class="s-icon">🛵</span>
-      <div>
-        <span class="s-label">Livraison</span>
-        <span class="s-val">Montereau & alentours</span>
-      </div>
-    </div>
-    <div class="strip-item reveal d2">
-      <span class="s-icon">📲</span>
-      <div>
-        <span class="s-label">WhatsApp</span>
-        <span class="s-val">07 63 67 61 91</span>
-      </div>
-    </div>
-    <div class="strip-item reveal d3">
-      <span class="s-icon">⭐</span>
-      <div>
-        <span class="s-label">Note Google</span>
-        <span class="s-val">4.7 / 5 sur 200+ avis</span>
-      </div>
+    <div class="promo-act">
+      <a href="pages/commande.html" class="btn">🔥 Commander maintenant</a>
     </div>
   </div>
 </div>
-
-<!-- PLATS -->
-<section class="plats-sec">
-  <div class="plats-header">
-    <div>
-      <span class="label reveal">Les incontournables</span>
-      <h2 class="big-title reveal d1">NOS<br>CLASSIQUES</h2>
-    </div>
-    <a href="pages/menu.html" class="btn btn-ghost reveal d2">Carte complète →</a>
-  </div>
-
-  <div class="plats-grid">
-
-    <!-- Featured -->
-    <div class="plat-card large reveal">
-      <div class="plat-img">
-        <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=700&q=85" alt="Kebab XL Le Sept 7" loading="lazy">
-        <div class="plat-img-ov"></div>
-      </div>
-      <div class="plat-info">
-        <div class="plat-cat">Signature</div>
-        <div class="plat-name">Sept Kebab XL</div>
-        <div class="plat-desc">Double viande marinée, sauce maison, légumes frais. Le classique qui revient.</div>
-        <div class="plat-footer">
-          <span class="plat-prix">8,50 €</span>
-          <a href="pages/commande.html" class="plat-add">+</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Med 1 -->
-    <div class="plat-card med reveal d1">
-      <div class="plat-img">
-        <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80" alt="Tacos Triple" loading="lazy">
-        <div class="plat-img-ov"></div>
-      </div>
-      <div class="plat-info">
-        <div class="plat-cat">Tacos</div>
-        <div class="plat-name">Triple XL</div>
-        <div class="plat-desc">3 viandes, fromagère, tortilla grillée XL.</div>
-        <div class="plat-footer"><span class="plat-prix">11,00 €</span><a href="pages/commande.html" class="plat-add">+</a></div>
-      </div>
-    </div>
-
-    <!-- Small 1 -->
-    <div class="plat-card small reveal d2">
-      <div class="plat-img">
-        <img src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=500&q=80" alt="Wings" loading="lazy">
-        <div class="plat-img-ov"></div>
-      </div>
-      <div class="plat-info">
-        <div class="plat-cat">Wings</div>
-        <div class="plat-name">Crispy x6</div>
-        <div class="plat-footer"><span class="plat-prix">6,50 €</span><a href="pages/commande.html" class="plat-add">+</a></div>
-      </div>
-    </div>
-
-    <!-- Med 2 -->
-    <div class="plat-card med reveal d1">
-      <div class="plat-img">
-        <img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600&q=80" alt="Tikka" loading="lazy">
-        <div class="plat-img-ov"></div>
-      </div>
-      <div class="plat-info">
-        <div class="plat-cat">Tikka</div>
-        <div class="plat-name">Masala Poulet</div>
-        <div class="plat-desc">Épices, riz basmati, sauce crémeuse.</div>
-        <div class="plat-footer"><span class="plat-prix">10,00 €</span><a href="pages/commande.html" class="plat-add">+</a></div>
-      </div>
-    </div>
-
-    <!-- Small 2 -->
-    <div class="plat-card small reveal d3">
-      <div class="plat-img">
-        <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=500&q=80" alt="Panini" loading="lazy">
-        <div class="plat-img-ov"></div>
-      </div>
-      <div class="plat-info">
-        <div class="plat-cat">Panini</div>
-        <div class="plat-name">Mozza</div>
-        <div class="plat-footer"><span class="plat-prix">7,00 €</span><a href="pages/commande.html" class="plat-add">+</a></div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ABOUT / IDENTITÉ -->
-<section class="about-sec">
-  <div class="about-grid">
-    <div class="about-img-wrap reveal">
-      <div class="about-img-main">
-        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=85" alt="Cuisine Sept 7" loading="lazy">
-      </div>
-      <div class="about-img-tag">
-        Fait maison.<br>Servi chaud.<br>Pas de compromis.
-      </div>
-    </div>
-    <div class="about-text">
-      <span class="label reveal">Qui sommes-nous</span>
-      <h2 class="big-title reveal d1">MONTEREAU<br>DANS<br>L'ASSIETTE</h2>
-      <p class="sub reveal d2">
-        Le Sept 7 c'est pas juste un fast food. C'est une adresse, un repère, une fierté locale. Depuis 2019, on sert Montereau avec des recettes travaillées et des produits de qualité.
-      </p>
-      <div class="about-list">
-        <div class="about-item reveal d2">
-          <div class="about-num">01</div>
-          <div class="about-item-text">
-            <strong>Produits frais</strong>
-            <span>Approvisionnement quotidien. Rien de congelé dans nos recettes signatures.</span>
-          </div>
-        </div>
-        <div class="about-item reveal d3">
-          <div class="about-num">02</div>
-          <div class="about-item-text">
-            <strong>Recettes maison</strong>
-            <span>Sauces, marinades, épices — tout est préparé ici. Pas de formule industrielle.</span>
-          </div>
-        </div>
-        <div class="about-item reveal d4">
-          <div class="about-num">03</div>
-          <div class="about-item-text">
-            <strong>Ancré dans le quartier</strong>
-            <span>On connaît nos clients. On respecte notre ville. On fait partie de Montereau.</span>
-          </div>
-        </div>
-      </div>
-      <a href="pages/ambiance.html" class="btn btn-ghost reveal d5">Notre histoire →</a>
-    </div>
-  </div>
-</section>
-
-<!-- AVIS -->
-<section class="avis-sec">
-  <div class="avis-header">
-    <span class="label reveal">Google · 4.7/5</span>
-    <h2 class="big-title reveal d1">CE QU'ILS<br>EN DISENT</h2>
-  </div>
-  <div class="avis-grid">
-    <div class="avis-card reveal">
-      <div class="avis-stars">★★★★★</div>
-      <p class="avis-text">Le kebab XL c'est une tuerie. La sauce maison ça change tout, j'en commande trois fois par semaine. Rien d'autre à dire.</p>
-      <div class="avis-author">
-        <div class="avis-avatar">K</div>
-        <div>
-          <div class="avis-name">Karim B.</div>
-          <div class="avis-plat">Google · Montereau</div>
-        </div>
-      </div>
-    </div>
-    <div class="avis-card reveal d1">
-      <div class="avis-stars">★★★★★</div>
-      <p class="avis-text">Les tacos XXL sont généreux, bien chauds, livrés rapidement. Le Sept 7 c'est clairement le meilleur spot de la ville. Y'a pas photo.</p>
-      <div class="avis-author">
-        <div class="avis-avatar">S</div>
-        <div>
-          <div class="avis-name">Sarah M.</div>
-          <div class="avis-plat">Google · Montereau</div>
-        </div>
-      </div>
-    </div>
-    <div class="avis-card reveal d2">
-      <div class="avis-stars">★★★★★</div>
-      <p class="avis-text">Le tikka masala m'a bluffé. On s'attend pas à ça dans un kebab. La qualité est vraiment là, c'est du boulot sérieux.</p>
-      <div class="avis-author">
-        <div class="avis-avatar">A</div>
-        <div>
-          <div class="avis-name">Alexandre T.</div>
-          <div class="avis-plat">Google · Montereau</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- CONTACT -->
-<section class="contact-sec">
-  <div class="contact-grid">
-    <div>
-      <span class="label reveal">Viens nous voir</span>
-      <h2 class="big-title reveal d1">OÙ<br>NOUS<br>TROUVER</h2>
-      <div class="contact-list">
-        <div class="c-item reveal d2">
-          <span class="c-num">01</span>
-          <div class="c-content">
-            <strong>Adresse</strong>
-            <span>Montereau-Fault-Yonne, 77130</span>
-          </div>
-        </div>
-        <div class="c-item reveal d3">
-          <span class="c-num">02</span>
-          <div class="c-content">
-            <strong>Téléphone & WhatsApp</strong>
-            <span><a href="tel:0763676191" style="color:inherit">07 63 67 61 91</a></span>
-          </div>
-        </div>
-        <div class="c-item reveal d4">
-          <span class="c-num">03</span>
-          <div class="c-content">
-            <strong>Horaires</strong>
-            <span>Lun–Sam : 11h–14h30 · 18h–23h<br>Dimanche : 12h–22h</span>
-          </div>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px" class="reveal d5">
-        <a href="https://wa.me/33763676191" target="_blank" rel="noopener" class="btn btn-wa">WhatsApp</a>
-        <a href="pages/commande.html" class="btn btn-rouge">Commander</a>
-      </div>
-    </div>
-    <div class="map-block reveal d2">
-      <div class="map-tag">Montereau — 77130</div>
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10671!2d2.8583!3d48.3834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e8ac0c!2sMontereau-Fault-Yonne!5e0!3m2!1sfr!2sfr!4v1699000000"
-        allowfullscreen loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Le Sept 7 Montereau">
-      </iframe>
-    </div>
-  </div>
-</section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <div class="fl">
-        <div class="fl-num">7</div>
-        Le Sept
+  <div class="ft-inner">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <div class="ft-logo">SEPT<em>7</em></div>
+        <p>Le QG street food de Montereau.<br>Commande. Mange. Reviens.</p>
+        <div class="ft-soc">
+          <a href="https://wa.me/33763676191" class="soc" target="_blank" rel="noopener">💬</a>
+          <a href="#" class="soc">📸</a>
+          <a href="#" class="soc">🎵</a>
+        </div>
       </div>
-      <p>Street food premium depuis 2019. Kebabs, tacos, paninis, tikka. Montereau-Fault-Yonne, 77130.</p>
-      <div class="f-socials">
-        <a href="#" class="f-soc" aria-label="Instagram">📸</a>
-        <a href="#" class="f-soc" aria-label="TikTok">🎵</a>
-        <a href="https://wa.me/33763676191" class="f-soc" aria-label="WhatsApp" target="_blank" rel="noopener">💬</a>
+      <div class="ft-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="pages/menu.html">Menu</a></li>
+          <li><a href="pages/galerie.html">Galerie</a></li>
+          <li><a href="pages/ambiance.html">Ambiance</a></li>
+          <li><a href="pages/commande.html">Commander</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:0763676191">07 63 67 61 91</a></li>
+          <li><a href="https://wa.me/33763676191" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li>72 rue Jean Jaurès</li>
+          <li>77130 Montereau-Fault-Yonne</li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Horaires</h4>
+        <ul>
+          <li>Lun – Jeu · 11h – 00h</li>
+          <li>Vendredi · 17h – 00h</li>
+          <li>Sam – Dim · 11h – 00h</li>
+          <li style="color:var(--red);font-weight:700;margin-top:8px">Sur place · À emporter<br>Livraison</li>
+        </ul>
       </div>
     </div>
-    <div class="footer-col">
-      <h4>Menu</h4>
-      <ul>
-        <li><a href="pages/menu.html">Kebabs</a></li>
-        <li><a href="pages/menu.html">Tacos</a></li>
-        <li><a href="pages/menu.html">Wings</a></li>
-        <li><a href="pages/menu.html">Tikka</a></li>
-        <li><a href="pages/menu.html">Menus</a></li>
-      </ul>
+    <div class="ft-bot">
+      <p>© 2025 Le Sept 7 · Montereau-Fault-Yonne · Tous droits réservés</p>
+      <a href="pages/commande.html" class="btn btn-red" style="padding:10px 22px;font-size:10px">🔥 Commander</a>
     </div>
-    <div class="footer-col">
-      <h4>Pages</h4>
-      <ul>
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="pages/galerie.html">Galerie</a></li>
-        <li><a href="pages/ambiance.html">Notre histoire</a></li>
-        <li><a href="pages/commande.html">Commander</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <ul>
-        <li><a href="tel:0763676191">07 63 67 61 91</a></li>
-        <li><a href="https://wa.me/33763676191" target="_blank" rel="noopener">WhatsApp</a></li>
-        <li><a href="#">Lun–Sam 11h–23h</a></li>
-        <li><a href="#">Dimanche 12h–22h</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2025 Le Sept 7 · Montereau-Fault-Yonne · Tous droits réservés</p>
-    <p style="opacity:.4;font-size:11px">Images Unsplash (libres de droits)</p>
   </div>
 </footer>
 
@@ -917,27 +491,46 @@ footer{
 // LOADER
 const loader=document.getElementById('loader');
 document.body.style.overflow='hidden';
-setTimeout(()=>{loader.classList.add('hidden');document.body.style.overflow='';},2000);
+setTimeout(()=>{loader.classList.add('out');document.body.style.overflow='';},2300);
 
-// NAVBAR
-const navbar=document.getElementById('navbar');
-window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>50),{passive:true});
+// NAV scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>50),{passive:true});
 
 // BURGER
-const burger=document.getElementById('burger'),mob=document.getElementById('mobile-nav');
+const burger=document.getElementById('burger'),mnav=document.getElementById('mnav');
 burger.addEventListener('click',()=>{
-  burger.classList.toggle('open');mob.classList.toggle('open');
-  document.body.style.overflow=mob.classList.contains('open')?'hidden':'';
+  burger.classList.toggle('open');mnav.classList.toggle('open');
+  document.body.style.overflow=mnav.classList.contains('open')?'hidden':'';
 });
-mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
-  burger.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';
+mnav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  burger.classList.remove('open');mnav.classList.remove('open');document.body.style.overflow='';
 }));
 
 // REVEAL
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
-},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const rvObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rvObs.unobserve(e.target);}});
+},{threshold:.08,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
+
+// COUNTER
+function countUp(el){
+  const target=parseInt(el.dataset.val);
+  const duration=1500;
+  const start=Date.now();
+  const update=()=>{
+    const elapsed=Date.now()-start;
+    const progress=Math.min(elapsed/duration,1);
+    const ease=1-Math.pow(1-progress,3);
+    el.textContent=Math.round(ease*target);
+    if(progress<1) requestAnimationFrame(update);
+  };
+  update();
+}
+const ctrObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){countUp(e.target);ctrObs.unobserve(e.target);}});
+},{threshold:.5});
+document.querySelectorAll('[data-val]').forEach(el=>ctrObs.observe(el));
 </script>
 </body>
 </html>
