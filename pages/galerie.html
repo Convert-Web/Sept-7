@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050505">
+<title>Galerie — Le Sept 7 · Street Food · Montereau</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bk:#050505;--bk2:#0A0A0A;--bk3:#111;--bk4:#181818;--red:#FF1A1A;--rdb:rgba(255,26,26,.13);--rdg:rgba(255,26,26,.3);--yel:#FFD426;--ora:#FF6500;--wh:#F5F5F0;--gr:#888;--gr2:#555;--dm:#252525;--brd:rgba(255,255,255,.07);--gn:#25D366;--fn:'Barlow Condensed',-apple-system,sans-serif;--fh:'Bebas Neue','Impact',sans-serif;--tr:.28s cubic-bezier(.4,0,.2,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bk);color:var(--wh);font-family:var(--fn);font-weight:500;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bk2)}::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--bk);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;transition:opacity .6s ease,visibility .6s ease}
+#loader.out{opacity:0;visibility:hidden;pointer-events:none}
+.ld-ring{position:relative;width:88px;height:88px;display:flex;align-items:center;justify-content:center}
+.ld-ring::before{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:var(--red);border-right-color:var(--ora);animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ld-num{font-family:var(--fh);font-size:50px;line-height:1;color:var(--wh);text-shadow:0 0 20px var(--red),0 0 40px var(--rdg);position:relative;z-index:1}
+.ld-name{font-family:var(--fh);font-size:22px;letter-spacing:5px}
+.ld-bar{width:200px;height:2px;background:var(--dm);border-radius:2px;overflow:hidden}
+.ld-prog{height:100%;background:linear-gradient(90deg,var(--red),var(--ora));width:0;animation:lp 2s ease forwards}
+@keyframes lp{to{width:100%}}
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;transition:var(--tr)}
+.nav.sc{background:rgba(5,5,5,.95);backdrop-filter:blur(24px);padding:13px 48px;border-bottom:1px solid var(--brd)}
+.nav-logo{font-family:var(--fh);font-size:26px;letter-spacing:.05em}
+.nav-logo em{color:var(--red);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:36px}
+.nav-links a{font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--gr);transition:color var(--tr)}
+.nav-links a:hover,.nav-links a.on{color:var(--wh)}
+.nav-cta{background:var(--red)!important;color:var(--wh)!important;padding:9px 20px;border-radius:3px;letter-spacing:.18em!important;box-shadow:0 4px 16px var(--rdg)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.burger span{width:22px;height:2px;background:var(--wh);display:block;transition:var(--tr)}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mnav{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bk2);z-index:998;display:flex;flex-direction:column;justify-content:center;padding:0 40px;gap:28px;transform:translateX(100%);transition:transform .42s cubic-bezier(.4,0,.2,1)}
+.mnav.open{transform:translateX(0)}
+.mnav a{font-family:var(--fh);font-size:clamp(44px,10vw,64px);letter-spacing:.04em;color:var(--gr);transition:color var(--tr)}
+.mnav a:hover,.mn-hot{color:var(--red)!important}
+.mnav-line{width:40px;height:2px;background:var(--red);margin-bottom:8px}
+/* HERO */
+.ghero{padding:130px 48px 60px;position:relative;overflow:hidden}
+.ghero-bg{position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,26,26,.07) 0%,var(--bk) 50%)}
+.ghero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.ghero-eye{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ghero-eye::before{content:'';width:20px;height:2px;background:var(--red)}
+.ghero h1{font-family:var(--fh);font-size:clamp(56px,9vw,96px);letter-spacing:.02em;line-height:.9;margin-bottom:12px}
+.ghero-sub{font-size:15px;color:var(--gr)}
+/* MASONRY GRID */
+.gallery-wrap{max-width:1200px;margin:0 auto;padding:48px 48px 100px}
+.gallery-grid{columns:3;column-gap:16px}
+.gitem{break-inside:avoid;margin-bottom:16px;position:relative;overflow:hidden;border-radius:6px;cursor:pointer;background:var(--bk3)}
+.gitem img{width:100%;display:block;transition:transform .55s ease}
+.gitem:hover img{transform:scale(1.06)}
+.gitem-ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(5,5,5,.85) 100%);opacity:0;transition:opacity var(--tr)}
+.gitem:hover .gitem-ov{opacity:1}
+.gitem-caption{position:absolute;bottom:0;left:0;right:0;padding:16px;transform:translateY(8px);opacity:0;transition:all var(--tr)}
+.gitem:hover .gitem-caption{transform:translateY(0);opacity:1}
+.gc-title{font-family:var(--fh);font-size:16px;letter-spacing:.05em;margin-bottom:3px}
+.gc-sub{font-size:11px;color:var(--gr);letter-spacing:.1em}
+.gitem-badge{position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:3px 9px;border-radius:2px}
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(5,5,5,.96);z-index:5000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}
+.lightbox.open{opacity:1;visibility:visible}
+.lb-img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:4px;animation:lbin .3s ease}
+@keyframes lbin{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.lb-close{position:absolute;top:20px;right:24px;width:44px;height:44px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;color:var(--wh);transition:var(--tr)}
+.lb-close:hover{background:var(--red);border-color:var(--red)}
+.lb-prev,.lb-next{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;color:var(--wh);transition:var(--tr)}
+.lb-prev{left:20px}.lb-next{right:20px}
+.lb-prev:hover,.lb-next:hover{background:var(--red);border-color:var(--red)}
+/* REVEAL */
+.rv{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+/* FOOTER */
+footer{background:var(--bk2);border-top:1px solid var(--brd);padding:48px}
+.ft-bot{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.ft-logo{font-family:var(--fh);font-size:28px;letter-spacing:.05em}
+.ft-logo em{color:var(--red);font-style:normal}
+.ft-bot p{font-size:12px;color:var(--gr2)}
+.btn-red{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;font-family:var(--fn);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;border-radius:3px;background:var(--red);color:#fff;box-shadow:0 4px 16px var(--rdg);transition:var(--tr)}
+.btn-red:hover{transform:translateY(-2px)}
+@media(max-width:768px){.nav{padding:16px 20px}.nav.sc{padding:12px 20px}.nav-links{display:none}.burger{display:flex}.ghero{padding:90px 20px 40px}.gallery-wrap{padding:28px 16px 80px}.gallery-grid{columns:2}.ft-bot{flex-direction:column;align-items:flex-start}.footer{padding:32px 20px}}
+@media(max-width:480px){.gallery-grid{columns:1}}
+</style>
+</head>
+<body>
+<div id="loader"><div class="ld-ring"><div class="ld-num">7</div></div><div class="ld-name">GALERIE</div><div class="ld-bar"><div class="ld-prog"></div></div></div>
+
+<nav class="nav" id="nav">
+  <a href="../index.html" class="nav-logo">SEPT<em>7</em></a>
+  <div class="nav-links">
+    <a href="../index.html">Accueil</a><a href="menu.html">Menu</a><a href="galerie.html" class="on">Galerie</a><a href="ambiance.html">Ambiance</a>
+    <a href="commande.html" class="nav-cta">🔥 Commander</a>
+  </div>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mnav" id="mnav"><div class="mnav-line"></div><a href="../index.html">Accueil</a><a href="menu.html">Menu</a><a href="galerie.html">Galerie</a><a href="ambiance.html">Ambiance</a><a href="commande.html" class="mn-hot">Commander →</a></div>
+
+<div class="ghero">
+  <div class="ghero-bg"></div>
+  <div class="ghero-inner">
+    <div class="ghero-eye">Photos</div>
+    <h1>LA GALERIE<br>DU SEPT<em style="color:var(--red);font-style:normal">7</em></h1>
+    <p class="ghero-sub">Nos plats, notre cuisine, notre spot. Tout est là.</p>
+  </div>
+</div>
+
+<div class="gallery-wrap">
+  <div class="gallery-grid" id="gallery">
+
+    <div class="gitem rv" onclick="openLb(0)">
+      <img src="https://images.unsplash.com/photo-1622289970580-2c68e8c6e0e2?w=600&q=80" alt="Kebab XL">
+      <div class="gitem-ov"></div>
+      <span class="gitem-badge">⭐ Signature</span>
+      <div class="gitem-caption"><div class="gc-title">KEBAB XL</div><div class="gc-sub">Le classique Sept 7</div></div>
+    </div>
+
+    <div class="gitem rv" onclick="openLb(1)">
+      <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=600&q=80" alt="Tacos Triple XL">
+      <div class="gitem-ov"></div>
+      <span class="gitem-badge">🔥 Best seller</span>
+      <div class="gitem-caption"><div class="gc-title">TACOS TRIPLE XL</div><div class="gc-sub">Le must de la maison</div></div>
+    </div>
+
+    <div class="gitem rv" onclick="openLb(2)">
+      <img src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=600&q=80" alt="Wings x12">
+      <div class="gitem-ov"></div>
+      <div class="gitem-caption"><div class="gc-title">WINGS x12</div><div class="gc-sub">Croustillantes à souhait</div></div>
+    </div>
+
+    <div class="gitem rv" onclick="openLb(3)">
+      <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80" alt="Tacos Double">
+      <div class="gitem-ov"></div>
+      <div class="gitem-caption"><div class="gc-title">TACOS DOUBLE</div><div class="gc-sub">2 viandes au choix</div></div>
+    </div>
+
+    <div class="gitem rv" onclick="openLb(4)">
+      <img src="https://images.unsplash.com/photo-1587131782738-de30ea91a542?w=600&q=80" alt="Chicken">
+      <div class="gitem-ov"></div>
+      <span class="gitem-badge">🍗 Chicken</span>
+      <div class="gitem-caption"><div class="gc-title">CHICKEN STRIPS</div><div class="gc-sub">Tenders panés maison</div></div>
+    </div>
+
+    <div class="gitem rv" onclick="openLb(5)">
+      <img src="https://images.unsplash.com/photo-1561043433-aaf687c4cf04?w=600&q=80" alt="Assiette">
+      <div class="gitem-ov"></div>
+      <div class="gitem-caption"><div class="gc-title">ASSIETTE KEBAB</div><div class="gc-sub">Le menu complet</div></div>
+    </div>
+
+    <div class="gitem rv" onclick="openLb(6)">
+      <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&q=80" alt="Panini">
+      <div class="gitem-ov"></div>
+      <div class="gitem-caption"><div class="gc-title">PANINI MOZZA</div><div class="gc-sub">Croustillant, fondant</div></div>
+    </div>
+
+    <div class="gitem rv" onclick="openLb(7)">
+      <img src="https://images.unsplash.com/photo-1639024471283-03518883512d?w=600&q=80" alt="Wings plat">
+      <div class="gitem-ov"></div>
+      <span class="gitem-badge">🌶 Spicy</span>
+      <div class="gitem-caption"><div class="gc-title">WINGS BUFFALO</div><div class="gc-sub">Sauce pimentée maison</div></div>
+    </div>
+
+    <div class="gitem rv" onclick="openLb(8)">
+      <img src="https://images.unsplash.com/photo-1600803907087-f56d462fd26b?w=600&q=80" alt="Tacos close">
+      <div class="gitem-ov"></div>
+      <div class="gitem-caption"><div class="gc-title">TACOS MAISON</div><div class="gc-sub">Tortilla grillée, garniture généreuse</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lb" onclick="closeLb()">
+  <img id="lb-img" class="lb-img" src="" alt="">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-prev" onclick="event.stopPropagation();lbMove(-1)">‹</button>
+  <button class="lb-next" onclick="event.stopPropagation();lbMove(1)">›</button>
+</div>
+
+<footer>
+  <div class="ft-bot">
+    <div class="ft-logo">SEPT<em>7</em></div>
+    <p>© 2025 Le Sept 7 · 72 rue Jean Jaurès · 77130 Montereau-Fault-Yonne</p>
+    <a href="commande.html" class="btn-red">🔥 Commander</a>
+  </div>
+</footer>
+
+<script>
+const loader=document.getElementById('loader');
+document.body.style.overflow='hidden';
+setTimeout(()=>{loader.classList.add('out');document.body.style.overflow='';},2300);
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>50),{passive:true});
+const burger=document.getElementById('burger'),mnav=document.getElementById('mnav');
+burger.addEventListener('click',()=>{burger.classList.toggle('open');mnav.classList.toggle('open');document.body.style.overflow=mnav.classList.contains('open')?'hidden':'';});
+mnav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger.classList.remove('open');mnav.classList.remove('open');document.body.style.overflow='';}));
+const rvObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');rvObs.unobserve(x.target);}});},{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
+
+// LIGHTBOX
+const imgs=[...document.querySelectorAll('.gitem img')].map(i=>i.src);
+let lbIdx=0;
+function openLb(i){lbIdx=i;document.getElementById('lb-img').src=imgs[i];document.getElementById('lb').classList.add('open');document.body.style.overflow='hidden';}
+function closeLb(){document.getElementById('lb').classList.remove('open');document.body.style.overflow='';}
+function lbMove(d){lbIdx=(lbIdx+d+imgs.length)%imgs.length;document.getElementById('lb-img').src=imgs[lbIdx];}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();if(e.key==='ArrowLeft')lbMove(-1);if(e.key==='ArrowRight')lbMove(1);});
+</script>
+</body>
+</html>

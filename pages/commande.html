@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050505">
+<meta name="description" content="Commander en ligne chez Le Sept 7. Livraison ou à emporter à Montereau-Fault-Yonne.">
+<title>Commander — Le Sept 7 · Street Food · Montereau</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bk:#050505;--bk2:#0A0A0A;--bk3:#111;--bk4:#181818;
+  --red:#FF1A1A;--rdb:rgba(255,26,26,.13);--rdg:rgba(255,26,26,.3);
+  --yel:#FFD426;--ora:#FF6500;
+  --wh:#F5F5F0;--gr:#888;--gr2:#555;--dm:#252525;--brd:rgba(255,255,255,.07);
+  --gn:#25D366;--gnb:rgba(37,211,102,.15);
+  --fn:'Barlow Condensed',-apple-system,sans-serif;
+  --fh:'Bebas Neue','Impact',sans-serif;
+  --tr:.28s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bk);color:var(--wh);font-family:var(--fn);font-weight:500;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bk2)}::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
+input,textarea,select{font-family:var(--fn)}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--bk);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;transition:opacity .6s ease,visibility .6s ease}
+#loader.out{opacity:0;visibility:hidden;pointer-events:none}
+.ld-ring{position:relative;width:88px;height:88px;display:flex;align-items:center;justify-content:center}
+.ld-ring::before{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:var(--red);border-right-color:var(--ora);animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ld-num{font-family:var(--fh);font-size:50px;line-height:1;color:var(--wh);text-shadow:0 0 20px var(--red),0 0 40px var(--rdg);position:relative;z-index:1}
+.ld-name{font-family:var(--fh);font-size:22px;letter-spacing:5px}
+.ld-bar{width:200px;height:2px;background:var(--dm);border-radius:2px;overflow:hidden}
+.ld-prog{height:100%;background:linear-gradient(90deg,var(--red),var(--ora));width:0;animation:lp 2s ease forwards}
+@keyframes lp{to{width:100%}}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;transition:var(--tr)}
+.nav.sc{background:rgba(5,5,5,.95);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding:13px 48px;border-bottom:1px solid var(--brd)}
+.nav-logo{font-family:var(--fh);font-size:26px;letter-spacing:.05em}
+.nav-logo em{color:var(--red);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:36px}
+.nav-links a{font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--gr);transition:color var(--tr)}
+.nav-links a:hover,.nav-links a.on{color:var(--wh)}
+.nav-cta{background:var(--red)!important;color:var(--wh)!important;padding:9px 20px;border-radius:3px;letter-spacing:.18em!important;box-shadow:0 4px 16px var(--rdg)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.burger span{width:22px;height:2px;background:var(--wh);display:block;transition:var(--tr)}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mnav{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bk2);z-index:998;display:flex;flex-direction:column;justify-content:center;padding:0 40px;gap:28px;transform:translateX(100%);transition:transform .42s cubic-bezier(.4,0,.2,1)}
+.mnav.open{transform:translateX(0)}
+.mnav a{font-family:var(--fh);font-size:clamp(44px,10vw,64px);letter-spacing:.04em;color:var(--gr);transition:color var(--tr)}
+.mnav a:hover,.mn-hot{color:var(--red)!important}
+.mnav-line{width:40px;height:2px;background:var(--red);margin-bottom:8px}
+
+/* HERO */
+.ohero{padding:110px 48px 50px;background:var(--bk2);border-bottom:1px solid var(--brd);position:relative;overflow:hidden}
+.ohero-glow{position:absolute;bottom:0;left:0;right:0;height:240px;background:radial-gradient(ellipse 80% 100% at 50% 100%,rgba(255,26,26,.1) 0%,transparent 70%);pointer-events:none}
+.ohero-inner{max-width:1400px;margin:0 auto;position:relative;z-index:1}
+.ohero-eye{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ohero-eye::before{content:'';width:20px;height:2px;background:var(--red)}
+.ohero h1{font-family:var(--fh);font-size:clamp(50px,8vw,84px);letter-spacing:.02em;line-height:.9;margin-bottom:10px}
+.ohero-sub{font-size:15px;color:var(--gr)}
+
+/* LAYOUT */
+.order-wrap{max-width:1400px;margin:0 auto;padding:48px 48px 120px;display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:start}
+
+/* PRODUCTS SIDE */
+.op-section{margin-bottom:40px}
+.op-sec-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid var(--bk4)}
+.op-sec-ico{font-size:22px}
+.op-sec-title{font-family:var(--fh);font-size:26px;letter-spacing:.05em}
+.op-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.op-item{background:var(--bk3);border:1px solid var(--brd);border-radius:6px;overflow:hidden;display:flex;transition:var(--tr)}
+.op-item:hover{border-color:rgba(255,26,26,.18)}
+.op-item.added{border-color:rgba(255,26,26,.35);background:linear-gradient(135deg,rgba(255,26,26,.04),var(--bk3))}
+.op-img{width:88px;height:88px;flex-shrink:0;overflow:hidden}
+.op-img img{width:100%;height:100%;object-fit:cover}
+.op-img-em{width:88px;height:88px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:30px;background:var(--bk4)}
+.op-info{flex:1;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-width:0}
+.op-name{font-size:13.5px;font-weight:700;line-height:1.3;margin-bottom:3px}
+.op-desc{font-size:11px;color:var(--gr);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:8px}
+.op-foot{display:flex;align-items:center;justify-content:space-between}
+.op-price{font-size:15px;font-weight:700;color:var(--yel)}
+.op-add{width:30px;height:30px;background:var(--red);border:none;border-radius:3px;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;font-weight:700;line-height:1;transition:var(--tr);flex-shrink:0}
+.op-add:hover{transform:scale(1.12);box-shadow:0 4px 14px var(--rdg)}
+.op-add:active{transform:scale(.95)}
+
+/* CART SIDE */
+.cart-side{position:sticky;top:90px;background:var(--bk2);border:1px solid var(--brd);border-radius:8px;overflow:hidden}
+.cart-hdr{padding:20px 22px;border-bottom:1px solid var(--brd);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(255,26,26,.07),transparent)}
+.cart-hdr-l{display:flex;align-items:center;gap:10px}
+.cart-htitle{font-family:var(--fh);font-size:24px;letter-spacing:.04em}
+.cart-count{background:var(--red);color:#fff;font-size:11px;font-weight:700;min-width:22px;height:22px;padding:0 5px;border-radius:20px;display:flex;align-items:center;justify-content:center;transition:transform .25s}
+.cart-count.bump{animation:bump .3s var(--ease)}
+@keyframes bump{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
+.cart-clear{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gr2);background:none;border:none;cursor:pointer;transition:color var(--tr)}
+.cart-clear:hover{color:var(--red)}
+.cart-empty{padding:48px 20px;text-align:center}
+.cart-empty-ico{font-size:40px;margin-bottom:12px;opacity:.3}
+.cart-empty p{font-size:14px;color:var(--gr);line-height:1.7}
+.cart-items{padding:14px 16px;max-height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.citem{display:flex;align-items:center;gap:10px;background:var(--bk3);border-radius:5px;padding:10px 12px;animation:ci-in .25s ease}
+@keyframes ci-in{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+.ci-name{flex:1;font-size:13px;font-weight:700;line-height:1.3;min-width:0}
+.ci-price{font-size:13px;font-weight:700;color:var(--yel);white-space:nowrap;margin-right:8px}
+.ci-ctrl{display:flex;align-items:center;gap:6px}
+.ci-btn{width:24px;height:24px;background:var(--bk2);border:1px solid var(--dm);border-radius:3px;color:var(--wh);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;font-weight:700;line-height:1;transition:var(--tr)}
+.ci-btn:hover{border-color:var(--red);color:var(--red)}
+.ci-qty{font-size:13px;font-weight:800;min-width:18px;text-align:center}
+.ci-del{background:none;border:none;color:var(--gr2);cursor:pointer;font-size:16px;padding:2px;transition:color var(--tr);flex-shrink:0}
+.ci-del:hover{color:var(--red)}
+
+/* CART FORM */
+.cart-form{padding:16px 20px;border-top:1px solid var(--brd)}
+.cf-tot{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--brd)}
+.cf-tot-lbl{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gr)}
+.cf-tot-num{font-family:var(--fh);font-size:30px;color:var(--yel)}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.fl{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gr)}
+.fi{background:var(--bk3);border:1.5px solid var(--dm);border-radius:4px;padding:11px 14px;color:var(--wh);font-size:14px;font-weight:600;outline:none;transition:border-color var(--tr);width:100%}
+.fi:focus{border-color:var(--red)}
+.fi.err{border-color:var(--red)}
+.fi::placeholder{color:var(--gr2)}
+input[type="time"].fi{color-scheme:dark}
+textarea.fi{resize:none;min-height:72px;font-size:13px;line-height:1.5}
+.mode-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mode-btn{padding:11px 8px;background:var(--bk3);border:1.5px solid var(--dm);border-radius:4px;color:var(--gr);font-family:var(--fn);font-size:13px;font-weight:700;cursor:pointer;transition:all var(--tr);text-align:center}
+.mode-btn.on{background:var(--rdb);border-color:var(--red);color:var(--red)}
+.ferr{font-size:11px;color:var(--red);margin-top:2px}
+.send-btns{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--gn);color:#fff;border:none;border-radius:4px;padding:16px;font-family:var(--fn);font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:var(--tr);box-shadow:0 6px 24px rgba(37,211,102,.25)}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(37,211,102,.4)}
+.btn-wa:active{transform:scale(.98)}
+.btn-sms{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:transparent;color:var(--gr);border:1px solid var(--dm);border-radius:4px;padding:12px;font-family:var(--fn);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:var(--tr)}
+.btn-sms:hover{border-color:rgba(255,255,255,.2);color:var(--wh)}
+.btn-call{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:rgba(10,132,255,.12);color:#4DA6FF;border:1px solid rgba(10,132,255,.25);border-radius:4px;padding:12px;font-family:var(--fn);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:var(--tr)}
+.btn-call:hover{background:rgba(10,132,255,.2)}
+
+/* SUCCESS OVERLAY */
+.success-overlay{position:fixed;inset:0;background:rgba(5,5,5,.92);z-index:2000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(12px);opacity:0;visibility:hidden;transition:opacity .4s ease,visibility .4s ease}
+.success-overlay.show{opacity:1;visibility:visible}
+.success-box{background:var(--bk2);border:1px solid rgba(37,211,102,.3);border-radius:10px;padding:48px 40px;text-align:center;max-width:400px;width:90%;box-shadow:0 0 60px rgba(37,211,102,.15);animation:sbx .5s cubic-bezier(.32,.72,0,1) both}
+@keyframes sbx{from{transform:scale(.8) translateY(20px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.suc-ring{width:80px;height:80px;border-radius:50%;background:rgba(37,211,102,.12);border:2px solid rgba(37,211,102,.4);display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 20px;box-shadow:0 0 30px rgba(37,211,102,.2)}
+.suc-title{font-family:var(--fh);font-size:36px;letter-spacing:.05em;margin-bottom:10px}
+.suc-sub{font-size:15px;color:var(--gr);line-height:1.7;margin-bottom:28px}
+.suc-dot{width:8px;height:8px;background:var(--gn);border-radius:50%;margin:0 auto 24px;animation:sp2 2s infinite}
+@keyframes sp2{0%{box-shadow:0 0 0 0 rgba(37,211,102,.5)}70%{box-shadow:0 0 0 12px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+
+/* MOBILE STICKY CART */
+.mobile-cart-btn{display:none;position:fixed;bottom:0;left:0;right:0;padding:10px 16px 22px;background:linear-gradient(to top,rgba(5,5,5,1) 50%,rgba(5,5,5,0));z-index:50}
+.mcb{width:100%;background:var(--red);color:#fff;border:none;border-radius:4px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;font-family:var(--fn);font-weight:700;font-size:15px;letter-spacing:.1em;cursor:pointer;box-shadow:0 6px 24px var(--rdg);transition:var(--tr);animation:mca .3s ease}
+@keyframes mca{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+.mcb:active{transform:scale(.98)}
+.mcb-l{display:flex;align-items:center;gap:10px}
+.mcb-count{background:rgba(0,0,0,.2);width:28px;height:28px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900}
+.mobile-drawer{position:fixed;bottom:0;left:0;right:0;background:var(--bk2);border-radius:20px 20px 0 0;border-top:1px solid var(--brd);z-index:200;transform:translateY(102%);transition:transform .4s cubic-bezier(.32,.72,0,1);max-height:92vh;overflow-y:auto;padding-bottom:env(safe-area-inset-bottom)}
+.mobile-drawer.open{transform:translateY(0)}
+.md-pill{width:38px;height:4px;background:var(--dm);border-radius:2px;margin:12px auto 8px}
+.md-hdr{display:flex;align-items:center;justify-content:space-between;padding:8px 20px 16px;border-bottom:1px solid var(--brd)}
+.md-title{font-family:var(--fh);font-size:22px;letter-spacing:.05em}
+.md-close{width:34px;height:34px;background:var(--bk3);border:1px solid var(--dm);border-radius:6px;color:var(--wh);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
+
+/* FOOTER */
+footer{background:var(--bk2);border-top:1px solid var(--brd);padding:60px 48px 32px}
+.ft-inner{max-width:1400px;margin:0 auto}
+.ft-bot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.ft-bot p{font-size:12px;color:var(--gr2)}
+.ft-logo{font-family:var(--fh);font-size:28px;letter-spacing:.05em}
+.ft-logo em{color:var(--red);font-style:normal}
+
+/* RESPONSIVE */
+@media(max-width:960px){.order-wrap{grid-template-columns:1fr;padding:32px 20px 100px}.cart-side{display:none}.mobile-cart-btn{display:block}.ohero{padding:90px 20px 36px}.nav{padding:16px 20px}.nav.sc{padding:12px 20px}.nav-links{display:none}.burger{display:flex}.op-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.op-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="ld-ring"><div class="ld-num">7</div></div>
+  <div class="ld-name">COMMANDE</div>
+  <div class="ld-bar"><div class="ld-prog"></div></div>
+</div>
+
+<nav class="nav" id="nav">
+  <a href="../index.html" class="nav-logo">SEPT<em>7</em></a>
+  <div class="nav-links">
+    <a href="../index.html">Accueil</a>
+    <a href="menu.html">Menu</a>
+    <a href="galerie.html">Galerie</a>
+    <a href="commande.html" class="nav-cta on">🔥 Commander</a>
+  </div>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mnav" id="mnav">
+  <div class="mnav-line"></div>
+  <a href="../index.html">Accueil</a>
+  <a href="menu.html">Menu</a>
+  <a href="galerie.html">Galerie</a>
+  <a href="commande.html" class="mn-hot">Commander →</a>
+</div>
+
+<!-- HERO -->
+<div class="ohero">
+  <div class="ohero-glow"></div>
+  <div class="ohero-inner">
+    <div class="ohero-eye">Commande en ligne</div>
+    <h1>PASSE<br>TA COMMANDE</h1>
+    <p class="ohero-sub">Ajoute tes plats · Choisis tes options · Envoie via WhatsApp &nbsp;·&nbsp; Prêt en 15 min</p>
+  </div>
+</div>
+
+<!-- ORDER LAYOUT -->
+<div class="order-wrap">
+
+  <!-- PRODUCTS -->
+  <div class="products-side">
+
+    <div class="op-section">
+      <div class="op-sec-head"><span class="op-sec-ico">🥙</span><h2 class="op-sec-title">KEBABS</h2></div>
+      <div class="op-grid">
+        <div class="op-item" id="item-kebab-n">
+          <img class="op-img" src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Kebab Normal" loading="lazy">
+          <div class="op-info"><div class="op-name">Kebab Normal</div><div class="op-desc">Pain pita, viande, sauce au choix</div><div class="op-foot"><span class="op-price">6,50 €</span><button class="op-add" onclick="Cart.add('kebab-n','Kebab Normal',6.50)">+</button></div></div>
+        </div>
+        <div class="op-item" id="item-kebab-xl">
+          <img class="op-img" src="https://images.unsplash.com/photo-1622289970580-2c68e8c6e0e2?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Kebab XL" loading="lazy">
+          <div class="op-info"><div class="op-name">Kebab XL ⭐</div><div class="op-desc">Double viande, sauce secrète Sept 7</div><div class="op-foot"><span class="op-price">8,50 €</span><button class="op-add" onclick="Cart.add('kebab-xl','Kebab XL',8.50)">+</button></div></div>
+        </div>
+        <div class="op-item" id="item-assiette-k">
+          <img class="op-img" src="https://images.unsplash.com/photo-1561043433-aaf687c4cf04?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Assiette Kebab" loading="lazy">
+          <div class="op-info"><div class="op-name">Assiette Kebab</div><div class="op-desc">Viande + frites + salade + sauce</div><div class="op-foot"><span class="op-price">10,00 €</span><button class="op-add" onclick="Cart.add('assiette-k','Assiette Kebab',10.00)">+</button></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="op-section">
+      <div class="op-sec-head"><span class="op-sec-ico">🌮</span><h2 class="op-sec-title">TACOS</h2></div>
+      <div class="op-grid">
+        <div class="op-item" id="item-tacos-s">
+          <img class="op-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Tacos Simple" loading="lazy">
+          <div class="op-info"><div class="op-name">Tacos Simple</div><div class="op-desc">1 viande, sauce fromagère</div><div class="op-foot"><span class="op-price">7,00 €</span><button class="op-add" onclick="Cart.add('tacos-s','Tacos Simple',7.00)">+</button></div></div>
+        </div>
+        <div class="op-item" id="item-tacos-d">
+          <img class="op-img" src="https://images.unsplash.com/photo-1600803907087-f56d462fd26b?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Tacos Double" loading="lazy">
+          <div class="op-info"><div class="op-name">Tacos Double</div><div class="op-desc">2 viandes, double sauce fromagère</div><div class="op-foot"><span class="op-price">9,00 €</span><button class="op-add" onclick="Cart.add('tacos-d','Tacos Double',9.00)">+</button></div></div>
+        </div>
+        <div class="op-item" id="item-tacos-xl">
+          <img class="op-img" src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Tacos Triple XL" loading="lazy">
+          <div class="op-info"><div class="op-name">Tacos Triple XL 🔥</div><div class="op-desc">3 viandes, fromage fondu, XL</div><div class="op-foot"><span class="op-price">11,00 €</span><button class="op-add" onclick="Cart.add('tacos-xl','Tacos Triple XL',11.00)">+</button></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="op-section">
+      <div class="op-sec-head"><span class="op-sec-ico">🥖</span><h2 class="op-sec-title">SANDWICHS</h2></div>
+      <div class="op-grid">
+        <div class="op-item" id="item-panini-m">
+          <img class="op-img" src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Panini Mozza" loading="lazy">
+          <div class="op-info"><div class="op-name">Panini Mozza ✨</div><div class="op-desc">Jambon, mozzarella, pesto</div><div class="op-foot"><span class="op-price">7,00 €</span><button class="op-add" onclick="Cart.add('panini-m','Panini Mozza',7.00)">+</button></div></div>
+        </div>
+        <div class="op-item" id="item-sand-p">
+          <img class="op-img" src="https://images.unsplash.com/photo-1528736235302-52922df5c122?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Sandwich Poulet" loading="lazy">
+          <div class="op-info"><div class="op-name">Sandwich Poulet</div><div class="op-desc">Escalope grillée, mayo maison</div><div class="op-foot"><span class="op-price">7,50 €</span><button class="op-add" onclick="Cart.add('sand-p','Sandwich Poulet',7.50)">+</button></div></div>
+        </div>
+        <div class="op-item" id="item-sand-m">
+          <img class="op-img" src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Sandwich Mixte" loading="lazy">
+          <div class="op-info"><div class="op-name">Sandwich Mixte</div><div class="op-desc">Thon, œuf, salade, vinaigrette</div><div class="op-foot"><span class="op-price">6,50 €</span><button class="op-add" onclick="Cart.add('sand-m','Sandwich Mixte',6.50)">+</button></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="op-section">
+      <div class="op-sec-head"><span class="op-sec-ico">🍗</span><h2 class="op-sec-title">WINGS</h2></div>
+      <div class="op-grid">
+        <div class="op-item" id="item-wings-6">
+          <img class="op-img" src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Wings x6" loading="lazy">
+          <div class="op-info"><div class="op-name">Wings x6</div><div class="op-desc">Buffalo, BBQ ou honey mustard</div><div class="op-foot"><span class="op-price">6,50 €</span><button class="op-add" onclick="Cart.add('wings-6','Wings x6',6.50)">+</button></div></div>
+        </div>
+        <div class="op-item" id="item-wings-12">
+          <img class="op-img" src="https://images.unsplash.com/photo-1587131782738-de30ea91a542?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Wings x12" loading="lazy">
+          <div class="op-info"><div class="op-name">Wings x12</div><div class="op-desc">2 sauces au choix — best value</div><div class="op-foot"><span class="op-price">11,00 €</span><button class="op-add" onclick="Cart.add('wings-12','Wings x12',11.00)">+</button></div></div>
+        </div>
+        <div class="op-item" id="item-strips">
+          <img class="op-img" src="https://images.unsplash.com/photo-1639024471283-03518883512d?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Chicken Strips" loading="lazy">
+          <div class="op-info"><div class="op-name">Chicken Strips</div><div class="op-desc">Tenders panés, sauce pimentée</div><div class="op-foot"><span class="op-price">7,50 €</span><button class="op-add" onclick="Cart.add('strips','Chicken Strips',7.50)">+</button></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="op-section">
+      <div class="op-sec-head"><span class="op-sec-ico">🍱</span><h2 class="op-sec-title">MENUS COMPLETS</h2></div>
+      <div class="op-grid">
+        <div class="op-item" id="item-menu-k">
+          <img class="op-img" src="https://images.unsplash.com/photo-1622289970580-2c68e8c6e0e2?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Menu Kebab" loading="lazy">
+          <div class="op-info"><div class="op-name">Menu Kebab</div><div class="op-desc">Kebab + frites + boisson</div><div class="op-foot"><span class="op-price">10,00 €</span><button class="op-add" onclick="Cart.add('menu-k','Menu Kebab',10.00)">+</button></div></div>
+        </div>
+        <div class="op-item" id="item-menu-t">
+          <img class="op-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Menu Tacos" loading="lazy">
+          <div class="op-info"><div class="op-name">Menu Tacos</div><div class="op-desc">Tacos + frites + boisson</div><div class="op-foot"><span class="op-price">11,00 €</span><button class="op-add" onclick="Cart.add('menu-t','Menu Tacos',11.00)">+</button></div></div>
+        </div>
+        <div class="op-item" id="item-menu-w">
+          <img class="op-img" src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=200&q=70" style="width:88px;height:88px;object-fit:cover;flex-shrink:0" alt="Menu Wings" loading="lazy">
+          <div class="op-info"><div class="op-name">Menu Wings</div><div class="op-desc">Wings x6 + frites + boisson</div><div class="op-foot"><span class="op-price">11,00 €</span><button class="op-add" onclick="Cart.add('menu-w','Menu Wings',11.00)">+</button></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="op-section">
+      <div class="op-sec-head"><span class="op-sec-ico">🥤</span><h2 class="op-sec-title">BOISSONS</h2></div>
+      <div class="op-grid">
+        <div class="op-item" id="item-coca"><div class="op-img-em">🥤</div><div class="op-info"><div class="op-name">Coca-Cola 33cl</div><div class="op-desc">Original · Zéro · Light</div><div class="op-foot"><span class="op-price">2,00 €</span><button class="op-add" onclick="Cart.add('coca','Coca-Cola 33cl',2.00)">+</button></div></div></div>
+        <div class="op-item" id="item-jus"><div class="op-img-em">🧃</div><div class="op-info"><div class="op-name">Jus de fruits 33cl</div><div class="op-desc">Orange · Pomme · Mangue</div><div class="op-foot"><span class="op-price">2,00 €</span><button class="op-add" onclick="Cart.add('jus','Jus de fruits',2.00)">+</button></div></div></div>
+        <div class="op-item" id="item-eau"><div class="op-img-em">💧</div><div class="op-info"><div class="op-name">Eau minérale 50cl</div><div class="op-desc">Plate ou gazeuse</div><div class="op-foot"><span class="op-price">1,50 €</span><button class="op-add" onclick="Cart.add('eau','Eau minérale',1.50)">+</button></div></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CART SIDEBAR (desktop) -->
+  <aside class="cart-side">
+    <div class="cart-hdr">
+      <div class="cart-hdr-l">
+        <span class="cart-htitle">🛒 Panier</span>
+        <span class="cart-count" id="cc">0</span>
+      </div>
+      <button class="cart-clear" onclick="Cart.clear()">Vider</button>
+    </div>
+
+    <div id="cart-empty" class="cart-empty">
+      <div class="cart-empty-ico">🛒</div>
+      <p>Ton panier est vide.<br>Ajoute des plats !</p>
+    </div>
+
+    <div id="cart-items" class="cart-items"></div>
+
+    <div class="cart-form">
+      <div class="cf-tot">
+        <span class="cf-tot-lbl">Total estimé</span>
+        <span class="cf-tot-num" id="ct">0,00 €</span>
+      </div>
+
+      <div class="fg">
+        <label class="fl">👤 Prénom & Nom</label>
+        <input class="fi" id="f-name" placeholder="Jean Dupont" type="text">
+        <span class="ferr" id="err-name" style="display:none">Requis</span>
+      </div>
+      <div class="fg">
+        <label class="fl">📞 Téléphone</label>
+        <input class="fi" id="f-phone" placeholder="06 12 34 56 78" type="tel">
+        <span class="ferr" id="err-phone" style="display:none">Requis</span>
+      </div>
+      <div class="fg">
+        <label class="fl">🏠 Mode</label>
+        <div class="mode-row">
+          <button class="mode-btn on" id="btn-sp" onclick="setMode('sur_place')">🪑 Sur place</button>
+          <button class="mode-btn" id="btn-em" onclick="setMode('emporter')">🥡 À emporter</button>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">⏰ Heure souhaitée</label>
+        <input class="fi" id="f-time" type="time">
+        <span class="ferr" id="err-time" style="display:none">Requis</span>
+      </div>
+      <div class="fg">
+        <label class="fl">📝 Viande · Sauce · Notes <span style="color:var(--gr2);font-weight:500;text-transform:none;letter-spacing:0">(facultatif)</span></label>
+        <textarea class="fi" id="f-notes" placeholder="Ex: Tacos Double → kebab+merguez, sauce samouraï&#10;Wings → BBQ&#10;Gratiné sur le tacos..."></textarea>
+      </div>
+
+      <div class="send-btns">
+        <button class="btn-wa" onclick="Cart.sendWA()">💬 Commander via WhatsApp</button>
+        <button class="btn-sms" onclick="Cart.sendSMS()">📲 Envoyer par SMS</button>
+        <a href="tel:0763676191" class="btn-call">📞 Appeler le restaurant</a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-overlay" id="success">
+  <div class="success-box">
+    <div class="suc-ring">🎉</div>
+    <div class="suc-title">C'EST PARTI !</div>
+    <div class="suc-dot"></div>
+    <p class="suc-sub">Commande envoyée au Sept 7.<br>On confirme ta commande rapidement.<br>Prêt en 15 min !</p>
+    <button onclick="closeSuccess()" style="background:var(--red);color:#fff;border:none;padding:12px 28px;border-radius:3px;font-family:var(--fn);font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;cursor:pointer">OK</button>
+  </div>
+</div>
+
+<!-- MOBILE: Sticky cart button -->
+<div class="mobile-cart-btn" id="mob-cart-btn" style="display:none">
+  <button class="mcb" onclick="openMobileCart()">
+    <div class="mcb-l"><span class="mcb-count" id="mob-cc">0</span><span>Voir mon panier</span></div>
+    <span id="mob-ct" style="font-size:16px;font-weight:900">0,00 €</span>
+  </button>
+</div>
+
+<!-- MOBILE CART DRAWER -->
+<div class="mobile-drawer" id="mob-drawer">
+  <div class="md-pill"></div>
+  <div class="md-hdr">
+    <span class="md-title">🛒 Mon panier</span>
+    <button class="md-close" onclick="closeMobileCart()">✕</button>
+  </div>
+  <div style="padding:16px 20px">
+    <div id="mob-items" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);margin-bottom:16px">
+      <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gr)">Total estimé</span>
+      <span id="mob-tot-num" style="font-family:var(--fh);font-size:28px;color:var(--yel)">0,00 €</span>
+    </div>
+    <div class="fg"><label class="fl">👤 Nom</label><input class="fi" id="mf-name" placeholder="Jean Dupont" type="text"></div>
+    <div class="fg"><label class="fl">📞 Téléphone</label><input class="fi" id="mf-phone" placeholder="06 12 34 56 78" type="tel"></div>
+    <div class="fg"><label class="fl">🏠 Mode</label><div class="mode-row"><button class="mode-btn on" id="mbn-sp" onclick="setMMode('sur_place')">🪑 Sur place</button><button class="mode-btn" id="mbn-em" onclick="setMMode('emporter')">🥡 À emporter</button></div></div>
+    <div class="fg"><label class="fl">⏰ Heure</label><input class="fi" id="mf-time" type="time"></div>
+    <div class="fg"><label class="fl">📝 Notes</label><textarea class="fi" id="mf-notes" placeholder="Viande, sauce, gratiné..."></textarea></div>
+    <div class="send-btns" style="padding-bottom:24px">
+      <button class="btn-wa" onclick="Cart.sendWA(true)">💬 Commander via WhatsApp</button>
+      <button class="btn-sms" onclick="Cart.sendSMS(true)">📲 Envoyer par SMS</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-inner">
+    <div class="ft-bot">
+      <div class="ft-logo">SEPT<em>7</em></div>
+      <p>© 2025 Le Sept 7 · 72 rue Jean Jaurès · 77130 Montereau-Fault-Yonne</p>
+      <a href="tel:0763676191" style="font-size:14px;font-weight:700;color:var(--gr)">📞 07 63 67 61 91</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// LOADER
+const loader=document.getElementById('loader');
+document.body.style.overflow='hidden';
+setTimeout(()=>{loader.classList.add('out');document.body.style.overflow='';},2300);
+
+// NAV
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>50),{passive:true});
+const burger=document.getElementById('burger'),mnav=document.getElementById('mnav');
+burger.addEventListener('click',()=>{burger.classList.toggle('open');mnav.classList.toggle('open');document.body.style.overflow=mnav.classList.contains('open')?'hidden':'';});
+mnav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger.classList.remove('open');mnav.classList.remove('open');document.body.style.overflow='';}));
+
+// MODE
+let currentMode='sur_place';
+let currentMobileMode='sur_place';
+function setMode(m){currentMode=m;document.getElementById('btn-sp').classList.toggle('on',m==='sur_place');document.getElementById('btn-em').classList.toggle('on',m==='emporter');}
+function setMMode(m){currentMobileMode=m;document.getElementById('mbn-sp').classList.toggle('on',m==='sur_place');document.getElementById('mbn-em').classList.toggle('on',m==='emporter');}
+
+// MOBILE DRAWER
+function openMobileCart(){document.getElementById('mob-drawer').classList.add('open');document.getElementById('mob-drawer').querySelector('#mob-items').innerHTML='';document.body.style.overflow='hidden';renderMobileItems();}
+function closeMobileCart(){document.getElementById('mob-drawer').classList.remove('open');document.body.style.overflow='';}
+
+function renderMobileItems(){
+  const el=document.getElementById('mob-items');
+  el.innerHTML='';
+  if(!Cart.items.length){el.innerHTML='<p style="color:var(--gr);font-size:14px;text-align:center;padding:20px 0">Panier vide — ajoute des plats !</p>';return;}
+  Cart.items.forEach(i=>{
+    const d=document.createElement('div');
+    d.className='citem';
+    d.innerHTML=`<span class="ci-name">${i.name}</span><span class="ci-price">${(i.price*i.qty).toFixed(2)}€</span><div class="ci-ctrl"><button class="ci-btn" onclick="Cart.dec('${i.id}');renderMobileItems()">-</button><span class="ci-qty">${i.qty}</span><button class="ci-btn" onclick="Cart.inc('${i.id}');renderMobileItems()">+</button></div><button class="ci-del" onclick="Cart.remove('${i.id}');renderMobileItems()">✕</button>`;
+    el.appendChild(d);
+  });
+  document.getElementById('mob-tot-num').textContent=Cart.total().toFixed(2)+' €';
+}
+
+// CART
+const Cart={
+  items:[],
+  add(id,name,price){
+    const ex=this.items.find(i=>i.id===id);
+    if(ex){ex.qty++;}else{this.items.push({id,name,price,qty:1});}
+    const el=document.getElementById('item-'+id);
+    if(el){el.classList.add('added');setTimeout(()=>el.classList.remove('added'),1200);}
+    this.render();
+  },
+  inc(id){const i=this.items.find(x=>x.id===id);if(i)i.qty++;this.render();},
+  dec(id){const i=this.items.find(x=>x.id===id);if(i){i.qty--;if(i.qty<=0)this.items=this.items.filter(x=>x.id!==id);}this.render();},
+  remove(id){this.items=this.items.filter(i=>i.id!==id);this.render();},
+  clear(){this.items=[];this.render();},
+  total(){return this.items.reduce((s,i)=>s+i.price*i.qty,0);},
+  count(){return this.items.reduce((s,i)=>s+i.qty,0);},
+  render(){
+    const c=this.count();
+    // Desktop
+    const cc=document.getElementById('cc');
+    cc.textContent=c;
+    cc.classList.add('bump');setTimeout(()=>cc.classList.remove('bump'),350);
+    document.getElementById('ct').textContent=this.total().toFixed(2)+' €';
+    const em=document.getElementById('cart-empty');
+    const ci=document.getElementById('cart-items');
+    em.style.display=c?'none':'block';
+    ci.innerHTML='';
+    this.items.forEach(i=>{
+      const d=document.createElement('div');
+      d.className='citem';
+      d.innerHTML=`<span class="ci-name">${i.name}</span><span class="ci-price">${(i.price*i.qty).toFixed(2)}€</span><div class="ci-ctrl"><button class="ci-btn" onclick="Cart.dec('${i.id}')">-</button><span class="ci-qty">${i.qty}</span><button class="ci-btn" onclick="Cart.inc('${i.id}')">+</button></div><button class="ci-del" onclick="Cart.remove('${i.id}')">✕</button>`;
+      ci.appendChild(d);
+    });
+    // Mobile
+    const mobBtn=document.getElementById('mob-cart-btn');
+    const mobCC=document.getElementById('mob-cc');
+    const mobCT=document.getElementById('mob-ct');
+    mobBtn.style.display=c?'block':'none';
+    if(mobCC)mobCC.textContent=c;
+    if(mobCT)mobCT.textContent=this.total().toFixed(2)+' €';
+  },
+  getForm(mobile){
+    return{
+      name:document.getElementById(mobile?'mf-name':'f-name').value,
+      phone:document.getElementById(mobile?'mf-phone':'f-phone').value,
+      time:document.getElementById(mobile?'mf-time':'f-time').value,
+      notes:document.getElementById(mobile?'mf-notes':'f-notes').value,
+      mode:mobile?currentMobileMode:currentMode,
+    };
+  },
+  validate(mobile){
+    const f=this.getForm(mobile);
+    let ok=true;
+    if(!mobile){
+      const en=document.getElementById('err-name');
+      const ep=document.getElementById('err-phone');
+      const et=document.getElementById('err-time');
+      const fn=document.getElementById('f-name');
+      const fp=document.getElementById('f-phone');
+      const ft=document.getElementById('f-time');
+      en.style.display=fn.value.trim()?'none':'block';
+      ep.style.display=fp.value.trim()?'none':'block';
+      et.style.display=ft.value?'none':'block';
+      fn.classList.toggle('err',!fn.value.trim());
+      fp.classList.toggle('err',!fp.value.trim());
+      ft.classList.toggle('err',!ft.value);
+      ok=!!(fn.value.trim()&&fp.value.trim()&&ft.value);
+    }else{
+      const mn=document.getElementById('mf-name');
+      const mp=document.getElementById('mf-phone');
+      const mt=document.getElementById('mf-time');
+      ok=!!(mn.value.trim()&&mp.value.trim()&&mt.value);
+      if(!ok)alert('Merci de remplir : nom, téléphone et heure.');
+    }
+    return ok;
+  },
+  buildMsg(mobile){
+    const f=this.getForm(mobile);
+    const ml=f.mode==='sur_place'?'Sur place 🪑':'À emporter 🥡';
+    const lines=this.items.map(i=>`• ${i.qty}x ${i.name} — ${(i.price*i.qty).toFixed(2)}€`).join('\n');
+    const notes=f.notes.trim()?`\n\n📝 Notes : ${f.notes}`:'';
+    return `🍽️ Nouvelle commande — Le Sept 7\n\n👤 Nom : ${f.name}\n📞 Tél : ${f.phone}\n\n📋 Commande :\n${lines}\n\n💰 Total : ${this.total().toFixed(2)}€\n\n🏠 Mode : ${ml}\n⏰ Heure : ${f.time}${notes}`;
+  },
+  sendWA(mobile=false){
+    if(!this.items.length)return alert('Ton panier est vide !');
+    if(!this.validate(mobile))return;
+    window.open(`https://wa.me/33763676191?text=${encodeURIComponent(this.buildMsg(mobile))}`,'_blank');
+    this.afterSend(mobile);
+  },
+  sendSMS(mobile=false){
+    if(!this.items.length)return alert('Ton panier est vide !');
+    if(!this.validate(mobile))return;
+    window.open(`sms:0763676191?body=${encodeURIComponent(this.buildMsg(mobile))}`,'_blank');
+    this.afterSend(mobile);
+  },
+  afterSend(mobile){
+    if(mobile)closeMobileCart();
+    document.getElementById('success').classList.add('show');
+    this.clear();
+  }
+};
+
+function closeSuccess(){
+  document.getElementById('success').classList.remove('show');
+  // reset form
+  ['f-name','f-phone','f-time','f-notes','mf-name','mf-phone','mf-time','mf-notes'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.value='';
+  });
+}
+
+// Close on overlay click
+document.getElementById('success').addEventListener('click',e=>{if(e.target.id==='success')closeSuccess();});
+
+// Swipe to close mobile drawer
+let ts=0;
+document.getElementById('mob-drawer').addEventListener('touchstart',e=>ts=e.touches[0].clientY,{passive:true});
+document.getElementById('mob-drawer').addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-ts>60)closeMobileCart();},{passive:true});
+</script>
+</body>
+</html>
