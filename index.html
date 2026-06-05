@@ -443,6 +443,29 @@
     .btn-personaliser:hover{background:var(--red-dk);box-shadow:0 0 20px var(--red-glow)}
     @media(max-width:540px){.size-cards{grid-template-columns:1fr 1fr}.options-grid{grid-template-columns:1fr 1fr}.tacos-foot{flex-wrap:wrap}.tacos-price-display{flex:1}.tacos-nav-btns{width:100%;justify-content:space-between}}
 
+
+/* ===== PRODUCT MODAL (simple) ===== */
+#product-modal{position:fixed;inset:0;z-index:5700;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .3s ease}
+#product-modal.open{opacity:1;pointer-events:all}
+.pmodal-box{background:#0a0a0a;border:1px solid #1c1c1c;width:100%;max-width:460px;max-height:82vh;display:flex;flex-direction:column;border-radius:12px;transform:scale(.94) translateY(10px);transition:transform .35s cubic-bezier(.22,1,.36,1);overflow:hidden}
+#product-modal.open .pmodal-box{transform:scale(1) translateY(0)}
+.pmodal-head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid #1c1c1c;background:#060606;flex-shrink:0;gap:10px}
+.pmodal-name{font-family:var(--display);font-size:1.15rem;letter-spacing:.05em;line-height:1}
+.pmodal-hint{font-size:.68rem;color:#666;margin-top:3px;letter-spacing:.04em}
+.pmodal-body{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:11px}
+.pmodal-slbl{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#555;margin-bottom:4px}
+.pmodal-foot{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1px solid #1c1c1c;background:#060606;flex-shrink:0;gap:10px}
+.pmodal-price-wrap{display:flex;flex-direction:column}
+.pmodal-price-lbl{font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#555}
+.pmodal-price-val{font-family:var(--display);font-size:1.55rem;color:var(--yellow);line-height:1;transition:transform .15s}
+.pmodal-price-val.bump{animation:priceBump .22s ease both}
+.drink-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.drink-chip{padding:9px 10px;border:1.5px solid #252525;background:#111;border-radius:6px;cursor:pointer;font-size:.76rem;font-weight:600;transition:all .2s;text-align:center;user-select:none;-webkit-tap-highlight-color:transparent}
+.drink-chip:hover{border-color:rgba(224,20,31,.35);background:rgba(224,20,31,.06)}
+.drink-chip.selected{border-color:var(--red);background:rgba(224,20,31,.14)}
+.size-cards-sm{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(max-width:400px){.pmodal-box{max-width:100%;border-radius:12px 12px 0 0}.pmodal-foot{flex-wrap:wrap}}
+
   </style>
 </head>
 <body>
@@ -660,7 +683,7 @@
             <div class="mcard-desc">Steak presse, cheddar fondu, sauce maison, salade, tomate, oignons caramelises</div>
             <div class="mcard-ft"><div class="mcard-price">5,40&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('SMASH BURGER',5.4)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'SMASH BURGER',price:5.4,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -676,7 +699,7 @@
             <div class="mcard-desc">Poulet croustillant, cheddar, salade, cornichons, sauce ranch maison</div>
             <div class="mcard-ft"><div class="mcard-price">5,40&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('CHICKEN BURGER',5.4)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'CHICKEN BURGER',price:5.4,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -692,7 +715,7 @@
             <div class="mcard-desc">Poulet pane epice, sauce pimentee, salade iceberg, mayo relevee</div>
             <div class="mcard-ft"><div class="mcard-price">6,80&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('LE ZINGER',6.8)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'LE ZINGER',price:6.8,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -708,7 +731,7 @@
             <div class="mcard-desc">2 steaks 45g, double cheddar, cornichons, oignons, ketchup, moutarde</div>
             <div class="mcard-ft"><div class="mcard-price">7,00&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('CHEESE BURGER',7.0)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'CHEESE BURGER',price:7.0,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -724,7 +747,7 @@
             <div class="mcard-desc">2 steaks 45g, triple fromage fondu, sauce secrete, tomate, salade</div>
             <div class="mcard-ft"><div class="mcard-price">8,00&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('DOUBLE CHEESE',8.0)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'DOUBLE CHEESE',price:8.0,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -740,7 +763,7 @@
             <div class="mcard-desc">2 steaks 45g, bacon fume croustillant, cheddar, salade, tomate, sauce BBQ</div>
             <div class="mcard-ft"><div class="mcard-price">7,50&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('BACON BURGER',7.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'BACON BURGER',price:7.5,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -756,7 +779,7 @@
             <div class="mcard-desc">Galette de pomme de terre, steak hache, cheddar, sauce sucree-salee</div>
             <div class="mcard-ft"><div class="mcard-price">7,50&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('SARATOGA',7.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'SARATOGA',price:7.5,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -772,7 +795,7 @@
             <div class="mcard-desc">Le meilleur des deux mondes : poulet epice facon tacos, sauce exclusive</div>
             <div class="mcard-ft"><div class="mcard-price">7,00&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('LE ZINGER TACOS',7.0)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'LE ZINGER TACOS',price:7.0,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -872,7 +895,7 @@
             <div class="mcard-desc">Filets de poulet tendres, panure legere et doree, sauce au choix</div>
             <div class="mcard-ft"><div class="mcard-price">Des 4,50&euro;</div></div>
             <div class="mtags" style="margin-top:7px"><span class="mtag">3 pcs</span><span class="mtag">6 pcs</span><span class="mtag">9 pcs</span></div>
-            <button class="btn-cart-add" onclick="addToCart('TENDERS',4.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'TENDERS',price:4.5,type:'quantity'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -888,7 +911,7 @@
             <div class="mcard-desc">Nuggets dores, poulet 100% blanc, panure croustillante, sauce dipping</div>
             <div class="mcard-ft"><div class="mcard-price">Des 4,00&euro;</div></div>
             <div class="mtags" style="margin-top:7px"><span class="mtag">6 pcs</span><span class="mtag">9 pcs</span><span class="mtag">15 pcs</span><span class="mtag">20 pcs</span></div>
-            <button class="btn-cart-add" onclick="addToCart('NUGGETS',4.0)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'NUGGETS',price:4.0,type:'quantity'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -904,7 +927,7 @@
             <div class="mcard-desc">Ailes de poulet marinees, cuisson parfaite, sauce BBQ ou buffalo</div>
             <div class="mcard-ft"><div class="mcard-price">Des 5,50&euro;</div></div>
             <div class="mtags" style="margin-top:7px"><span class="mtag">5 pcs</span><span class="mtag">8 pcs</span><span class="mtag">10 pcs</span><span class="mtag">20 pcs</span></div>
-            <button class="btn-cart-add" onclick="addToCart('WINGS',5.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'WINGS',price:5.5,type:'quantity'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -936,7 +959,7 @@
             <div class="mcard-desc">Tenders ou nuggets facon tex-mex, sauce salsa, guacamole, mais</div>
             <div class="mcard-ft"><div class="mcard-price">6,50&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('TEX-MEX CHICKEN',6.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'TEX-MEX CHICKEN',price:6.5,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -952,7 +975,7 @@
             <div class="mcard-desc">Viande kebab, salade, tomate, oignons, sauce blanche ou harissa, pain maison</div>
             <div class="mcard-ft"><div class="mcard-price">5,50&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('KEBAB',5.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'KEBAB',price:5.5,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -968,7 +991,7 @@
             <div class="mcard-desc">Steak hache, salade, tomate, fromage fondu, sauce au choix</div>
             <div class="mcard-ft"><div class="mcard-price">5,50&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('STEAK',5.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'STEAK',price:5.5,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -984,7 +1007,7 @@
             <div class="mcard-desc">Poulet marine tex-mex, salsa maison, creme fraiche, crudites</div>
             <div class="mcard-ft"><div class="mcard-price">6,00&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('RIO TACOS',6.0)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'RIO TACOS',price:6.0,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1000,7 +1023,7 @@
             <div class="mcard-desc">Blanc de poulet, crudites, fromage, sauce moutarde-miel, pain complet</div>
             <div class="mcard-ft"><div class="mcard-price">5,80&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('CAMPAGNARD',5.8)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'CAMPAGNARD',price:5.8,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1016,7 +1039,7 @@
             <div class="mcard-desc">Notre sandwich signature, sauce exclusive maison, garniture ultra genereux</div>
             <div class="mcard-ft"><div class="mcard-price">6,50&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('LE SEPT',6.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'LE SEPT',price:6.5,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1032,7 +1055,7 @@
             <div class="mcard-desc">Triple garniture, maxi sandwich, fromage fondu, sauce au choix</div>
             <div class="mcard-ft"><div class="mcard-price">7,50&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('TRIPLEX',7.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'TRIPLEX',price:7.5,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1048,7 +1071,7 @@
             <div class="mcard-desc">Poulet grille, legumes rotis, sauce orientale, pain artisanal</div>
             <div class="mcard-ft"><div class="mcard-price">5,80&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('OLD TOWN',5.8)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'OLD TOWN',price:5.8,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1064,7 +1087,7 @@
             <div class="mcard-desc">Poulet citronne, roquette, parmesan, sauce legere au citron</div>
             <div class="mcard-ft"><div class="mcard-price">5,80&euro; <small>&middot; Menu +3&euro;</small></div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('LEMON',5.8)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'LEMON',price:5.8,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1085,7 +1108,7 @@
             <div class="mcard-desc">Riz basmati, sauce thai maison, oignons frits, 1 viande au choix</div>
             <div class="mcard-ft"><div class="mcard-price">Seul / Menu</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('RIZ THAI 1 VIANDE',8.0)">
+            <button class="btn-cart-add" onclick="openRizModal(1,'RIZ THAI 1 VIANDE',8.0)">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1101,7 +1124,7 @@
             <div class="mcard-desc">Riz basmati, sauce thai maison, oignons frits, 2 viandes au choix</div>
             <div class="mcard-ft"><div class="mcard-price">Seul / Menu</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('RIZ THAI 2 VIANDES',10.5)">
+            <button class="btn-cart-add" onclick="openRizModal(2,'RIZ THAI 2 VIANDES',10.5)">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1117,7 +1140,7 @@
             <div class="mcard-desc">Riz basmati, sauce thai maison, oignons frits, 3 viandes au choix</div>
             <div class="mcard-ft"><div class="mcard-price">Seul / Menu</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('RIZ THAI 3 VIANDES',12.5)">
+            <button class="btn-cart-add" onclick="openRizModal(3,'RIZ THAI 3 VIANDES',12.5)">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1133,7 +1156,7 @@
             <div class="mcard-desc">Salade fraiche, tomate, poulet grille, fromage rape, croutons, sauce Cesar</div>
             <div class="mcard-ft"><div class="mcard-price">8,00&euro;</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('SALADE CESAR',8.0)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'SALADE CESAR',price:8.0,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1149,7 +1172,7 @@
             <div class="mcard-desc">Riz basmati, salade fraiche, 1 viande au choix, sauce maison</div>
             <div class="mcard-ft"><div class="mcard-price">10,30&euro;</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('ASSIETTE SEPT 1',10.3)">
+            <button class="btn-cart-add" onclick="openRizModal(1,'ASSIETTE SEPT 1',10.3)">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1165,7 +1188,7 @@
             <div class="mcard-desc">Riz basmati, salade fraiche, 2 viandes au choix, sauce maison</div>
             <div class="mcard-ft"><div class="mcard-price">12,00&euro;</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('ASSIETTE SEPT 2',12.0)">
+            <button class="btn-cart-add" onclick="openRizModal(2,'ASSIETTE SEPT 2',12.0)">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1181,7 +1204,7 @@
             <div class="mcard-desc">Riz basmati, salade fraiche, 3 viandes au choix, sauce maison</div>
             <div class="mcard-ft"><div class="mcard-price">13,00&euro;</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('ASSIETTE SEPT 3',13.0)">
+            <button class="btn-cart-add" onclick="openRizModal(3,'ASSIETTE SEPT 3',13.0)">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1197,7 +1220,7 @@
             <div class="mcard-desc">Poulet au choix, mozzarella, legumes frais, sauce maison, pain grille</div>
             <div class="mcard-ft"><div class="mcard-price">Seul / Menu</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('PANINI POULET',5.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'PANINI POULET',price:5.5,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1213,7 +1236,7 @@
             <div class="mcard-desc">Viande kebab, mozzarella, salade, tomate, sauce maison</div>
             <div class="mcard-ft"><div class="mcard-price">Seul / Menu</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('PANINI KEBAB',5.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'PANINI KEBAB',price:5.5,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1229,7 +1252,7 @@
             <div class="mcard-desc">Triple fromage (emmental + cheddar + mozzarella), roquette, tomates sechees</div>
             <div class="mcard-ft"><div class="mcard-price">Seul / Menu</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('PANINI 3 FROMAGES',6.0)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'PANINI 3 FROMAGES',price:6.0,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1245,7 +1268,7 @@
             <div class="mcard-desc">Bacon fume, mozzarella, sauce moutarde-miel, tomate, ciabatta grille</div>
             <div class="mcard-ft"><div class="mcard-price">Seul / Menu</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('PANINI BACON',5.8)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'PANINI BACON',price:5.8,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1261,7 +1284,7 @@
             <div class="mcard-desc">Viande hachee assaisonnee, cheddar fondu, sauce maison, crudites</div>
             <div class="mcard-ft"><div class="mcard-price">Seul / Menu</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('PANINI VIANDE HACHEE',5.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'PANINI VIANDE HACHEE',price:5.5,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1277,7 +1300,7 @@
             <div class="mcard-desc">Pain maison gratine, garniture genereux, fromage fondu. 1 a 3 viandes.</div>
             <div class="mcard-ft"><div class="mcard-price">Seul / Menu</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('SANDWICH AU FOUR',6.5)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'SANDWICH AU FOUR',price:6.5,type:'sauce'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1293,7 +1316,7 @@
             <div class="mcard-desc">Tiramisu maison au mascarpone, biscuits imbibes au cafe, cacao amer</div>
             <div class="mcard-ft"><div class="mcard-price">4,00&euro;</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('TIRAMISU',4.0)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'TIRAMISU',price:4.0,type:'dessert'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1309,7 +1332,7 @@
             <div class="mcard-desc">Tarte gourmande aux eclats de Daim, caramel fondant, base sablee</div>
             <div class="mcard-ft"><div class="mcard-price">4,00&euro;</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('TARTE AU DAIM',4.0)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'TARTE AU DAIM',price:4.0,type:'dessert'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1325,7 +1348,7 @@
             <div class="mcard-desc">Coca-Cola, Fanta, Ice Tea, eau minerale, jus de fruits</div>
             <div class="mcard-ft"><div class="mcard-price">Des 4,30&euro;</div></div>
             <div class="mtags" style="margin-top:7px"><span class="mtag">33cl</span><span class="mtag">50cl</span><span class="mtag">Maxi</span></div>
-            <button class="btn-cart-add" onclick="addToCart('BOISSONS',4.3)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'BOISSONS',price:4.3,type:'drink'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1341,7 +1364,7 @@
             <div class="mcard-desc">8 nuggets + portion de frites + boisson XXL incluse</div>
             <div class="mcard-ft"><div class="mcard-price">10,00&euro;</div></div>
             
-            <button class="btn-cart-add" onclick="addToCart('MENU NUGGETS + FRITES',10.0)">
+            <button class="btn-cart-add" onclick="openProductModal({name:'MENU NUGGETS + FRITES',price:10.0,type:'combo'})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter au panier
             </button>
@@ -1577,7 +1600,7 @@ function submitOrder(){
   if(!name||!phone||!type||!time){showToast('Veuillez remplir tous les champs');return;}
   const items=CART.map(i=>`\u2022 ${i.name} x${i.qty} \u2014 ${(i.price*i.qty).toFixed(2).replace('.',',')}\u20AC`).join('\n');
   const msg=['\uD83D\uDD25 NOUVELLE COMMANDE \u2013 LE SEPT 7','','\uD83D\uDC64 Nom : '+name,'\uD83D\uDCDE T\u00E9l\u00E9phone : '+phone,'\uD83D\uDCCD Type : '+(type==='A emporter'?'\uD83D\uDECD\uFE0F A emporter':'\uD83C\uDF74 Sur place'),'\u23F0 Heure : '+time,'','\uD83D\uDED2 COMMANDE :',items,'','\uD83D\uDCB0 Total : '+getTotal().toFixed(2).replace('.',',')+'\u20AC'].join('\n');
-  window.open('https://wa.me/33763676191?text='+encodeURIComponent(msg),'_blank');
+  window.open('https://wa.me/33763686191?text='+encodeURIComponent(msg),'_blank');
   closeOrderForm();CART.length=0;updateCartUI();showToast('\u2705 Commande envoy\u00E9e ! Merci !');
 }
 let toastTimer;
@@ -1803,6 +1826,188 @@ document.addEventListener('click',function(e){const b=e.target.closest('.btn-car
 /* ===== SHAKE ANIMATION ===== */
 (function(){const s=document.createElement('style');s.textContent='@keyframes shakeX{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}';document.head.appendChild(s);})();
 
+
+/* ===================================================
+   PRODUCT MODAL — Personnalisation generique
+   Supporte: sauce | quantity | drink | dessert | combo
+=================================================== */
+const BURGER_SAUCES = ['Ketchup','Mayonnaise','BBQ','Andalouse','Samourai','Blanche','Biggy','Harissa'];
+const DRINKS_LIST   = ['Coca-Cola','Coca Zero','Fanta Orange','Fanta Citron','Ice Tea Peche','Ice Tea Citron','Sprite','Eau Minerale','Jus Orange','Jus Pomme'];
+const PRODUCT_SIZES = {
+  'TENDERS':         [{label:'3 pcs', price:4.50},{label:'6 pcs', price:7.50},{label:'9 pcs', price:10.50}],
+  'NUGGETS':         [{label:'6 pcs', price:4.00},{label:'9 pcs', price:6.00},{label:'10 pcs', price:6.50},{label:'15 pcs', price:9.50},{label:'20 pcs', price:12.00}],
+  'WINGS':           [{label:'5 pcs', price:5.50},{label:'8 pcs', price:8.00},{label:'10 pcs', price:10.00},{label:'20 pcs', price:18.00}],
+  'TIRAMISU':        [{label:'Part individuelle', price:4.00},{label:'Part a partager', price:6.50}],
+  'TARTE AU DAIM':   [{label:'Part individuelle', price:4.00},{label:'Part a partager', price:6.50}],
+};
+const PM_HINTS = {
+  sauce:    'Choisissez votre sauce (optionnel)',
+  quantity: 'Selectionnez la taille',
+  drink:    'Selectionnez votre boisson',
+  dessert:  'Choisissez votre portion',
+  combo:    'Boisson et sauce pour les nuggets',
+  riz:      'Personnalisez votre assiette'
+};
+
+/* Etat du modal produit */
+let PM = {name:'',basePrice:0,type:'',selections:{},finalPrice:0};
+
+/* ---- OUVERTURE / FERMETURE ---- */
+function openProductModal(cfg) {
+  PM = {name:cfg.name, basePrice:cfg.price, type:cfg.type, selections:{}, finalPrice:cfg.price};
+  const modal = document.getElementById('product-modal');
+  const nameEl = document.getElementById('pmodal-name');
+  const hintEl = document.getElementById('pmodal-hint');
+  const body   = document.getElementById('pmodal-body');
+  if (!modal||!nameEl||!body) return;
+  nameEl.textContent = cfg.name;
+  if (hintEl) hintEl.textContent = PM_HINTS[cfg.type] || '';
+  body.innerHTML = buildPMBody(cfg);
+  updatePMPrice();
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  playTick(440,.08);
+  /* Focus first focusable element */
+  setTimeout(()=>{ const f=body.querySelector('[tabindex="0"]'); if(f) f.focus(); },300);
+}
+
+function closeProductModal() {
+  document.getElementById('product-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ---- BUILDERS ---- */
+function buildPMBody(cfg) {
+  switch(cfg.type) {
+    case 'sauce':    return buildPMSauces();
+    case 'quantity': return buildPMSizes(cfg.name);
+    case 'drink':    return buildPMDrinks();
+    case 'dessert':  return buildPMDessert(cfg.name);
+    case 'combo':    return buildPMCombo();
+    default:         return '';
+  }
+}
+
+function pmChip(key, val, extra) {
+  extra = extra || '';
+  return `<div class="opt-chip" data-pmkey="${key}" data-pmval="${val}" onclick="selectPM('${key}','${val}',${extra||0})" role="radio" aria-checked="false" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')selectPM('${key}','${val}',${extra||0})"><span class="chip-check">&#x2713;</span>${val}</div>`;
+}
+
+function pmSizeCard(key, lbl, price, num) {
+  const n = num || lbl.split(' ')[0];
+  return `<div class="size-card" data-pmkey="${key}" data-pmval="${lbl}" onclick="selectPM('${key}','${lbl}',${price})" role="radio" aria-checked="false" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')selectPM('${key}','${lbl}',${price})"><div class="size-card-num" style="font-size:1.6rem">${n}</div><div class="size-card-lbl">${lbl}</div><div class="size-card-price">${price.toFixed(2).replace('.',',')}&#x20AC;</div></div>`;
+}
+
+function buildPMSauces() {
+  const chips = [...BURGER_SAUCES,'Sans sauce'].map(s => pmChip('sauce',s,0)).join('');
+  return `<div class="pmodal-slbl">Sauce au choix</div><div class="options-grid">${chips}</div>`;
+}
+
+function buildPMSizes(name) {
+  const sizes = PRODUCT_SIZES[name] || [];
+  const cards = sizes.map(s => pmSizeCard('qty', s.label, s.price)).join('');
+  return `<div class="pmodal-slbl">Choisissez votre taille</div><div class="size-cards">${cards}</div>`;
+}
+
+function buildPMDrinks() {
+  const chips = DRINKS_LIST.map(d => pmChip('drink',d,0)).join('');
+  return `<div class="pmodal-slbl">Votre boisson</div><div class="options-grid">${chips}</div>`;
+}
+
+function buildPMDessert(name) {
+  const sizes = PRODUCT_SIZES[name] || [{label:'Part individuelle',price:4.00},{label:'Part a partager',price:6.50}];
+  const cards = sizes.map(s => pmSizeCard('size', s.label, s.price, s.label === 'Part individuelle' ? '1' : '2')).join('');
+  return `<div class="pmodal-slbl">Choisissez votre portion</div><div class="size-cards">${cards}</div>`;
+}
+
+function buildPMCombo() {
+  const drinkChips  = DRINKS_LIST.map(d => pmChip('drink',d,0)).join('');
+  const sauceChips  = BURGER_SAUCES.map(s => pmChip('sauce',s,0)).join('');
+  return `<div class="pmodal-slbl">Votre boisson</div><div class="options-grid">${drinkChips}</div>`
+       + `<div class="pmodal-slbl" style="margin-top:10px">Sauce nuggets (optionnel)</div><div class="options-grid">${sauceChips}</div>`;
+}
+
+/* ---- SELECTION ---- */
+function selectPM(key, val, price) {
+  PM.selections[key] = {val, price};
+  if (key === 'qty' || key === 'size') PM.finalPrice = price;
+  /* Visuellement: deselect siblings, select this */
+  document.querySelectorAll(`[data-pmkey="${key}"]`).forEach(el => {
+    const on = el.dataset.pmval === val;
+    el.classList.toggle('selected', on);
+    el.setAttribute('aria-checked', on.toString());
+    if (on) { el.classList.add('chip-pop'); setTimeout(()=>el.classList.remove('chip-pop'),280); }
+  });
+  updatePMPrice();
+  playTick(500,.07);
+  /* Auto-add for single-choice required types */
+  const autoTypes = {qty:'quantity', size:'dessert'};
+  if (autoTypes[key] === PM.type) setTimeout(confirmProductModal, 380);
+}
+
+function updatePMPrice() {
+  const el = document.getElementById('pmodal-price-val'); if(!el) return;
+  const p = PM.finalPrice > 0 ? PM.finalPrice : PM.basePrice;
+  const s = p.toFixed(2).replace('.',',') + '\u20AC';
+  if (el.textContent !== s) { el.textContent = s; el.classList.add('bump'); setTimeout(()=>el.classList.remove('bump'),250); }
+}
+
+/* ---- CONFIRMATION ---- */
+function confirmProductModal() {
+  /* Validation */
+  if (PM.type === 'drink' && !PM.selections.drink) { shakeProductModal(); showToast('Choisissez une boisson !'); return; }
+  if (PM.type === 'combo' && !PM.selections.drink) { shakeProductModal(); showToast('Choisissez une boisson !'); return; }
+  /* Build descriptive name */
+  const parts = [PM.name];
+  if (PM.selections.qty)    parts.push(PM.selections.qty.val);
+  if (PM.selections.size)   parts.push(PM.selections.size.val);
+  if (PM.selections.drink)  parts.push(PM.selections.drink.val);
+  if (PM.selections.sauce && PM.selections.sauce.val !== 'Sans sauce')
+    parts.push('Sauce ' + PM.selections.sauce.val);
+  const finalName  = parts.join(' – ');
+  const finalPrice = PM.finalPrice > 0 ? PM.finalPrice : PM.basePrice;
+  /* Add to cart */
+  const ex = CART.find(i => i.name === finalName);
+  if (ex) ex.qty++;
+  else CART.push({name:finalName, price:finalPrice, qty:1});
+  updateCartUI();
+  closeProductModal();
+  showToast('\u2705 ' + finalName.split(' \u2013 ')[0] + ' ajout\u00E9 !');
+  setTimeout(()=>launchParticles(document.querySelector('.nav-cart-btn')),100);
+  playTick(660,.12);
+}
+
+function shakeProductModal() {
+  const b = document.getElementById('pmodal-box'); if(!b) return;
+  b.style.animation = 'none'; b.offsetHeight;
+  b.style.animation = 'shakeX .38s ease';
+  setTimeout(()=>b.style.animation='',420);
+}
+
+/* ---- RIZ / ASSIETTES — reuse tacos modal ---- */
+function openRizModal(nViandes, productName, basePrice) {
+  /* Reinit tacos state avec taille fixee */
+  T.step=0; T.size={id:nViandes,label:nViandes+(nViandes===1?' Viande':' Viandes'),price:basePrice};
+  T.meats=[]; T.sauces=[]; T.supps=[];
+  renderTacosAll();
+  /* Changer le titre */
+  const titleEl = document.getElementById('tacos-modal-title');
+  const subEl   = document.getElementById('tacos-sub');
+  if (titleEl) titleEl.innerHTML = '\uD83C\uDF5A ' + productName;
+  /* Sauter l\'etape Taille, aller directement a Viandes */
+  goToStep(1, 'forward');
+  document.getElementById('tacos-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  updateTacosPriceDisplay();
+}
+
+/* Escape closes product modal too */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && document.getElementById('product-modal').classList.contains('open')) {
+    closeProductModal(); e.preventDefault();
+  }
+});
+
 </script>
 
 <!-- ===== TACOS CUSTOMIZATION MODAL ===== -->
@@ -1858,6 +2063,30 @@ document.addEventListener('click',function(e){const b=e.target.closest('.btn-car
         <button class="btn btn-ghost" id="tacos-prev" onclick="tacosPrev()" style="padding:10px 16px;font-size:.78rem;border-radius:5px;display:none" aria-label="Etape precedente">&#x2190; Retour</button>
         <button class="btn btn-red" id="tacos-next" onclick="tacosNext()" style="padding:10px 20px;font-size:.78rem;border-radius:5px" aria-label="Etape suivante">Suivant &#x2192;</button>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== PRODUCT OPTIONS MODAL (simple) ===== -->
+<div id="product-modal" role="dialog" aria-modal="true" aria-labelledby="pmodal-name">
+  <div class="pmodal-box" id="pmodal-box">
+    <div class="pmodal-head">
+      <div>
+        <div class="pmodal-name" id="pmodal-name">Options</div>
+        <div class="pmodal-hint" id="pmodal-hint"></div>
+      </div>
+      <button class="cart-close" onclick="closeProductModal()" aria-label="Fermer">&#x00D7;</button>
+    </div>
+    <div class="pmodal-body" id="pmodal-body"></div>
+    <div class="pmodal-foot">
+      <div class="pmodal-price-wrap">
+        <span class="pmodal-price-lbl">Total</span>
+        <span class="pmodal-price-val" id="pmodal-price-val">&#x2014;</span>
+      </div>
+      <button class="btn btn-red" id="pmodal-add-btn" onclick="confirmProductModal()" style="border-radius:5px;padding:12px 20px;font-size:.8rem">
+        Ajouter au panier &#x1F6D2;
+      </button>
     </div>
   </div>
 </div>
