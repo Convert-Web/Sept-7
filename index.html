@@ -182,7 +182,7 @@
     .mdot{width:4px;height:4px;background:var(--yellow);border-radius:50%;flex-shrink:0}
     .tag{display:inline-flex;align-items:center;gap:7px;font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:12px}
     .tag::before{content:"";display:block;width:18px;height:2px;background:var(--red)}
-    .h2{font-family:var(--dp);font-size:clamp(2rem,5vw,4.5rem);line-height:.92;letter-spacing:.03em;text-transform:uppercase}
+    .h2{font-family:var(--dp);font-size:clamp(2rem,5vw,4.5rem);line-height:.92;letter-spacing:.03em;text-transform:uppercase;overflow-wrap:break-word}
     .h2 em{font-style:normal;color:var(--red)}
     #stars{padding:var(--pad) 0;background:linear-gradient(to bottom,#080808,var(--black))}
     .stars-hd{text-align:center;margin-bottom:44px}
@@ -232,7 +232,7 @@
     .menu-note strong{color:#fff}.menu-note a{color:var(--yellow)}
   </style>
   <style>
-    #how{padding:var(--pad) 0;background:#060606;position:relative}
+    #how{padding:var(--pad) 0;background:#060606;position:relative;overflow:hidden}
     #how::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:700px;height:350px;background:radial-gradient(ellipse,rgba(224,20,31,.05) 0%,transparent 70%);pointer-events:none}
     .how-steps{display:flex;justify-content:space-between;margin-top:52px;position:relative}
     .how-line{position:absolute;top:33px;left:calc(10% + 16px);right:calc(10% + 16px);height:1px;background:linear-gradient(90deg,var(--red),rgba(224,20,31,.15),transparent,rgba(224,20,31,.15),var(--red));pointer-events:none}
@@ -567,7 +567,7 @@
   <div class="wrap">
     <div class="stars-hd rev">
       <div class="tag" style="justify-content:center;display:flex">&#x2B50; Nos Best-Sellers</div>
-      <h2 class="h2" id="stars-title" style="text-align:center">Les in<em>contournables</em></h2>
+      <h2 class="h2" id="stars-title" style="text-align:center">Les in<wbr><em>contournables</em></h2>
       <p style="color:var(--muted);font-size:.88rem;margin-top:10px;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.7;text-align:center">Nos plats les plus command&eacute;s, les plus appr&eacute;ci&eacute;s. Menus avec frites&nbsp;+&nbsp;boisson&nbsp;33cl.</p>
     </div>
     <div class="stars-grid">
