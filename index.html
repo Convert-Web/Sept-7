@@ -200,7 +200,8 @@ address { font-style:normal; }
 /* ═══ HERO ═══ */
 .hero { position:relative; min-height:100dvh; display:flex; align-items:center; overflow:hidden; background:var(--void); }
 .hero-bg { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
-.hero-bg-img { position:absolute; inset:0; background-size:cover; background-position:center; opacity:.14; filter:saturate(.4) blur(2px) contrast(1.1); }
+.hero-bg-img { position:absolute; inset:0; background-size:cover; background-position:center; opacity:.5; filter:saturate(.75) contrast(1.15); }
+.hero-bg-scrim { position:absolute; inset:0; background:linear-gradient(100deg, var(--black) 0%, rgba(5,5,6,.94) 28%, rgba(5,5,6,.68) 52%, rgba(5,5,6,.32) 74%, rgba(5,5,6,.42) 100%); }
 .hero-bg-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,179,0,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,179,0,.04) 1px,transparent 1px); background-size:60px 60px; mask-image:radial-gradient(ellipse 80% 60% at 50% 40%,black 20%,transparent 75%); }
 .hero-glow-1 { position:absolute; width:560px; height:560px; top:-140px; right:2%; border-radius:50%; background:radial-gradient(circle,rgba(255,179,0,.28) 0%,transparent 70%); filter:blur(70px); animation:glowPulse 7s ease-in-out infinite alternate; }
 .hero-glow-2 { position:absolute; width:460px; height:460px; bottom:-80px; left:2%; border-radius:50%; background:radial-gradient(circle,rgba(255,179,0,.22) 0%,transparent 70%); filter:blur(70px); animation:glowPulse 9s ease-in-out infinite alternate-reverse; }
@@ -672,7 +673,8 @@ address { font-style:normal; }
 <section id="hero" class="hero">
   <div class="hero-bg">
     <div class="hero-bg-grid"></div>
-    <div class="hero-bg-img" style="background-image:url('https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=1400&q=80')"></div>
+    <div class="hero-bg-img" style="background-image:url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=1400&q=80')"></div>
+    <div class="hero-bg-scrim"></div>
     <div class="hero-glow-1"></div><div class="hero-glow-2"></div><div class="hero-glow-3"></div>
     <div class="hero-particles" id="heroParticles"></div>
     <div class="hero-ghost" aria-hidden="true">SEPT 7</div>
