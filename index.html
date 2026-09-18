@@ -76,9 +76,9 @@ address { font-style:normal; }
 .scroll-progress { position:fixed; top:0; left:0; height:3px; width:0%; background:linear-gradient(90deg,var(--flame),var(--gold)); z-index:9999; box-shadow:0 1px 6px rgba(255,75,43,.4); transition:width .07s linear; pointer-events:none; }
 
 /* REVEAL */
-.reveal { opacity:0; transform:translateY(20px); transition:opacity .7s var(--ease-o),transform .7s var(--ease-o); }
-.reveal.visible { opacity:1; transform:translateY(0); }
-@media (prefers-reduced-motion:reduce) { .reveal { opacity:1; transform:none; transition:none; } }
+.reveal { opacity:0; transform:translateY(20px); filter:blur(4px); transition:opacity .7s var(--ease-o),transform .7s var(--ease-o),filter .7s var(--ease-o); }
+.reveal.visible { opacity:1; transform:translateY(0); filter:blur(0); }
+@media (prefers-reduced-motion:reduce) { .reveal { opacity:1; transform:none; filter:none; transition:none; } }
 
 /* BUTTONS */
 .btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.75rem 1.5rem; border-radius:var(--r-f); font-weight:700; font-size:.875rem; letter-spacing:.01em; white-space:nowrap; transition:all var(--t); cursor:pointer; border:2px solid transparent; position:relative; overflow:hidden; text-decoration:none; }
@@ -222,6 +222,43 @@ address { font-style:normal; }
 .hero-cta-row .btn-outline { border-color:var(--border-h); color:var(--white); }
 .hero-cta-row .btn-outline:hover, .hero-cta-row .btn-outline.mobile-hover { border-color:var(--gold); background:rgba(255,176,32,.08); }
 .hero-meta-row { display:flex; flex-wrap:wrap; gap:1.75rem; margin-top:var(--s10); padding-top:var(--s8); border-top:1px solid var(--border); }
+
+/* ENTRÉE CINÉMATIQUE — cascade progressive à l'arrivée sur le Hero.
+   Chaque bloc part légèrement en retrait, flouté, puis se pose avec un délai
+   croissant. Le fond/les glows/le 7 sont déjà gérés par leurs propres
+   animations continues ; ceci orchestre uniquement le contenu texte + CTA
+   + les couches visuelles pour une apparition dans l'ordre. */
+.hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row,
+.hero-glow-1, .hero-glow-2, .hero-glow-3, .hero-visual-col {
+  opacity:0; filter:blur(6px); transition:opacity .9s var(--ease-o), filter .9s var(--ease-o), transform .9s var(--ease-o);
+}
+.hero-status-row { transform:translateY(14px); }
+.hero-eyebrow-row { transform:translateY(14px); }
+.hero-tagline { transform:translateY(16px); }
+.hero-cta-row { transform:translateY(16px); }
+.hero-meta-row { transform:translateY(18px); }
+.hero-glow-1, .hero-glow-2, .hero-glow-3 { filter:blur(70px); transition:opacity 1.4s var(--ease-o); }
+/* .hero-visual-col ne transitionne pas "transform" ici : cette propriété est
+   déjà pilotée par le parallax souris en JS (voir initHeroParallax) — un
+   double-emploi sur transform provoquerait un à-coup au premier mousemove. */
+.hero-visual-col { transition:opacity .9s var(--ease-o), filter .9s var(--ease-o); }
+
+.hero-loaded .hero-status-row  { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.05s; }
+.hero-loaded .hero-eyebrow-row { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.16s; }
+/* .hero-title garde son propre reveal ligne par ligne, déclenché aussi par .hero-loaded, délai ~.24s via ses transitions internes */
+.hero-loaded .hero-tagline    { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.5s; }
+.hero-loaded .hero-cta-row    { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.62s; }
+.hero-loaded .hero-meta-row   { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.74s; }
+.hero-loaded .hero-glow-1 { opacity:1; transition-delay:0s; }
+.hero-loaded .hero-glow-2 { opacity:1; transition-delay:.1s; }
+.hero-loaded .hero-glow-3 { opacity:1; transition-delay:.2s; }
+.hero-loaded .hero-visual-col { opacity:1; filter:blur(0); transition-delay:.3s; }
+@media (prefers-reduced-motion:reduce) {
+  .hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row,
+  .hero-glow-1, .hero-glow-2, .hero-glow-3, .hero-visual-col {
+    opacity:1; filter:none; transform:none; transition:none;
+  }
+}
 .hero-meta-item { display:flex; flex-direction:column; gap:.15rem; }
 .hero-meta-num { font-family:var(--font-d); font-size:1.6rem; color:var(--white); line-height:1; display:flex; align-items:baseline; gap:.2rem; }
 .hero-meta-num small { font-size:.9rem; color:var(--gold); }
@@ -264,12 +301,21 @@ address { font-style:normal; }
 /* SHOWCASE — scroll-locké, 3 cartes néon graphiques (pas de photo) */
 .showcase-wrap { position:relative; height:300vh; background:var(--ink); }
 .showcase-pin { position:sticky; top:0; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center; }
-.showcase-step { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .5s var(--ease-o); }
+.showcase-step { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .5s var(--ease-o); overflow:hidden; }
 .showcase-step.active { opacity:1; pointer-events:auto; }
-.showcase-step::before { content:''; position:absolute; inset:0; z-index:0; }
-.showcase-step[data-step="0"]::before { background:radial-gradient(ellipse 90% 70% at 30% 40%,rgba(255,75,43,.28),transparent 62%),var(--ink); }
-.showcase-step[data-step="1"]::before { background:radial-gradient(ellipse 90% 70% at 70% 40%,rgba(51,194,204,.24),transparent 62%),var(--ink); }
-.showcase-step[data-step="2"]::before { background:radial-gradient(ellipse 90% 70% at 50% 60%,rgba(154,92,224,.26),transparent 62%),var(--ink); }
+/* Couche "image" : la vraie photo du Sept 7 (classe .vis-food, la même que
+   dans le hero) qui zoome lentement façon Ken Burns pendant que la scène est
+   active. Une teinte de couleur différente par scène (via ::after) marque
+   la transition entre les 3 étapes sans changer la photo elle-même. */
+.showcase-bg { position:absolute; inset:0; z-index:0; transform:scale(1.18); transition:transform 3.4s var(--ease-o); background-size:cover; background-position:center; }
+.showcase-step.active .showcase-bg { transform:scale(1.02); }
+.showcase-bg::after { content:''; position:absolute; inset:0; mix-blend-mode:color; opacity:.35; }
+.showcase-step[data-step="0"] .showcase-bg::after { background:radial-gradient(ellipse 90% 70% at 30% 40%,rgba(255,75,43,.9),transparent 62%); }
+.showcase-step[data-step="1"] .showcase-bg::after { background:radial-gradient(ellipse 90% 70% at 70% 40%,rgba(51,194,204,.9),transparent 62%); }
+.showcase-step[data-step="2"] .showcase-bg::after { background:radial-gradient(ellipse 90% 70% at 50% 60%,rgba(154,92,224,.9),transparent 62%); }
+/* Scrim : assombrit légèrement pour garder le texte lisible par-dessus la couche zoomée */
+.showcase-scrim { position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,rgba(20,17,15,.35),rgba(20,17,15,.75) 70%,rgba(20,17,15,.92)); pointer-events:none; }
+@media (prefers-reduced-motion:reduce) { .showcase-bg { transition:none; transform:scale(1.02); } }
 .showcase-num { position:absolute; z-index:1; font-family:var(--font-d); font-size:min(46vw,42rem); line-height:.78; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,.09); top:50%; left:50%; transform:translate(-50%,-50%) scale(.9); user-select:none; pointer-events:none; transition:transform 1.1s var(--ease-o); }
 .showcase-step.active .showcase-num { transform:translate(-50%,-50%) scale(1); }
 .showcase-content { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--s5); max-width:720px; padding-inline:var(--s6); }
@@ -306,10 +352,19 @@ address { font-style:normal; }
 .stats-section { background:var(--ink); padding-block:var(--s16); position:relative; overflow:clip; }
 .stats-section::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(255,176,32,.08),transparent 60%); pointer-events:none; }
 .stats-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:var(--s8); position:relative; z-index:1; }
-.stat-item { text-align:center; }
-.stat-num { font-family:var(--font-d); font-size:clamp(2.4rem,5.5vw,3.6rem); color:var(--white); line-height:1; display:flex; align-items:baseline; justify-content:center; gap:.15rem; }
+.stat-item { text-align:center; padding:1.1rem .5rem; border-radius:var(--radius-lg); transition:transform .35s var(--ease-o),background .35s var(--ease-o); }
+.stat-item:hover { transform:translateY(-4px); background:rgba(255,255,255,.03); }
+.stat-num { font-family:var(--font-d); font-size:clamp(2.4rem,5.5vw,3.6rem); color:var(--white); line-height:1; display:flex; align-items:baseline; justify-content:center; gap:.15rem; text-shadow:0 0 0 transparent; transition:text-shadow .4s var(--ease-o); }
+.stat-item:hover .stat-num { text-shadow:0 0 26px rgba(255,176,32,.35); }
 .stat-num .stat-accent { color:var(--gold); }
 .stat-lbl { font-size:.8rem; color:var(--muted); font-weight:600; margin-top:.5rem; letter-spacing:.02em; }
+/* Live counter — indicateur d'activité simulé, jamais présenté comme une
+   donnée commerciale réelle (voir commentaire JS dans initLiveActivity). */
+.live-activity { display:inline-flex; align-items:center; gap:.5rem; font-size:.78rem; font-weight:700; color:var(--lime); letter-spacing:.02em; margin-top:var(--s6); }
+.live-activity .la-label { transition:opacity .22s var(--ease-o); }
+.live-activity .la-dot { width:7px; height:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 0 0 rgba(154,224,58,.6); animation:laPulse 2s ease-out infinite; }
+@keyframes laPulse { 0% { box-shadow:0 0 0 0 rgba(154,224,58,.55); } 70% { box-shadow:0 0 0 8px rgba(154,224,58,0); } 100% { box-shadow:0 0 0 0 rgba(154,224,58,0); } }
+@media (prefers-reduced-motion:reduce) { .live-activity .la-dot { animation:none; } }
 @media (min-width:820px) { .stats-grid { grid-template-columns:repeat(4,1fr); } }
 
 /* SECTION HEADER commun */
@@ -363,8 +418,11 @@ address { font-style:normal; }
 .product-card { background:#fff; border-radius:var(--r-lg); border:1px solid var(--border-lt); overflow:hidden; transition:all var(--t); display:flex; flex-direction:column; cursor:pointer; }
 .product-card:hover, .product-card.mobile-hover { transform:translateY(-3px); border-color:var(--gold); box-shadow:0 12px 26px rgba(0,0,0,.09); }
 .product-vis { height:110px; display:flex; align-items:center; justify-content:center; font-size:2.6rem; position:relative; flex-shrink:0; }
-.product-badge { position:absolute; top:.5rem; left:.5rem; font-size:.62rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; padding:.2rem .5rem; border-radius:var(--r-f); background:var(--flame); color:#fff; }
-.product-badge.menu-badge { left:auto; right:.5rem; background:var(--gold-d); }
+.product-badge { position:absolute; top:.5rem; left:.5rem; font-size:.62rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; padding:.2rem .5rem; border-radius:var(--r-f); background:var(--flame); color:#fff; box-shadow:0 0 0 0 rgba(255,75,43,.5); animation:badgeGlow 2.6s ease-in-out infinite; }
+.product-badge.menu-badge { left:auto; right:.5rem; background:var(--gold-d); box-shadow:0 0 0 0 rgba(255,176,32,.5); animation:badgeGlowGold 2.6s ease-in-out infinite; }
+@keyframes badgeGlow { 0%,100% { box-shadow:0 0 0 0 rgba(255,75,43,.35); } 50% { box-shadow:0 0 10px 1px rgba(255,75,43,.45); } }
+@keyframes badgeGlowGold { 0%,100% { box-shadow:0 0 0 0 rgba(255,176,32,.35); } 50% { box-shadow:0 0 10px 1px rgba(255,176,32,.45); } }
+@media (prefers-reduced-motion:reduce) { .product-badge, .product-badge.menu-badge { animation:none; } }
 .product-info { padding:.85rem .9rem 1rem; display:flex; flex-direction:column; gap:.35rem; flex:1; }
 .product-name { font-size:.85rem; font-weight:800; color:var(--off); line-height:1.25; }
 .product-desc { font-size:.72rem; color:var(--muted-lt); line-height:1.4; flex:1; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
@@ -472,9 +530,12 @@ address { font-style:normal; }
 .footer-brand-desc { font-size:.85rem; line-height:1.6; max-width:34ch; color:var(--muted2); }
 .footer-col-title { font-size:.78rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--white); margin-bottom:1rem; }
 .footer-links { display:flex; flex-direction:column; gap:.65rem; }
-.footer-links a { font-size:.85rem; color:var(--muted); transition:color var(--tf); }
-.footer-links a:hover, .footer-links a.mobile-hover { color:var(--gold); }
+.footer-links a { font-size:.85rem; color:var(--muted); transition:color var(--tf); position:relative; }
+.footer-links a::after { content:''; position:absolute; left:0; bottom:-2px; width:0; height:1px; background:var(--gold); transition:width .3s var(--ease-o); }
+.footer-links a:hover, .footer-links a.mobile-hover { color:var(--gold); text-shadow:0 0 8px rgba(255,176,32,.3); }
+.footer-links a:hover::after, .footer-links a.mobile-hover::after { width:100%; }
 .footer-bottom { border-top:1px solid var(--border); padding-top:var(--s6); display:flex; flex-direction:column; gap:.75rem; align-items:center; text-align:center; font-size:.78rem; color:var(--muted2); }
+.footer-sep { height:1px; background:linear-gradient(90deg,transparent,rgba(255,176,32,.35),transparent); margin-bottom:var(--s10); }
 @media (min-width:820px) { .footer-grid { grid-template-columns:1.3fr .8fr .8fr .9fr; } .footer-bottom { flex-direction:row; justify-content:space-between; text-align:left; } }
 
 /* FAB */
@@ -547,14 +608,21 @@ address { font-style:normal; }
 @media (prefers-reduced-motion:reduce) { .hero-glow-1,.hero-glow-2,.hero-glow-3 { animation:none; } }
 
 .hero-particles { position:absolute; inset:0; pointer-events:none; overflow:hidden; contain:layout; z-index:0; }
-.spark { position:absolute; bottom:-10px; pointer-events:none; opacity:0; animation:sparkFloat linear forwards; will-change:transform; }
-@keyframes sparkFloat { 0% { opacity:0; transform:translateY(0) scale(.5) rotate(0deg); } 10% { opacity:.65; } 80% { opacity:.3; } 100% { opacity:0; transform:translateY(-100vh) scale(1.1) rotate(540deg); } }
+.spark { position:absolute; bottom:-10px; pointer-events:none; opacity:0; animation:sparkFloat linear forwards; will-change:transform,opacity; font-family:var(--font-b); line-height:1; text-shadow:0 0 8px currentColor; }
+.spark.c-flame { color:var(--flame); } .spark.c-gold { color:var(--gold); } .spark.c-lime { color:var(--lime); }
+@keyframes sparkFloat { 0% { opacity:0; transform:translateY(0) scale(.4) rotate(0deg); } 12% { opacity:.85; } 78% { opacity:.4; } 100% { opacity:0; transform:translateY(-100vh) scale(1) rotate(220deg); } }
 
-/* HERO — parallaxe curseur sur le bloc visuel "7" */
-.hero-visual-col { transition:transform .5s var(--ease-o); will-change:transform; }
+/* HERO — parallaxe curseur : will-change seulement (la transition d'entrée
+   ci-dessus gère déjà opacity/filter/transform ; le parallax applique son
+   propre transform via JS une fois .hero-loaded actif et n'a pas besoin
+   d'une transition CSS distincte, la souris étant déjà interpolée en JS). */
+.hero-visual-col { will-change:transform; }
 
-/* PRODUCT CARDS — tilt 3D léger (desktop) */
+/* PRODUCT CARDS — tilt 3D léger (desktop). Étendu aux cartes "populaires" et
+   pas seulement au menu, pour un tilt cohérent partout où .product-card /
+   .pop-card apparaissent (voir applyProductTilt). */
 .product-card { transition-property:transform,border-color,box-shadow; transition-duration:.15s,.3s,.3s; transition-timing-function:var(--ease-o); }
+.pop-card { transition-property:transform,border-color,box-shadow; transition-duration:.15s,.3s,.3s; transition-timing-function:var(--ease-o); }
 
 /* TOAST — feedback flottant */
 .toast { position:fixed; bottom:1.75rem; left:50%; transform:translateX(-50%) translateY(20px); background:rgba(20,17,15,.96); backdrop-filter:blur(20px); color:#fff; padding:.9rem 1.4rem; border-radius:var(--r-f); font-size:.85rem; font-weight:700; white-space:nowrap; z-index:9998; opacity:0; pointer-events:none; transition:all .26s var(--ease-o); border-left:4px solid var(--flame); box-shadow:0 8px 24px rgba(0,0,0,.35); max-width:90vw; text-align:center; }
@@ -632,7 +700,7 @@ address { font-style:normal; }
     <div class="header-actions">
       <a href="tel:+33175154128" class="btn-phone"><span class="btn-phone-txt">01 75 15 41 28</span></a>
       <a href="#" class="btn btn-wa btn-wa-nav" id="cartBtn">Commander <span class="cart-badge" id="cartBadge">0</span></a>
-      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
     </div>
   </div>
   <div class="mobile-nav" id="mobileNav">
@@ -699,6 +767,8 @@ address { font-style:normal; }
 <section class="showcase-wrap" id="showcaseWrap">
   <div class="showcase-pin">
     <div class="showcase-step active" data-step="0">
+      <div class="showcase-bg vis-food"></div>
+      <div class="showcase-scrim"></div>
       <div class="showcase-num">7</div>
       <div class="showcase-content">
         <div class="showcase-emoji">🌯</div>
@@ -708,6 +778,8 @@ address { font-style:normal; }
       </div>
     </div>
     <div class="showcase-step" data-step="1">
+      <div class="showcase-bg vis-food"></div>
+      <div class="showcase-scrim"></div>
       <div class="showcase-num">7</div>
       <div class="showcase-content">
         <div class="showcase-emoji">🥙</div>
@@ -717,6 +789,8 @@ address { font-style:normal; }
       </div>
     </div>
     <div class="showcase-step" data-step="2">
+      <div class="showcase-bg vis-food"></div>
+      <div class="showcase-scrim"></div>
       <div class="showcase-num">7</div>
       <div class="showcase-content">
         <div class="showcase-emoji">🍔</div>
@@ -756,10 +830,13 @@ address { font-style:normal; }
 
 <section class="stats-section">
   <div class="container stats-grid">
-    <div class="stat-item reveal"><div class="stat-num"><span class="stat-accent">91</span></div><div class="stat-lbl">Plats à la carte</div></div>
+    <div class="stat-item reveal"><div class="stat-num"><span class="stat-accent" data-count="91">0</span></div><div class="stat-lbl">Plats à la carte</div></div>
     <div class="stat-item reveal"><div class="stat-num">4,5<span class="stat-accent">★</span></div><div class="stat-lbl">264 avis Google</div></div>
-    <div class="stat-item reveal"><div class="stat-num"><span class="stat-accent">20</span></div><div class="stat-lbl">Familles de plats</div></div>
+    <div class="stat-item reveal"><div class="stat-num"><span class="stat-accent" data-count="20">0</span></div><div class="stat-lbl">Familles de plats</div></div>
     <div class="stat-item reveal"><div class="stat-num">7<span class="stat-accent">j/7</span></div><div class="stat-lbl">Jusqu'à minuit</div></div>
+  </div>
+  <div class="container" style="text-align:center;">
+    <div class="live-activity" id="liveActivity"><span class="la-dot"></span><span class="la-label">Commandes en préparation en cuisine</span></div>
   </div>
 </section>
 
@@ -927,11 +1004,11 @@ address { font-style:normal; }
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
-      <div>
+      <div class="reveal">
         <div class="footer-brand-logo"><span class="logo-le">LE</span><span class="logo-name">SEPT<em style="color:var(--flame);font-style:normal">7</em></span></div>
         <p class="footer-brand-desc">Street food à Montereau-Fault-Yonne. Tacos, sandwichs, burgers, paninis — 91 plats, ouvert jusqu'à minuit, 7j/7.</p>
       </div>
-      <div>
+      <div class="reveal">
         <div class="footer-col-title">Navigation</div>
         <div class="footer-links">
           <a href="#menu">La Carte</a>
@@ -940,7 +1017,7 @@ address { font-style:normal; }
           <a href="#infos">Infos & Accès</a>
         </div>
       </div>
-      <div>
+      <div class="reveal">
         <div class="footer-col-title">Contact</div>
         <div class="footer-links">
           <a href="tel:+33175154128">01 75 15 41 28</a>
@@ -948,7 +1025,7 @@ address { font-style:normal; }
           <a href="#" id="footerWaLink">Commander sur WhatsApp</a>
         </div>
       </div>
-      <div>
+      <div class="reveal">
         <div class="footer-col-title">Horaires</div>
         <div class="footer-links">
           <span>Dim–Jeu &amp; Sam : 11h–00h</span>
@@ -956,6 +1033,7 @@ address { font-style:normal; }
         </div>
       </div>
     </div>
+    <div class="footer-sep"></div>
     <div class="footer-bottom">
       <span>© <span id="currentYear">2026</span> Le Sept 7 — Montereau-Fault-Yonne. Tous droits réservés.</span>
       <span>Site non-officiel réalisé à titre de démonstration.</span>
@@ -1124,6 +1202,8 @@ const VIANDES = ['Kebab','Escalope de poulet','Steak haché','Tenders','Nuggets'
 const VIANDES_RIZ2 = ['Kebab','Tandoori','Tenders','Steak haché'];
 const VIANDES_FOUR  = ['Kebab','Steak','Poulet curry','Poulet tandoori'];
 const BOISSONS = ['Coca-Cola','Fanta','Sprite','Oasis Tropical','Thé Glacé Lipton','Eau','Sans boisson'];
+/* Sauces de base, offertes — 2 au choix maximum (même sélection que Le Touareg) */
+const SAUCES = ['Fromagère maison','Sauce blanche','Harissa','Ketchup','Algérienne','Samouraï','Cocktail'];
 
 const CONFIG_RULES = {
   'tacos-1v':    { viandes:1, label:'1 viande au choix' },
@@ -1150,7 +1230,7 @@ const HOURS_BY_DAY = [
 ];
 const DAY_NAMES = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
 
-const WHATSAPP_NUMBER = '33175154128'; // à remplacer par le vrai numéro WhatsApp Business du Sept 7 si différent du fixe
+const WHATSAPP_NUMBER = '33763676191'; // numéro WhatsApp Business confirmé du Sept 7
 const PHONE_DISPLAY = '01 75 15 41 28';
 const RESTAURANT_NAME = 'Le Sept 7';
 const ADDRESS = '72 rue Jean Jaurès, 77130 Montereau-Fault-Yonne';
@@ -1161,6 +1241,7 @@ let activeCategory = 'all';
 let searchQuery = '';
 let cfgCurrentProduct = null;
 let cfgSelectedMeats = [];
+let cfgSelectedSauces = [];
 let cfgSelectedDrink = null;
 let cfgQty = 1;
 let showcaseStepIndex = 0;
@@ -1202,6 +1283,7 @@ function renderPopulaires() {
   const el = document.getElementById('popScroller');
   const pops = PRODUCTS.filter(p => p.popular);
   el.innerHTML = pops.map(p => productCardHTML(p, 'pop')).join('');
+  applyProductTilt();
 }
 
 function renderCatFilters() {
@@ -1332,11 +1414,13 @@ function renderFAQ() {
   const el = document.getElementById('faqList');
   el.innerHTML = FAQ_ITEMS.map((item, i) => `
     <div class="faq-item" data-idx="${i}">
-      <button class="faq-q" data-faq-toggle="${i}">
+      <button class="faq-q" data-faq-toggle="${i}" aria-expanded="false" aria-controls="faqA${i}">
         <span>${item.q}</span>
         <span class="faq-q-icon">+</span>
       </button>
-      <div class="faq-a" id="faqA${i}"><div class="faq-a-inner">${item.a}</div></div>
+      <div class="faq-a" id="faqA${i}" role="region">
+        <div class="faq-a-inner">${item.a}</div>
+      </div>
     </div>`).join('');
 }
 </script>
@@ -1372,9 +1456,10 @@ function addToCartSimple(productId) {
   spawnConfetti(document.querySelector(`[data-add-id="${productId}"]`));
 }
 
-function addToCartConfigured(product, meats, drink, qty) {
+function addToCartConfigured(product, meats, sauces, drink, qty) {
   const parts = [];
   if (meats && meats.length) parts.push(meats.join(', '));
+  if (sauces && sauces.length) parts.push('Sauces : ' + sauces.join(', '));
   if (drink) parts.push(drink);
   const configLabel = parts.join(' · ');
   const key = 'p' + product.id + '_' + configLabel.replace(/\s+/g,'') + '_' + Date.now();
@@ -1486,6 +1571,7 @@ function openConfigurator(productId) {
   if (!p) return;
   cfgCurrentProduct = p;
   cfgSelectedMeats = [];
+  cfgSelectedSauces = [];
   cfgSelectedDrink = null;
   cfgQty = 1;
 
@@ -1511,6 +1597,17 @@ function openConfigurator(productId) {
       <div class="cfg-group-label"><span>Boisson 33cl incluse</span><span class="cfg-group-hint" id="drinkHint">Non sélectionnée</span></div>
       <div class="cfg-options" id="drinkOptions">
         ${BOISSONS.map(b => `<button class="cfg-opt" data-drink="${b}"><span class="cfg-opt-check"></span><span>${b}</span></button>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  /* Sauces — offertes, 2 maximum. Proposées sur tous les plats configurables
+     (tacos, assiettes, riz, wraps, sandwichs au four), comme au Touareg. */
+  if (rule) {
+    bodyHTML += `<div class="cfg-group">
+      <div class="cfg-group-label"><span>Sauces <em style="font-style:normal;color:var(--muted2);font-weight:600">(offertes)</em></span><span class="cfg-group-hint" id="sauceHint">0/2 sélectionnée</span></div>
+      <div class="cfg-options" id="sauceOptions">
+        ${SAUCES.map(s => `<button class="cfg-opt" data-sauce="${s}"><span class="cfg-opt-check"></span><span>${s}</span></button>`).join('')}
       </div>
     </div>`;
   }
@@ -1568,6 +1665,28 @@ function bindConfiguratorEvents(rule) {
       });
     });
   }
+  /* Sauces — cap à 2 : au-delà, la plus ancienne est remplacée (même
+     comportement que le cap des viandes ci-dessus). Les sauces sont
+     facultatives : elles ne bloquent jamais l'ajout au panier. */
+  const sauceOpts = document.getElementById('sauceOptions');
+  if (sauceOpts) {
+    sauceOpts.querySelectorAll('.cfg-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sauce = btn.dataset.sauce;
+        const idx = cfgSelectedSauces.indexOf(sauce);
+        if (idx > -1) {
+          cfgSelectedSauces.splice(idx, 1);
+        } else {
+          if (cfgSelectedSauces.length >= 2) cfgSelectedSauces.shift();
+          cfgSelectedSauces.push(sauce);
+        }
+        sauceOpts.querySelectorAll('.cfg-opt').forEach(b => b.classList.toggle('selected', cfgSelectedSauces.includes(b.dataset.sauce)));
+        const sHint = document.getElementById('sauceHint');
+        sHint.textContent = `${cfgSelectedSauces.length}/2 sélectionnée${cfgSelectedSauces.length > 1 ? 's' : ''}`;
+        sHint.classList.toggle('ok', cfgSelectedSauces.length > 0);
+      });
+    });
+  }
   document.getElementById('cfgQtyMinus').addEventListener('click', () => { if (cfgQty > 1) cfgQty--; document.getElementById('cfgQtyVal').textContent = cfgQty; updateCfgAddButton(); });
   document.getElementById('cfgQtyPlus').addEventListener('click', () => { if (cfgQty < 15) cfgQty++; document.getElementById('cfgQtyVal').textContent = cfgQty; updateCfgAddButton(); });
 }
@@ -1600,7 +1719,7 @@ function closeConfigurator() {
 
 function confirmConfiguratorAdd() {
   if (!isConfiguratorValid() || !cfgCurrentProduct) return;
-  addToCartConfigured(cfgCurrentProduct, cfgSelectedMeats, cfgSelectedDrink, cfgQty);
+  addToCartConfigured(cfgCurrentProduct, cfgSelectedMeats, cfgSelectedSauces, cfgSelectedDrink, cfgQty);
   closeConfigurator();
   openCart();
 }
@@ -1637,16 +1756,32 @@ function initHeaderScroll() {
 function initMobileNav() {
   const hamburger = document.getElementById('hamburger');
   const mobileNav = document.getElementById('mobileNav');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileNav.classList.toggle('open');
-    document.body.classList.toggle('menu-open');
-  });
-  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  function closeMobileNav() {
     hamburger.classList.remove('open');
     mobileNav.classList.remove('open');
     document.body.classList.remove('menu-open');
-  }));
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+  function openMobileNav() {
+    hamburger.classList.add('open');
+    mobileNav.classList.add('open');
+    document.body.classList.add('menu-open');
+    hamburger.setAttribute('aria-expanded', 'true');
+  }
+  hamburger.addEventListener('click', () => {
+    if (mobileNav.classList.contains('open')) closeMobileNav(); else openMobileNav();
+  });
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
+  /* Fermeture au clic en dehors du panneau (point 40 du cahier des charges) */
+  document.addEventListener('click', (e) => {
+    if (!mobileNav.classList.contains('open')) return;
+    if (mobileNav.contains(e.target) || hamburger.contains(e.target)) return;
+    closeMobileNav();
+  });
+  /* Fermeture Escape, cohérente avec le panier/configurateur */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMobileNav();
+  });
 }
 
 function initAnnounceClose() {
@@ -1658,12 +1793,75 @@ function initAnnounceClose() {
 function initReveal() {
   const els = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('visible')); return; }
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* Délai progressif par carte : les enfants directs consécutifs d'une même
+     grille (produits, populaires, avis...) se révèlent en cascade plutôt
+     que tous d'un coup. Calculé une fois par groupe de frères "reveal". */
+  if (!reduced) {
+    const seen = new Set();
+    els.forEach(el => {
+      const parent = el.parentElement;
+      if (!parent || seen.has(parent)) return;
+      seen.add(parent);
+      const siblings = Array.from(parent.children).filter(c => c.classList.contains('reveal'));
+      siblings.forEach((sib, i) => { sib.style.transitionDelay = Math.min(i * 60, 360) + 'ms'; });
+    });
+  }
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
     });
   }, { threshold:0.12, rootMargin:'0px 0px -40px 0px' });
   els.forEach(el => observer.observe(el));
+}
+
+function initCounters() {
+  const els = document.querySelectorAll('[data-count]');
+  if (!els.length) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function animate(el) {
+    const target = parseInt(el.dataset.count, 10) || 0;
+    if (reduced || !('IntersectionObserver' in window)) { el.textContent = target; return; }
+    const duration = 1400;
+    const start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(eased * target);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  if (!('IntersectionObserver' in window)) { els.forEach(el => { el.textContent = el.dataset.count; }); return; }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { animate(entry.target); observer.unobserve(entry.target); }
+    });
+  }, { threshold:0.6 });
+  els.forEach(el => observer.observe(el));
+}
+
+function initLiveActivity() {
+  /* Indicateur d'activité "live" — volontairement discret et non chiffré :
+     il ne prétend jamais représenter un nombre de commandes ou de visiteurs
+     réel en temps réel. Simple rotation de messages courts sous la barre
+     de stats pour donner une sensation de vie, clairement décorative. */
+  const el = document.getElementById('liveActivity');
+  if (!el) return;
+  const messages = [
+    'Commandes en préparation en cuisine',
+    'Ouvert jusqu\u2019à minuit ce soir',
+    'Commande WhatsApp en 2 minutes'
+  ];
+  let i = 0;
+  const label = el.querySelector('.la-label');
+  if (!label) return;
+  setInterval(() => {
+    if (document.hidden) return;
+    i = (i + 1) % messages.length;
+    label.style.opacity = '0';
+    setTimeout(() => { label.textContent = messages[i]; label.style.opacity = '1'; }, 220);
+  }, 4200);
 }
 
 /* ============ TICKER ============ */
@@ -1682,11 +1880,15 @@ function initShowcase() {
   const total = steps.length;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  function onScroll() {
+  let ticking = false;
+  function update() {
+    ticking = false;
     const rect = wrap.getBoundingClientRect();
     const wrapHeight = wrap.offsetHeight;
     const scrolled = -rect.top;
-    const progress = Math.max(0, Math.min(1, scrolled / (wrapHeight - window.innerHeight)));
+    const denom = wrapHeight - window.innerHeight;
+    if (denom <= 0) return;
+    const progress = Math.max(0, Math.min(1, scrolled / denom));
     let idx = Math.floor(progress * total);
     if (idx >= total) idx = total - 1;
     if (idx < 0) idx = 0;
@@ -1696,8 +1898,12 @@ function initShowcase() {
       dots.forEach((d, i) => { d.classList.toggle('active', i === idx); d.classList.toggle('done', i < idx); });
     }
   }
+  function onScroll() {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }
   window.addEventListener('scroll', onScroll, { passive:true });
-  onScroll();
+  window.addEventListener('resize', onScroll, { passive:true });
+  update();
 }
 
 /* ============ FAQ TOGGLE ============ */
@@ -1710,18 +1916,29 @@ function initFAQ() {
     const answer = document.getElementById('faqA' + idx);
     const isOpen = item.classList.contains('open');
     document.querySelectorAll('.faq-item.open').forEach(other => {
-      if (other !== item) { other.classList.remove('open'); other.querySelector('.faq-a').style.maxHeight = null; }
+      if (other !== item) {
+        other.classList.remove('open');
+        other.querySelector('.faq-a').style.maxHeight = null;
+        other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      }
     });
-    if (isOpen) { item.classList.remove('open'); answer.style.maxHeight = null; }
-    else { item.classList.add('open'); answer.style.maxHeight = answer.scrollHeight + 'px'; }
+    if (isOpen) {
+      item.classList.remove('open'); answer.style.maxHeight = null;
+      btn.setAttribute('aria-expanded', 'false');
+    } else {
+      item.classList.add('open'); answer.style.maxHeight = answer.scrollHeight + 'px';
+      btn.setAttribute('aria-expanded', 'true');
+    }
   });
 }
 
 /* ============ MOBILE TAP-HOVER (virtual cursor pattern) ============ */
 function initMobileHover() {
   if (!('ontouchstart' in window)) return;
+  const HOVERABLE = 'a, button, .product-card, .pop-card, .cat-chip, .faq-q, .trust-item, ' +
+    '.stat-item, .footer-links a, .fab, .cfg-opt, .cart-item, .qty-btn, .review-card';
   document.addEventListener('touchstart', (e) => {
-    const target = e.target.closest('a, button, .product-card, .pop-card, .cat-chip, .faq-q');
+    const target = e.target.closest(HOVERABLE);
     if (!target) return;
     document.querySelectorAll('.mobile-hover').forEach(el => el.classList.remove('mobile-hover'));
     target.classList.add('mobile-hover');
@@ -1795,18 +2012,24 @@ function showToast(msg, duration = 2600) {
 function initParticles() {
   const container = document.getElementById('heroParticles');
   if (!container || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const sparks = ['🔥','⚡','✨'];
+  const symbols = ['✦', '·', '✧'];
+  const colors = ['c-flame', 'c-gold', 'c-lime'];
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  const maxActive = isTouch ? 10 : 22;
+  let active = 0;
   function spawn() {
-    if (document.hidden) return;
+    if (document.hidden || active >= maxActive) return;
+    active++;
     const el = document.createElement('span');
-    el.className = 'spark';
-    el.textContent = sparks[Math.floor(Math.random() * sparks.length)];
-    el.style.cssText = 'left:' + (Math.random()*90+5) + '%;font-size:' + (.7+Math.random()*.7) + 'rem;animation-duration:' + (3+Math.random()*5) + 's;';
+    el.className = 'spark ' + colors[Math.floor(Math.random() * colors.length)];
+    el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    el.style.cssText = 'left:' + (Math.random()*92+4) + '%;font-size:' + (.55+Math.random()*.85) + 'rem;animation-duration:' + (4+Math.random()*6) + 's;';
     container.appendChild(el);
-    el.addEventListener('animationend', () => el.remove(), { once:true });
+    el.addEventListener('animationend', () => { el.remove(); active--; }, { once:true });
   }
-  for (let i = 0; i < 5; i++) setTimeout(spawn, i * 400);
-  setInterval(spawn, 700);
+  const spawnCount = isTouch ? 3 : 6;
+  for (let i = 0; i < spawnCount; i++) setTimeout(spawn, i * 350);
+  setInterval(spawn, isTouch ? 1100 : 650);
 }
 
 /* ============ HERO — PARALLAXE CURSEUR ============ */
@@ -1815,24 +2038,59 @@ function initHeroParallax() {
   const visual = hero?.querySelector('.hero-visual-col');
   if (!hero || !visual || window.innerWidth < 1024) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  let raf = null, tx = 0, ty = 0;
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+
+  /* Couches à profondeurs différentes : plus "loin" = bouge moins vite.
+     Seuls des éléments SANS animation CSS de transform propre sont parallaxés
+     directement ; le "7" et les chips ont leur propre wrapper de parallax
+     pour ne jamais entrer en conflit avec sevenFloat / chipDrift. */
+  const seven = visual.querySelector('.hero-seven-frame');
+  const layers = [
+    { el: hero.querySelector('.hero-glow-1'), fx: 6,  fy: 5  },
+    { el: hero.querySelector('.hero-glow-2'), fx: -5, fy: 4  },
+    { el: hero.querySelector('.hero-glow-3'), fx: 8,  fy: -6 },
+    { el: hero.querySelector('.hero-seven-bg'), fx: 10, fy: 7 },
+    { el: visual.querySelector('.hero-food-layer'), fx: 12, fy: 9 },
+    { el: hero.querySelector('.hero-text-col'), fx: -3, fy: -2 },
+  ].filter(l => l.el);
+  if (seven && seven.parentElement === visual) {
+    const wrap = document.createElement('div');
+    wrap.className = 'hsf-parallax-wrap';
+    wrap.style.cssText = 'position:absolute; inset:0;';
+    visual.insertBefore(wrap, seven);
+    wrap.appendChild(seven);
+    layers.push({ el: wrap, fx: 22, fy: 15 });
+  }
+
+  let raf = null, tx = 0, ty = 0, cx = 0, cy = 0;
   hero.addEventListener('mousemove', e => {
     const r = hero.getBoundingClientRect();
     tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
     ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
     if (!raf) raf = requestAnimationFrame(apply);
-  });
+  }, { passive:true });
   hero.addEventListener('mouseleave', () => { tx = 0; ty = 0; if (!raf) raf = requestAnimationFrame(apply); });
+
   function apply() {
-    visual.style.transform = `translate3d(${(tx * 16).toFixed(1)}px, ${(ty * 12).toFixed(1)}px, 0)`;
-    raf = null;
+    /* Interpolation légère pour un mouvement organique, jamais brutal */
+    cx += (tx - cx) * 0.08;
+    cy += (ty - cy) * 0.08;
+    visual.style.transform = `translate3d(${(cx * 16).toFixed(1)}px, ${(cy * 12).toFixed(1)}px, 0)`;
+    layers.forEach(l => {
+      l.el.style.transform = `translate3d(${(cx * l.fx).toFixed(1)}px, ${(cy * l.fy).toFixed(1)}px, 0)`;
+    });
+    if (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) {
+      raf = requestAnimationFrame(apply);
+    } else {
+      raf = null;
+    }
   }
 }
 
 /* ============ PRODUCT CARDS — TILT 3D ============ */
 function applyProductTilt() {
   if (window.innerWidth < 1024 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  document.querySelectorAll('#menuGrid .product-card').forEach(card => {
+  document.querySelectorAll('.product-card, .pop-card, .review-card').forEach(card => {
     if (card._tiltBound) return;
     card._tiltBound = true;
     card.addEventListener('mousemove', e => {
@@ -1890,29 +2148,39 @@ function initYear() {
   if (el) el.textContent = new Date().getFullYear();
 }
 
-/* ============ INIT ============ */
+/* ============ INIT ============
+   safeInit isole chaque module : si l'un échoue, il logge l'erreur en
+   console et les autres continuent normalement (point 50 du cahier des
+   charges). Ordre calqué sur le brief (point 51), adapté aux fonctions
+   réellement présentes dans ce fichier. */
+function safeInit(fn, label) {
+  try { fn(); } catch (e) { console.error('[Sept 7]', label || fn.name, 'error:', e); }
+}
+
 function initApp() {
-  try { loadCart(); } catch (e) { console.error('Cart load error', e); }
-  try { renderPopulaires(); } catch (e) { console.error('Populaires render error', e); }
-  try { renderCatFilters(); } catch (e) { console.error('Filters render error', e); }
-  try { renderMenuGrid(); } catch (e) { console.error('Menu grid render error', e); }
-  try { renderReviews(); } catch (e) { console.error('Reviews render error', e); }
-  try { renderHoursTable(); } catch (e) { console.error('Hours render error', e); }
-  try { renderFAQ(); } catch (e) { console.error('FAQ render error', e); }
-  try { renderCart(); } catch (e) { console.error('Cart render error', e); }
-  try { updateOpenStatus(); } catch (e) { console.error('Open status error', e); }
-  try { initHeaderScroll(); } catch (e) { console.error('Header scroll error', e); }
-  try { initMobileNav(); } catch (e) { console.error('Mobile nav error', e); }
-  try { initAnnounceClose(); } catch (e) { console.error('Announce close error', e); }
-  try { initReveal(); } catch (e) { console.error('Reveal error', e); }
-  try { initTicker(); } catch (e) { console.error('Ticker error', e); }
-  try { initShowcase(); } catch (e) { console.error('Showcase error', e); }
-  try { initFAQ(); } catch (e) { console.error('FAQ toggle error', e); }
-  try { initMobileHover(); } catch (e) { console.error('Mobile hover error', e); }
-  try { initDelegatedEvents(); } catch (e) { console.error('Delegated events error', e); }
-  try { initParticles(); } catch (e) { console.error('Particles error', e); }
-  try { initHeroParallax(); } catch (e) { console.error('Hero parallax error', e); }
-  try { initYear(); } catch (e) { console.error('Year error', e); }
+  safeInit(initYear, 'Year');
+  safeInit(initAnnounceClose, 'Announcement');
+  safeInit(initHeaderScroll, 'Header scroll');
+  safeInit(updateOpenStatus, 'Open status');
+  safeInit(loadCart, 'Cart load');
+  safeInit(renderPopulaires, 'Populaires render');
+  safeInit(renderCatFilters, 'Filters render');
+  safeInit(renderMenuGrid, 'Menu grid render');
+  safeInit(renderReviews, 'Reviews render');
+  safeInit(renderHoursTable, 'Hours render');
+  safeInit(renderFAQ, 'FAQ render');
+  safeInit(renderCart, 'Cart render');
+  safeInit(initReveal, 'Reveal');
+  safeInit(initCounters, 'Counters');
+  safeInit(initLiveActivity, 'Live activity');
+  safeInit(initParticles, 'Particles');
+  safeInit(initHeroParallax, 'Hero parallax');
+  safeInit(initShowcase, 'Showcase');
+  safeInit(initTicker, 'Ticker');
+  safeInit(initMobileNav, 'Mobile nav');
+  safeInit(initFAQ, 'FAQ toggle');
+  safeInit(initMobileHover, 'Mobile hover');
+  safeInit(initDelegatedEvents, 'Delegated events');
   requestAnimationFrame(() => document.querySelector('.hero').classList.add('hero-loaded'));
 }
 
