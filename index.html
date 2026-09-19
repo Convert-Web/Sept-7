@@ -183,6 +183,9 @@ address { font-style:normal; }
 .order-mode-group { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
 .order-mode-label { display:flex; align-items:center; justify-content:center; gap:.5rem; padding:.6rem .75rem; border-radius:var(--r-md); font-size:.875rem; font-weight:600; color:var(--muted); background:var(--ink-2); border:2px solid var(--border); cursor:pointer; transition:all var(--tf); text-align:center; }
 .cart-disclaimer { font-size:.72rem; color:var(--muted2); text-align:center; line-height:1.5; margin-top:-.5rem; }
+.cart-delivery-note { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:.4rem; font-size:.78rem; color:var(--muted2); text-align:center; padding-top:.7rem; margin-top:.2rem; border-top:1px solid var(--border); }
+.cart-delivery-note-link { display:inline-flex; align-items:center; gap:.35rem; color:var(--off); font-weight:700; text-decoration:underline; text-underline-offset:2px; }
+.cart-delivery-note-link:hover, .cart-delivery-note-link.mobile-hover { color:var(--gold); }
 .order-mode-group--single { grid-template-columns:1fr; }
 .order-mode-label--static { border-color:var(--gold); color:var(--white); background:rgba(201,138,46,.1); cursor:default; }
 .cart-close:hover, .cart-close.mobile-hover { border-color:var(--flame); color:var(--flame); }.cart-item:hover, .cart-item.mobile-hover { border-color:rgba(201,138,46,.28); }.qty-btn:hover, .qty-btn.mobile-hover { background:var(--gold); color:var(--ink); }.qty-btn.remove:hover, .qty-btn.remove.mobile-hover { background:var(--flame); color:#fff; }.order-mode-label:hover, .order-mode-label.mobile-hover { border-color:var(--gold); color:var(--white); }
@@ -202,6 +205,8 @@ address { font-style:normal; }
 .hero-content { display:grid; grid-template-columns:1fr; gap:2.5rem; width:100%; padding-block:var(--s12) var(--s10); }
 .hero-status-row { display:flex; flex-wrap:wrap; align-items:center; gap:.6rem; margin-bottom:var(--s6); }
 .hero-pill { display:inline-flex; align-items:center; gap:.45rem; padding:.4rem .85rem; border-radius:var(--r-f); font-size:.72rem; font-weight:700; letter-spacing:.03em; border:1.5px solid var(--border); background:rgba(255,255,255,.04); color:var(--muted); }
+.hero-pill-link { text-decoration:none; cursor:pointer; transition:border-color .25s var(--ease-o),background .25s var(--ease-o),color .25s var(--ease-o); }
+.hero-pill-link:hover, .hero-pill-link.mobile-hover { border-color:var(--gold); background:rgba(201,138,46,.1); color:var(--off); }
 .hero-pill.status-open { border-color:rgba(143,168,74,.4); background:rgba(143,168,74,.08); color:var(--lime); }
 .hero-pill.status-closed { border-color:rgba(198,66,30,.35); background:rgba(198,66,30,.07); color:#F4957B; }
 .status-dot { width:7px; height:7px; border-radius:50%; background:currentColor; flex-shrink:0; }
@@ -362,6 +367,9 @@ address { font-style:normal; }
 .trust-strip { background:var(--paper-2); border-bottom:1px solid var(--border-lt); padding-block:var(--s10); }
 .trust-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:var(--s6); }
 .trust-item { display:flex; align-items:center; gap:1rem; }
+.trust-item-link { text-decoration:none; color:inherit; cursor:pointer; transition:transform .25s var(--ease-o); }
+.trust-item-link:hover, .trust-item-link.mobile-hover { transform:translateY(-2px); }
+.trust-item-link:hover .trust-title, .trust-item-link.mobile-hover .trust-title { color:var(--gold); }
 .trust-icon { width:48px; height:48px; border-radius:var(--r-md); display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; background:var(--ink); color:var(--gold); }
 .trust-title { font-size:.95rem; font-weight:800; color:var(--off); margin-bottom:2px; }
 .trust-sub { font-size:.8rem; color:var(--muted-lt); }
@@ -559,11 +567,17 @@ address { font-style:normal; }
 @media (min-width:820px) { .footer-grid { grid-template-columns:1.3fr .8fr .8fr .9fr; } .footer-bottom { flex-direction:row; justify-content:space-between; text-align:left; } }
 
 /* FAB */
-.fab-cart { position:fixed; bottom:1.5rem; right:1.5rem; z-index:850; width:58px; height:58px; border-radius:50%; background:var(--wa); color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow:0 10px 26px rgba(29,168,81,.4); transition:all var(--t); }
+.floating-actions { position:fixed; bottom:1.5rem; right:1.5rem; z-index:850; display:flex; flex-direction:column; align-items:flex-end; gap:.75rem; }
+.fab-cart { width:58px; height:58px; border-radius:50%; background:var(--wa); color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow:0 10px 26px rgba(29,168,81,.4); transition:all var(--t); }
 .fab-cart:hover, .fab-cart.mobile-hover { transform:scale(1.08); box-shadow:0 14px 32px rgba(29,168,81,.5); }
 .fab-cart-badge { position:absolute; top:-4px; right:-4px; min-width:22px; height:22px; background:var(--flame); color:#fff; font-size:.7rem; font-weight:800; border-radius:50%; display:flex; align-items:center; justify-content:center; padding:0 4px; border:2px solid var(--paper); }
 .fab-cart-badge.hidden { display:none; }
 .fab-cart.bump { animation:badgeBump .35s var(--ease-o); }
+.fab-uber { height:50px; padding:0 1.25rem; background:#06C167; color:#fff; border-radius:var(--r-f); display:flex; align-items:center; justify-content:center; gap:.5rem; font-size:.85rem; font-weight:800; text-decoration:none; box-shadow:0 10px 22px rgba(6,193,103,.32); transition:all var(--t); animation:fabUberPulse 2.6s ease-in-out infinite; white-space:nowrap; }
+.fab-uber:hover, .fab-uber.mobile-hover { transform:scale(1.05); box-shadow:0 14px 28px rgba(6,193,103,.42); }
+@keyframes fabUberPulse { 0%,100% { box-shadow:0 10px 22px rgba(6,193,103,.32),0 0 0 0 rgba(6,193,103,.35); } 50% { box-shadow:0 10px 22px rgba(6,193,103,.32),0 0 0 8px rgba(6,193,103,0); } }
+@media (prefers-reduced-motion:reduce) { .fab-uber { animation:none; } }
+@media (max-width:480px) { .fab-uber span.fab-uber-label { display:none; } .fab-uber { width:50px; height:50px; padding:0; border-radius:50%; } }
 @keyframes badgeBump { 0%,100% { transform:scale(1); } 40% { transform:scale(1.22); } }
 
 /* ============ RESPONSIVE ============ */
@@ -733,7 +747,7 @@ address { font-style:normal; }
     <div class="container announce-inner">
       <div class="announce-content">
         <span class="a-dot"></span>
-        <span class="a-text"><svg class="icon icon-flame"><use href="#i-flame" xlink:href="#i-flame"/></svg> Ouvert jusqu'à minuit · Commande à emporter en 2 min sur WhatsApp</span>
+        <span class="a-text"><svg class="icon icon-flame"><use href="#i-flame" xlink:href="#i-flame"/></svg> Ouvert jusqu'à minuit · Commande à emporter en 2 min sur WhatsApp · Livraison via Uber Eats</span>
       </div>
       <button class="a-close" id="announceClose" aria-label="Fermer"><svg class="icon"><use href="#i-close" xlink:href="#i-close"/></svg></button>
     </div>
@@ -778,6 +792,7 @@ address { font-style:normal; }
           <span class="hero-pill status-open" id="heroStatusPill"><span class="status-dot pulse"></span> Ouvert jusqu'à minuit</span>
           <span class="hero-pill"><span style="color:var(--gold)">★</span> 4,5 · 264 avis Google</span>
           <span class="hero-pill"><svg class="icon"><use href="#i-pin" xlink:href="#i-pin"/></svg> Montereau-Fault-Yonne</span>
+          <a class="hero-pill hero-pill-link" href="https://www.ubereats.com/fr/store/le-sept-7/jn5Wb6jHXWyJsiE2AmEouQ?srsltid=AU7gw4VImxe8g86Gl17bxTiEMvdZJ-T4w9S7g6WzjmWMpTOeVokSz74U" target="_blank" rel="noopener"><svg class="icon"><use href="#i-bag" xlink:href="#i-bag"/></svg> Livraison sur Uber Eats</a>
         </div>
         <div class="hero-eyebrow-row">
           <span class="hero-eyebrow">Street food · 77130</span>
@@ -865,10 +880,10 @@ address { font-style:normal; }
       <div class="trust-icon"><svg class="icon icon-lg"><use href="#i-chat" xlink:href="#i-chat"/></svg></div>
       <div><div class="trust-title">Commande WhatsApp</div><div class="trust-sub">Réponse en quelques minutes</div></div>
     </div>
-    <div class="trust-item reveal">
-      <div class="trust-icon" style="color:var(--gold)">★</div>
-      <div><div class="trust-title">4,5 / 5 sur Google</div><div class="trust-sub">264 avis clients</div></div>
-    </div>
+    <a class="trust-item trust-item-link reveal" href="https://www.ubereats.com/fr/store/le-sept-7/jn5Wb6jHXWyJsiE2AmEouQ?srsltid=AU7gw4VImxe8g86Gl17bxTiEMvdZJ-T4w9S7g6WzjmWMpTOeVokSz74U" target="_blank" rel="noopener">
+      <div class="trust-icon"><svg class="icon icon-lg"><use href="#i-bag" xlink:href="#i-bag"/></svg></div>
+      <div><div class="trust-title">Livraison</div><div class="trust-sub">Via Uber Eats</div></div>
+    </a>
     <div class="trust-item reveal">
       <div class="trust-icon"><svg class="icon icon-lg"><use href="#i-clock" xlink:href="#i-clock"/></svg></div>
       <div><div class="trust-title">Ouvert jusqu'à minuit</div><div class="trust-sub">7 jours sur 7</div></div>
@@ -1115,16 +1130,23 @@ address { font-style:normal; }
         <div class="order-mode-label order-mode-label--static"><svg class="icon"><use href="#i-bag" xlink:href="#i-bag"/></svg> À emporter / sur place — réglé à la prise en charge</div>
       </div>
       <button class="btn btn-wa btn-full btn-lg" id="sendWaBtn"><svg class="icon"><use href="#i-chat" xlink:href="#i-chat"/></svg> Envoyer sur WhatsApp</button>
+      <div class="cart-delivery-note"><span class="cart-delivery-note-txt">Besoin d'être livré ?</span><a href="https://www.ubereats.com/fr/store/le-sept-7/jn5Wb6jHXWyJsiE2AmEouQ?srsltid=AU7gw4VImxe8g86Gl17bxTiEMvdZJ-T4w9S7g6WzjmWMpTOeVokSz74U" class="cart-delivery-note-link" target="_blank" rel="noopener"><svg class="icon"><use href="#i-bag" xlink:href="#i-bag"/></svg> Commander sur Uber Eats</a></div>
       <p class="cart-disclaimer">Votre commande est envoyée par message. Nous confirmons la disponibilité et le délai directement sur WhatsApp.</p>
     </div>
   </div>
 </aside>
 
 <!-- FAB -->
-<button class="fab-cart" id="fabCart" aria-label="Voir le panier">
-  <svg class="icon icon-lg"><use href="#i-cart" xlink:href="#i-cart"/></svg>
-  <span class="fab-cart-badge hidden" id="fabCartBadge">0</span>
-</button>
+<div class="floating-actions">
+  <a class="fab-uber" href="https://www.ubereats.com/fr/store/le-sept-7/jn5Wb6jHXWyJsiE2AmEouQ?srsltid=AU7gw4VImxe8g86Gl17bxTiEMvdZJ-T4w9S7g6WzjmWMpTOeVokSz74U" target="_blank" rel="noopener" aria-label="Commander sur Uber Eats">
+    <svg class="icon"><use href="#i-bag" xlink:href="#i-bag"/></svg>
+    <span class="fab-uber-label">Uber Eats</span>
+  </a>
+  <button class="fab-cart" id="fabCart" aria-label="Voir le panier">
+    <svg class="icon icon-lg"><use href="#i-cart" xlink:href="#i-cart"/></svg>
+    <span class="fab-cart-badge hidden" id="fabCartBadge">0</span>
+  </button>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -1459,7 +1481,8 @@ const FAQ_ITEMS = [
   { q:"Comment puis-je payer ma commande ?", a:"Le règlement se fait sur place au moment de la prise en charge de votre commande." },
   { q:"Quelle est la meilleure chose à commander au Sept 7 ?", a:"Nos best-sellers : Menu Sandwich Kebab, Menu Sandwich Le Sept 7, Menu Tacos 2 Viandes, Sandwich au Four et Riz Thaï 2 Viandes." },
   { q:"Où est situé Le Sept 7 ?", a:"72 rue Jean Jaurès, 77130 Montereau-Fault-Yonne, à deux pas du centre-ville." },
-  { q:"Puis-je venir manger sur place ?", a:"Oui, le restaurant propose le repas sur place, la vente à emporter et la livraison." },
+  { q:"Puis-je me faire livrer une commande du Sept 7 ?", a:"Oui, la livraison est disponible via Uber Eats dans la zone couverte autour de Montereau-Fault-Yonne. Pour une commande à emporter ou sur place, passez plutôt par ce site et WhatsApp." },
+  { q:"Puis-je venir manger sur place ?", a:"Oui, le restaurant propose le repas sur place, la vente à emporter et la livraison via Uber Eats." },
 ];
 function renderFAQ() {
   const el = document.getElementById('faqList');
