@@ -568,12 +568,14 @@ address { font-style:normal; }
 
 /* FAB */
 .floating-actions { position:fixed; bottom:1.5rem; right:1.5rem; z-index:850; display:flex; flex-direction:column; align-items:flex-end; gap:.75rem; }
-.fab-cart { width:58px; height:58px; border-radius:50%; background:var(--wa); color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow:0 10px 26px rgba(29,168,81,.4); transition:all var(--t); }
-.fab-cart:hover, .fab-cart.mobile-hover { transform:scale(1.08); box-shadow:0 14px 32px rgba(29,168,81,.5); }
-.fab-cart-badge { position:absolute; top:-4px; right:-4px; min-width:22px; height:22px; background:var(--flame); color:#fff; font-size:.7rem; font-weight:800; border-radius:50%; display:flex; align-items:center; justify-content:center; padding:0 4px; border:2px solid var(--paper); }
+.fab-cart { width:50px; height:50px; border-radius:50%; background:#fff; color:var(--ink); border:1.5px solid var(--border-lt); display:flex; align-items:center; justify-content:center; box-shadow:0 10px 26px rgba(20,17,15,.18); transition:all var(--t); }
+.fab-cart .icon { width:22px; height:22px; }
+.fab-cart:hover, .fab-cart.mobile-hover { transform:scale(1.08); border-color:var(--gold); box-shadow:0 14px 32px rgba(20,17,15,.24); }
+.fab-cart-badge { position:absolute; top:-4px; right:-4px; min-width:22px; height:22px; background:var(--flame); color:#fff; font-size:.7rem; font-weight:800; border-radius:50%; display:flex; align-items:center; justify-content:center; padding:0 4px; border:2px solid #fff; }
 .fab-cart-badge.hidden { display:none; }
 .fab-cart.bump { animation:badgeBump .35s var(--ease-o); }
 .fab-uber { height:50px; padding:0 1.25rem; background:#06C167; color:#fff; border-radius:var(--r-f); display:flex; align-items:center; justify-content:center; gap:.5rem; font-size:.85rem; font-weight:800; text-decoration:none; box-shadow:0 10px 22px rgba(6,193,103,.32); transition:all var(--t); animation:fabUberPulse 2.6s ease-in-out infinite; white-space:nowrap; }
+.fab-uber .icon { width:22px; height:22px; }
 .fab-uber:hover, .fab-uber.mobile-hover { transform:scale(1.05); box-shadow:0 14px 28px rgba(6,193,103,.42); }
 @keyframes fabUberPulse { 0%,100% { box-shadow:0 10px 22px rgba(6,193,103,.32),0 0 0 0 rgba(6,193,103,.35); } 50% { box-shadow:0 10px 22px rgba(6,193,103,.32),0 0 0 8px rgba(6,193,103,0); } }
 @media (prefers-reduced-motion:reduce) { .fab-uber { animation:none; } }
@@ -1143,7 +1145,7 @@ address { font-style:normal; }
     <span class="fab-uber-label">Uber Eats</span>
   </a>
   <button class="fab-cart" id="fabCart" aria-label="Voir le panier">
-    <svg class="icon icon-lg"><use href="#i-cart" xlink:href="#i-cart"/></svg>
+    <svg class="icon"><use href="#i-cart" xlink:href="#i-cart"/></svg>
     <span class="fab-cart-badge hidden" id="fabCartBadge">0</span>
   </button>
 </div>
