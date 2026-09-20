@@ -380,9 +380,9 @@ address { font-style:normal; }
 .stats-section::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(201,138,46,.08),transparent 60%); pointer-events:none; }
 .stats-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:var(--s8); position:relative; z-index:1; }
 .stat-item { text-align:center; padding:1.1rem .5rem; border-radius:var(--radius-lg); transition:transform .35s var(--ease-o),background .35s var(--ease-o); }
-.stat-item:hover { transform:translateY(-4px); background:rgba(255,255,255,.03); }
+.stat-item:hover, .stat-item.mobile-hover { transform:translateY(-4px); background:rgba(255,255,255,.03); }
 .stat-num { font-family:var(--font-d); font-size:clamp(2.4rem,5.5vw,3.6rem); color:var(--white); line-height:1; display:flex; align-items:baseline; justify-content:center; gap:.15rem; text-shadow:0 0 0 transparent; transition:text-shadow .4s var(--ease-o); }
-.stat-item:hover .stat-num { text-shadow:0 0 26px rgba(201,138,46,.35); }
+.stat-item:hover .stat-num, .stat-item.mobile-hover .stat-num { text-shadow:0 0 26px rgba(201,138,46,.35); }
 .stat-num .stat-accent { color:var(--gold); }
 .stat-lbl { font-size:.8rem; color:var(--muted); font-weight:600; margin-top:.5rem; letter-spacing:.02em; }
 @media (min-width:820px) { .stats-grid { grid-template-columns:repeat(4,1fr); } }
@@ -679,12 +679,12 @@ address { font-style:normal; }
 
 /* CLASSIQUES — cartes photo avec overlay + badge (upgrade) */
 .classique-card { position:relative; border-radius:var(--r-xl); overflow:hidden; min-height:300px; border:1px solid var(--border); transition:all .4s var(--ease-o); display:flex; flex-direction:column; justify-content:flex-end; cursor:pointer; padding:1.75rem; color:#fff; }
-.classique-card:hover { transform:translateY(-8px); box-shadow:0 26px 52px rgba(0,0,0,.4); }
-.classique-card[data-glow="flame"]:hover { border-color:rgba(198,66,30,.45); box-shadow:0 26px 52px rgba(0,0,0,.4),0 0 0 1px rgba(198,66,30,.18); }
-.classique-card[data-glow="lime"]:hover { border-color:rgba(143,168,74,.4); box-shadow:0 26px 52px rgba(0,0,0,.4),0 0 0 1px rgba(143,168,74,.14); }
-.classique-card[data-glow="gold"]:hover { border-color:rgba(201,138,46,.45); box-shadow:0 26px 52px rgba(0,0,0,.4),0 0 0 1px rgba(201,138,46,.16); }
+.classique-card:hover, .classique-card.mobile-hover { transform:translateY(-8px); box-shadow:0 26px 52px rgba(0,0,0,.4); }
+.classique-card[data-glow="flame"]:hover, .classique-card[data-glow="flame"].mobile-hover { border-color:rgba(198,66,30,.45); box-shadow:0 26px 52px rgba(0,0,0,.4),0 0 0 1px rgba(198,66,30,.18); }
+.classique-card[data-glow="lime"]:hover, .classique-card[data-glow="lime"].mobile-hover { border-color:rgba(143,168,74,.4); box-shadow:0 26px 52px rgba(0,0,0,.4),0 0 0 1px rgba(143,168,74,.14); }
+.classique-card[data-glow="gold"]:hover, .classique-card[data-glow="gold"].mobile-hover { border-color:rgba(201,138,46,.45); box-shadow:0 26px 52px rgba(0,0,0,.4),0 0 0 1px rgba(201,138,46,.16); }
 .classique-img { position:absolute; inset:0; z-index:0; background-size:cover; background-position:center; transition:transform .7s var(--ease-o); }
-.classique-card:hover .classique-img { transform:scale(1.07); }
+.classique-card:hover .classique-img, .classique-card.mobile-hover .classique-img { transform:scale(1.07); }
 .classique-card-overlay { position:absolute; inset:0; z-index:0; background:linear-gradient(to top,rgba(14,11,9,.92) 0%,rgba(14,11,9,.55) 45%,rgba(14,11,9,.08) 100%); }
 .classique-card .classique-emoji { display:none; }
 .classique-card .classique-body { position:relative; z-index:1; }
@@ -1977,17 +1977,109 @@ function initFAQ() {
 }
 
 /* ============ MOBILE TAP-HOVER (virtual cursor pattern) ============ */
+/* ============ CURSEUR VIRTUEL (TACTILE) ============
+   Sur un écran tactile il n'y a pas de survol : tous les effets liés au
+   hover (accents, glow, zoom d'image, tilt 3D) resteraient invisibles.
+   Ce module simule un curseur au centre de l'écran : l'élément qui passe
+   sous ce point pendant le scroll reçoit la classe .mobile-hover, déjà
+   câblée dans tout le CSS à côté de chaque :hover. Le tap garde en plus
+   un retour immédiat sur l'élément touché.
+   Un seul système gère les deux cas, pour ne pas avoir deux modules qui
+   se retirent mutuellement la classe. */
 function initMobileHover() {
-  if (!('ontouchstart' in window)) return;
-  const HOVERABLE = 'a, button, .product-card, .pop-card, .cat-chip, .faq-q, .trust-item, ' +
-    '.stat-item, .footer-links a, .fab, .cfg-opt, .cart-item, .qty-btn, .review-card';
+  const isTouch = !window.matchMedia('(hover: hover)').matches || 'ontouchstart' in window;
+  if (!isTouch) return;
+
+  const HOVERABLE = '.btn, .hero-pill, .trust-item, .stat-item, .pop-card, .pop-add, ' +
+    '.cat-chip, .product-card, .product-add, .classique-card, .loc-card, .faq-q, ' +
+    '.review-platform, .cart-item, .qty-btn, .cfg-opt, .order-mode-label, ' +
+    '.cart-delivery-note-link, .search-clear, .nav-link, .mobile-nav-link, ' +
+    '.mobile-phone-link, .footer-links a, .fab-cart, .fab-uber, .a-link, .a-close, .hamburger';
+  /* Les cartes qui portent un vrai tilt 3D au survol sur desktop */
+  const TILTABLE = '.product-card, .pop-card, .classique-card';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let currentEl = null, currentTiltEl = null, ticking = false, centerY = 0;
+
+  function updateCenterY() { centerY = window.innerHeight / 2; }
+
+  function findElementAtCenter() {
+    const x = window.innerWidth / 2, y = centerY;
+    /* elementsFromPoint (pluriel) renvoie toute la pile sous ce point, du
+       dessus vers le dessous. Le singulier ne renverrait que le calque le
+       plus haut — souvent le grain, un scrim ou un glow décoratif, qui
+       masquerait la carte réellement survolable en dessous.
+       Repli sur le singulier si l'API pluriel manque (navigateurs anciens) :
+       sans ce garde-fou, la fonction lèverait une erreur à chaque frame. */
+    if (typeof document.elementsFromPoint === 'function') {
+      const stack = document.elementsFromPoint(x, y);
+      for (const el of stack) {
+        const hoverable = el.closest(HOVERABLE);
+        if (hoverable) return hoverable;
+      }
+      return null;
+    }
+    if (typeof document.elementFromPoint === 'function') {
+      const el = document.elementFromPoint(x, y);
+      return el ? el.closest(HOVERABLE) : null;
+    }
+    return null;
+  }
+
+  function applyTiltFromCenter(card) {
+    const rect = card.getBoundingClientRect();
+    const cy = rect.top + rect.height / 2;
+    const dy = (centerY - cy) / (rect.height / 2);
+    /* Le translateY du hover est repris ici : un transform inline écrase
+       toujours celui de la règle CSS :hover/.mobile-hover, donc les deux
+       effets doivent être combinés dans la même déclaration. */
+    const lift = card.classList.contains('classique-card') ? 8 : 4;
+    card.style.transition = 'transform .18s ease-out';
+    card.style.transform = `perspective(600px) rotateX(${(-dy * 4).toFixed(2)}deg) translateY(-${lift}px) translateZ(4px)`;
+  }
+  function resetTilt(card) {
+    card.style.transition = 'transform .4s ease';
+    card.style.transform = '';
+  }
+
+  function update() {
+    ticking = false;
+    const target = findElementAtCenter();
+    if (target !== currentEl) {
+      if (currentEl) currentEl.classList.remove('mobile-hover');
+      if (target) target.classList.add('mobile-hover');
+      currentEl = target;
+    }
+    if (reduced) return;
+    const tiltTarget = target ? target.closest(TILTABLE) : null;
+    if (tiltTarget !== currentTiltEl) {
+      if (currentTiltEl) resetTilt(currentTiltEl);
+      currentTiltEl = tiltTarget;
+    }
+    if (currentTiltEl) applyTiltFromCenter(currentTiltEl);
+  }
+
+  function onScroll() {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }
+
+  updateCenterY();
+  window.addEventListener('scroll', onScroll, { passive:true });
+  window.addEventListener('resize', () => { updateCenterY(); onScroll(); }, { passive:true });
+
+  /* Retour immédiat au toucher, sans effacer l'élément tenu par le curseur
+     central : la classe est posée sur l'élément touché puis retirée, et le
+     curseur reprend la main au scroll suivant. */
   document.addEventListener('touchstart', (e) => {
     const target = e.target.closest(HOVERABLE);
-    if (!target) return;
-    document.querySelectorAll('.mobile-hover').forEach(el => el.classList.remove('mobile-hover'));
+    if (!target || target === currentEl) return;
     target.classList.add('mobile-hover');
-    setTimeout(() => target.classList.remove('mobile-hover'), 600);
+    setTimeout(() => {
+      if (target !== currentEl) target.classList.remove('mobile-hover');
+    }, 600);
   }, { passive:true });
+
+  requestAnimationFrame(update);
 }
 
 /* ============ EVENT DELEGATION ============ */
