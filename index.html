@@ -401,7 +401,8 @@ address { font-style:normal; }
 .section-ink .section-sub { color:var(--muted); }
 
 /* POPULAIRES — carrousel scroll horizontal */
-.pop-scroller { display:flex; gap:1.1rem; overflow-x:auto; padding:.5rem var(--s6) 1.5rem; scroll-snap-type:x mandatory; scrollbar-width:none; }
+.pop-scroller { display:flex; gap:1.1rem; overflow-x:auto; padding:.5rem var(--s6) 1.5rem; scroll-padding-inline:var(--s6); scroll-snap-type:x mandatory; scrollbar-width:none; }
+.pop-scroller::after { content:""; flex:0 0 1px; } /* garde la marge droite après la dernière carte */
 .pop-scroller::-webkit-scrollbar { display:none; }
 .pop-card { scroll-snap-align:start; flex:0 0 auto; width:250px; background:#fff; border-radius:var(--r-lg); border:1px solid var(--border-lt); overflow:hidden; transition:all var(--t); cursor:pointer; display:flex; flex-direction:column; }
 .pop-card-vis { height:150px; display:flex; align-items:center; justify-content:center; font-size:3.2rem; position:relative; }
@@ -718,7 +719,91 @@ address { font-style:normal; }
 .vis-emoji-badge { position:absolute; bottom:.5rem; right:.5rem; width:26px; height:26px; border-radius:50%; background:rgba(20,17,15,.78); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; font-size:.85rem; z-index:2; line-height:1; }
 
 .hero-food-layer { position:absolute; z-index:0; pointer-events:none; opacity:.34; mix-blend-mode:luminosity; filter:grayscale(.25) contrast(1.05); -webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 40%,transparent 100%); mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 40%,transparent 100%); }
+
+/* ══ LÉGAL & COOKIES ══ */
+.footer-legal-links { display:flex; flex-wrap:wrap; justify-content:center; gap:.4rem 1.1rem; }
+.footer-bottom { padding-bottom:calc(1rem + 96px); }
+@media (min-width:900px) { .footer-bottom { padding-bottom:1rem; } }
+.footer-legal-links a { color:inherit; text-decoration:underline; text-underline-offset:3px; opacity:.85; }
+.footer-legal-links a:hover { opacity:1; color:var(--gold); }
+#demoNotice { opacity:.7; font-style:italic; }
+
+.legal-overlay { position:fixed; inset:0; z-index:9000; background:rgba(10,8,7,.72); backdrop-filter:blur(4px); display:none; align-items:flex-end; justify-content:center; padding:0; }
+.legal-overlay.open { display:flex; }
+.legal-modal { background:var(--paper,#faf6ef); color:var(--off,#1c1917); width:100%; max-width:760px; max-height:88vh; border-radius:22px 22px 0 0; display:flex; flex-direction:column; box-shadow:0 -20px 60px rgba(0,0,0,.45); }
+@media (min-width:760px) { .legal-overlay { align-items:center; padding:2rem; } .legal-modal { border-radius:22px; max-height:82vh; } }
+.legal-head { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1.1rem 1.4rem; border-bottom:1px solid var(--border-lt,#e7dfd2); flex-shrink:0; }
+.legal-head h2 { font-family:var(--font-d); font-weight:400; font-size:1.5rem; text-transform:uppercase; line-height:1; }
+.legal-close { width:38px; height:38px; border-radius:50%; background:var(--ink,#1c1917); color:#fff; font-size:1.3rem; line-height:1; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.legal-body { overflow-y:auto; padding:1.2rem 1.4rem 2rem; -webkit-overflow-scrolling:touch; line-height:1.6; font-size:.92rem; }
+.legal-body h3 { font-size:1rem; font-weight:800; margin:1.4rem 0 .4rem; color:var(--flame,#c6421e); }
+.legal-body p, .legal-body li { margin-bottom:.55rem; color:var(--muted-lt,#57534e); }
+.legal-body ul { padding-left:1.2rem; list-style:disc; }
+.legal-body a { color:var(--flame,#c6421e); text-decoration:underline; }
+.legal-todo { background:#fff3cd; color:#7a5b00; border-radius:4px; padding:0 .25rem; font-weight:700; }
+
+.cookie-banner { position:fixed; left:.75rem; right:.75rem; bottom:.75rem; z-index:8500; max-width:640px; margin-inline:auto; background:var(--ink,#1c1917); color:#f5efe4; border-radius:18px; padding:1.1rem 1.2rem; box-shadow:0 18px 50px rgba(0,0,0,.5); border:1px solid rgba(255,255,255,.08); display:none; font-size:.86rem; line-height:1.5; }
+.cookie-banner.show { display:block; animation:cookieIn .4s ease both; }
+@keyframes cookieIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+.cookie-banner p { margin-bottom:.8rem; }
+.cookie-banner a { color:var(--gold,#e0a53a); text-decoration:underline; cursor:pointer; }
+.cookie-actions { display:flex; flex-wrap:wrap; gap:.6rem; }
+.cookie-btn { flex:1 1 140px; padding:.75rem 1rem; border-radius:999px; font-weight:800; font-size:.85rem; text-align:center; }
+.cookie-btn.accept { background:var(--flame,#c6421e); color:#fff; }
+.cookie-btn.refuse { background:transparent; color:#f5efe4; border:1.5px solid rgba(255,255,255,.35); }
+.map-placeholder { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.9rem; text-align:center; min-height:280px; height:100%; padding:1.5rem; background:linear-gradient(135deg,#2a2521,#1c1917); color:#f5efe4; border-radius:inherit; }
+.map-placeholder p { max-width:34ch; font-size:.88rem; opacity:.85; }
 </style>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     CONFIGURATION DU RESTAURANT — SEUL BLOC À MODIFIER POUR UN NOUVEAU CLIENT
+     Tout le site (titre, SEO, téléphone, adresse, carte, footer, FAQ,
+     pages légales, message WhatsApp) se remplit automatiquement depuis ici.
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+window.SITE = {
+  /* ── Identité ── */
+  name:        'Le Sept 7',
+  logoLe:      'LE',            // petit mot devant le nom dans le logo ('' pour aucun)
+  logoName:    'SEPT',          // partie principale du logo
+  logoAccent:  '7',             // partie colorée du logo ('' pour aucune)
+  tagline:     'Tacos · Kebab · Burgers',
+  cuisine:     ['Tacos','Kebab','Burger','Sandwich','Street Food'],
+  priceRange:  '10€–20€',
+  domain:      'https://lesept7.fr',
+  storageKey:  'sept7_cart',    // clé du panier (unique par restaurant)
+
+  /* ── Contact & adresse ── */
+  whatsapp:    '33763676191',   // format international sans + ni espaces
+  phone:       '+33175154128',  // pour les liens tel:
+  phoneDisplay:'01 75 15 41 28',
+  street:      '72 rue Jean Jaurès',
+  postalCode:  '77130',
+  city:        'Montereau-Fault-Yonne',
+
+  /* ── Liens externes ('' pour masquer) ── */
+  uberEatsUrl: 'https://www.ubereats.com/fr/store/le-sept-7/jn5Wb6jHXWyJsiE2AmEouQ',
+  googleRating:{ value:'', count:'' },   // ex: { value:'4.5', count:'264' } — UNIQUEMENT si réel et vérifié
+
+  /* ── Informations légales (OBLIGATOIRES en France — à compléter) ── */
+  legal: {
+    companyName:  '[Raison sociale à compléter]',
+    legalForm:    '[Forme juridique, ex : SAS, SARL, EI]',
+    capital:      '',                        // ex : '5 000 €' (laisser vide si EI)
+    siret:        '[SIRET à compléter]',
+    tva:          '',                        // n° TVA intracom. si applicable
+    publisher:    '[Nom du responsable de publication]',
+    contactEmail: '[email@restaurant.fr]',
+    host:         '[Nom de l\'hébergeur]',
+    hostAddress:  '[Adresse de l\'hébergeur]',
+    hostUrl:      '',
+    creditLine:   ''                         // ex : 'Site réalisé par VotreNom' (facultatif)
+  },
+
+  /* ── Statut du site : passer à false le jour de la vraie mise en ligne ── */
+  demoMode: true
+};
+</script>
 </head>
 <body>
 <div class="grain-overlay"></div>
@@ -1108,8 +1193,14 @@ address { font-style:normal; }
     </div>
     <div class="footer-sep"></div>
     <div class="footer-bottom">
-      <span>© <span id="currentYear">2026</span> Le Sept 7 — Montereau-Fault-Yonne. Tous droits réservés.</span>
-      <span>Site non-officiel réalisé à titre de démonstration.</span>
+      <span>© <span id="currentYear">2026</span> <span data-site="name">Le Sept 7</span> — <span data-site="city">Montereau-Fault-Yonne</span>. Tous droits réservés.</span>
+      <span class="footer-legal-links">
+        <a href="#" data-legal="mentions">Mentions légales</a>
+        <a href="#" data-legal="confidentialite">Confidentialité</a>
+        <a href="#" data-legal="allergenes">Allergènes</a>
+        <a href="#" data-cookie-settings>Cookies</a>
+      </span>
+      <span id="demoNotice" hidden>Site non-officiel réalisé à titre de démonstration.</span>
     </div>
   </div>
 </footer>
@@ -1310,10 +1401,10 @@ const HOURS_BY_DAY = [
 ];
 const DAY_NAMES = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
 
-const WHATSAPP_NUMBER = '33763676191'; // numéro WhatsApp Business confirmé du Sept 7
-const PHONE_DISPLAY = '01 75 15 41 28';
-const RESTAURANT_NAME = 'Le Sept 7';
-const ADDRESS = '72 rue Jean Jaurès, 77130 Montereau-Fault-Yonne';
+const WHATSAPP_NUMBER = SITE.whatsapp;
+const PHONE_DISPLAY = SITE.phoneDisplay;
+const RESTAURANT_NAME = SITE.name;
+const ADDRESS = `${SITE.street}, ${SITE.postalCode} ${SITE.city}`;
 
 /* ============ STATE ============ */
 let cart = [];
@@ -1469,13 +1560,12 @@ function updateOpenStatus() {
 
 /* ============ FAQ ============ */
 const FAQ_ITEMS = [
-  { q:"Le Sept 7 est-il ouvert tous les jours ?", a:"Oui, 7 jours sur 7, de 11h00 à minuit. Exception le vendredi : ouverture à 17h00, jusqu'à minuit également." },
-  { q:"Comment commander au Sept 7 à Montereau-Fault-Yonne ?", a:"Composez votre panier directement sur ce site, puis envoyez votre commande sur WhatsApp en un clic. Nous confirmons la disponibilité et le délai par message." },
+  { q:`${SITE.name} est-il ouvert tous les jours ?`, a:"Consultez nos horaires dans la section « Infos & Accès » ci-dessous : ils sont mis à jour en direct et indiquent si le restaurant est ouvert en ce moment." },
+  { q:`Comment commander chez ${SITE.name} à ${SITE.city} ?`, a:"Composez votre panier directement sur ce site, puis envoyez votre commande sur WhatsApp en un clic. Nous confirmons la disponibilité et le délai par message." },
   { q:"Comment puis-je payer ma commande ?", a:"Le règlement se fait sur place au moment de la prise en charge de votre commande." },
-  { q:"Quelle est la meilleure chose à commander au Sept 7 ?", a:"Nos best-sellers : Menu Sandwich Kebab, Menu Sandwich Le Sept 7, Menu Tacos 2 Viandes, Sandwich au Four et Riz Thaï 2 Viandes." },
-  { q:"Où est situé Le Sept 7 ?", a:"72 rue Jean Jaurès, 77130 Montereau-Fault-Yonne, à deux pas du centre-ville." },
-  { q:"Puis-je me faire livrer une commande du Sept 7 ?", a:"Oui, la livraison est disponible via Uber Eats dans la zone couverte autour de Montereau-Fault-Yonne. Pour une commande à emporter ou sur place, passez plutôt par ce site et WhatsApp." },
-  { q:"Puis-je venir manger sur place ?", a:"Oui, le restaurant propose le repas sur place, la vente à emporter et la livraison via Uber Eats." },
+  { q:`Où est situé ${SITE.name} ?`, a:`${SITE.street}, ${SITE.postalCode} ${SITE.city}.` },
+  { q:"Puis-je me faire livrer ?", a: SITE.uberEatsUrl ? `Oui, la livraison est disponible via Uber Eats dans la zone couverte autour de ${SITE.city}. Pour une commande à emporter ou sur place, passez plutôt par ce site et WhatsApp.` : `Pour toute question sur la livraison, contactez-nous au ${SITE.phoneDisplay}.` },
+  { q:"Puis-je connaître les allergènes d'un plat ?", a:`Oui. Les allergènes réglementaires (gluten, lait, œufs, fruits à coque, etc.) peuvent être présents dans nos préparations. Demandez-nous avant de commander : par téléphone au ${SITE.phoneDisplay} ou par message WhatsApp. Nous vous indiquerons les allergènes de chaque plat.` },
 ];
 function renderFAQ() {
   const el = document.getElementById('faqList');
@@ -1496,7 +1586,7 @@ function renderFAQ() {
 /* ============ CART ============ */
 function loadCart() {
   try {
-    const saved = localStorage.getItem('sept7_cart');
+    const saved = localStorage.getItem(SITE.storageKey);
     if (saved) {
       cart = JSON.parse(saved);
       if (cart.length > 0) showToast('On a gardé votre panier de la dernière visite');
@@ -1504,7 +1594,7 @@ function loadCart() {
   } catch (e) { cart = []; }
 }
 function saveCart() {
-  try { localStorage.setItem('sept7_cart', JSON.stringify(cart)); } catch (e) {}
+  try { localStorage.setItem(SITE.storageKey, JSON.stringify(cart)); } catch (e) {}
 }
 function cartTotal() { return cart.reduce((sum, item) => sum + item.price * item.qty, 0); }
 function cartCount() { return cart.reduce((sum, item) => sum + item.qty, 0); }
@@ -2278,6 +2368,187 @@ function spawnConfetti(originEl) {
   setTimeout(() => layer.remove(), 900);
 }
 
+
+/* ============ APPLICATION DE LA CONFIG (SITE) ============ */
+const esc = (t) => String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const todo = (v) => /^\[.*\]$/.test(String(v || '').trim()) ? `<span class="legal-todo">${esc(v)}</span>` : esc(v);
+
+function applySiteConfig() {
+  const fullAddr = `${SITE.street}, ${SITE.postalCode} ${SITE.city}`;
+  const mapsQuery = encodeURIComponent(`${SITE.street} ${SITE.postalCode} ${SITE.city}`).replace(/%20/g, '+');
+  const mapsDir = `https://www.google.com/maps/dir/?api=1&destination=${mapsQuery}`;
+  const mapsSearch = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE.name + ' ' + SITE.street + ' ' + SITE.postalCode + ' ' + SITE.city)}`;
+
+  /* Titre & meta */
+  document.title = `${SITE.name} | ${SITE.tagline} — ${SITE.city} (${SITE.postalCode})`;
+  const setMeta = (sel, val) => { const m = document.querySelector(sel); if (m) m.setAttribute('content', val); };
+  const desc = `${SITE.name} à ${SITE.city} : ${SITE.tagline}. Commandez à emporter via WhatsApp${SITE.uberEatsUrl ? ' ou faites-vous livrer avec Uber Eats' : ''}.`;
+  setMeta('meta[name="description"]', desc);
+  setMeta('meta[name="keywords"]', `${SITE.name} ${SITE.city},${SITE.cuisine.map(c => c.toLowerCase() + ' ' + SITE.city).join(',')}`);
+  setMeta('meta[property="og:title"]', `${SITE.name} | ${SITE.tagline} — ${SITE.city}`);
+  setMeta('meta[property="og:description"]', `Commandez via WhatsApp, on prépare. ${SITE.name}, ${SITE.city}.`);
+  const canon = document.querySelector('link[rel="canonical"]'); if (canon) canon.href = SITE.domain.replace(/\/$/, '') + '/';
+  if (SITE.demoMode) setMeta('meta[name="robots"]', 'noindex,nofollow');   // pas d'indexation tant que c'est une démo
+
+  /* Textes marqués data-site */
+  document.querySelectorAll('[data-site="name"]').forEach(el => el.textContent = SITE.name);
+  document.querySelectorAll('[data-site="city"]').forEach(el => el.textContent = SITE.city);
+
+  /* Téléphone */
+  document.querySelectorAll('a[href^="tel:"]').forEach(a => {
+    a.setAttribute('href', 'tel:' + SITE.phone);
+    const t = a.querySelector('.btn-phone-txt'); if (t) t.textContent = SITE.phoneDisplay;
+    else if (!a.querySelector('*:not(svg):not(use)') || a.classList.contains('mobile-phone-link')) {
+      const svg = a.querySelector('svg'); a.textContent = ''; if (svg) a.appendChild(svg); a.append(' ' + SITE.phoneDisplay);
+    } else if (a.children.length === 0) a.textContent = SITE.phoneDisplay;
+  });
+
+  /* Adresse & cartes */
+  document.querySelectorAll('a[href*="google.com/maps/dir"]').forEach(a => a.href = mapsDir);
+  document.querySelectorAll('a[href*="google.com/maps/search"]').forEach(a => a.href = mapsSearch);
+  document.querySelectorAll('.loc-row-sub').forEach(el => { if (/rue|avenue|boulevard|\d{5}/i.test(el.textContent)) el.innerHTML = `${esc(SITE.street)}<br/>${esc(SITE.postalCode)} ${esc(SITE.city)}`; });
+  document.querySelectorAll('.section-eyebrow').forEach(el => { if (el.querySelector('use[href="#i-pin"]')) { const svg = el.querySelector('svg'); el.textContent = ''; el.appendChild(svg); el.append(' ' + SITE.street); } });
+  document.querySelectorAll('.trust-title').forEach(el => { if (/Montereau/i.test(el.textContent)) { el.textContent = SITE.city; const sub = el.parentElement.querySelector('.trust-sub'); if (sub) sub.textContent = SITE.street; } });
+  document.querySelectorAll('.hero-pill').forEach(el => { if (/Montereau/i.test(el.textContent)) { const svg = el.querySelector('svg'); el.textContent = ''; if (svg) el.appendChild(svg); el.append(' ' + SITE.city); } });
+  const footerAddr = document.querySelector('.footer-links a[href*="google.com/maps"]'); if (footerAddr) footerAddr.textContent = `${SITE.street}, ${SITE.postalCode}`;
+
+  /* Uber Eats */
+  document.querySelectorAll('a[href*="ubereats.com"]').forEach(a => {
+    if (SITE.uberEatsUrl) a.href = SITE.uberEatsUrl;
+    else (a.closest('.review-platform, .btn, .hero-cta, li, .trust-item') || a).style.display = 'none';
+  });
+
+  /* Logo (header, footer) */
+  document.querySelectorAll('.logo-le').forEach(el => { el.textContent = SITE.logoLe; if (!SITE.logoLe) el.style.display = 'none'; });
+  document.querySelectorAll('.logo-name').forEach(el => {
+    el.innerHTML = esc(SITE.logoName) + (SITE.logoAccent ? `<em style="color:var(--flame);font-style:normal">${esc(SITE.logoAccent)}</em>` : '');
+  });
+
+  /* Phrases d'accroche */
+  document.querySelectorAll('.section-sub').forEach(el => {
+    if (/plats les plus command/i.test(el.textContent)) el.textContent = `Les plats les plus commandés chez ${SITE.name} — validés par les habitués.`;
+    if (/avis du Sept 7/i.test(el.textContent)) el.textContent = `Les avis de ${SITE.name} sont publics sur Google${SITE.uberEatsUrl ? ' et Uber Eats' : ''}. Allez les lire — et laissez le vôtre après votre commande.`;
+  });
+  const fdesc = document.querySelector('.footer-brand-desc'); if (fdesc) fdesc.textContent = `${SITE.tagline} à ${SITE.city}. Commande à emporter via WhatsApp.`;
+  const iframe = document.querySelector('.map-embed iframe'); if (iframe) iframe.title = 'Localisation ' + SITE.name;
+
+  /* Mode démo */
+  const demo = document.getElementById('demoNotice'); if (demo) demo.hidden = !SITE.demoMode;
+
+  /* Google Maps : chargé uniquement après consentement */
+  window.__mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(fullAddr)}&output=embed`;
+  updateMapConsent();
+
+  /* Données structurées (JSON-LD) régénérées */
+  const old = document.querySelector('script[type="application/ld+json"]'); 
+  document.querySelectorAll('script[type="application/ld+json"]').forEach(x => x.remove());
+  const dayMap = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const pad = n => String(n).padStart(2, '0') + ':00';
+  const ld = {
+    '@context':'https://schema.org', '@type':'FastFoodRestaurant', name:SITE.name, url:SITE.domain,
+    address:{ '@type':'PostalAddress', streetAddress:SITE.street, addressLocality:SITE.city, postalCode:SITE.postalCode, addressCountry:'FR' },
+    telephone:SITE.phone, servesCuisine:SITE.cuisine, priceRange:SITE.priceRange,
+    openingHoursSpecification: HOURS_BY_DAY.map(h => ({ '@type':'OpeningHoursSpecification', dayOfWeek:dayMap[h.day], opens:pad(h.open), closes: h.close >= 24 ? '23:59' : pad(h.close) }))
+  };
+  /* La note Google n'est publiée que si elle est renseignée ET réelle */
+  if (SITE.googleRating && SITE.googleRating.value && SITE.googleRating.count) {
+    ld.aggregateRating = { '@type':'AggregateRating', ratingValue:SITE.googleRating.value, reviewCount:SITE.googleRating.count, bestRating:'5' };
+  }
+  const tag = document.createElement('script'); tag.type = 'application/ld+json'; tag.textContent = JSON.stringify(ld);
+  document.head.appendChild(tag);
+}
+
+/* ============ COOKIES / CONSENTEMENT GOOGLE MAPS ============ */
+const CONSENT_KEY = 'site_maps_consent';
+function getConsent() { try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; } }
+function setConsent(v) { try { localStorage.setItem(CONSENT_KEY, v); } catch (e) {} }
+
+function updateMapConsent() {
+  const box = document.querySelector('.map-embed'); if (!box) return;
+  const consent = getConsent();
+  if (consent === 'yes') {
+    if (!box.querySelector('iframe[data-loaded]')) {
+      box.innerHTML = `<iframe data-loaded="1" src="${window.__mapSrc}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Localisation ${esc(SITE.name)}"></iframe>`;
+    }
+  } else {
+    box.innerHTML = `<div class="map-placeholder">
+      <p>La carte Google Maps n'est chargée qu'avec votre accord.</p>
+      <button class="btn btn-primary" data-map-accept>Afficher la carte</button>
+      <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(SITE.street + ' ' + SITE.postalCode + ' ' + SITE.city)}" target="_blank" rel="noopener" style="color:#f5efe4;text-decoration:underline">Ouvrir dans Google Maps</a>
+    </div>`;
+  }
+}
+function initCookies() {
+  const banner = document.getElementById('cookieBanner');
+  const hide = () => banner.classList.remove('show');
+  if (getConsent() === null) setTimeout(() => banner.classList.add('show'), 900);
+  document.getElementById('cookieAccept').addEventListener('click', () => { setConsent('yes'); hide(); updateMapConsent(); });
+  document.getElementById('cookieRefuse').addEventListener('click', () => { setConsent('no'); hide(); updateMapConsent(); });
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('[data-cookie-settings]')) { e.preventDefault(); banner.classList.add('show'); }
+    if (e.target.closest('[data-map-accept]')) { setConsent('yes'); updateMapConsent(); }
+  });
+}
+
+/* ============ PAGES LÉGALES ============ */
+function legalContent(type) {
+  const L = SITE.legal, fullAddr = `${SITE.street}, ${SITE.postalCode} ${SITE.city}`;
+  if (type === 'mentions') return { title:'Mentions légales', html: `
+    <h3>Éditeur du site</h3>
+    <p><strong>${todo(L.companyName)}</strong>, ${todo(L.legalForm)}${L.capital ? ', au capital de ' + esc(L.capital) : ''}.<br/>
+    Nom commercial : ${esc(SITE.name)}<br/>Siège / établissement : ${esc(fullAddr)}<br/>
+    SIRET : ${todo(L.siret)}${L.tva ? '<br/>N° TVA intracommunautaire : ' + esc(L.tva) : ''}<br/>
+    Téléphone : <a href="tel:${esc(SITE.phone)}">${esc(SITE.phoneDisplay)}</a><br/>E-mail : ${todo(L.contactEmail)}</p>
+    <h3>Responsable de la publication</h3><p>${todo(L.publisher)}</p>
+    <h3>Hébergement</h3><p>${todo(L.host)}<br/>${todo(L.hostAddress)}${L.hostUrl ? '<br/><a href="' + esc(L.hostUrl) + '" target="_blank" rel="noopener">' + esc(L.hostUrl) + '</a>' : ''}</p>
+    <h3>Propriété intellectuelle</h3><p>Les textes, images, logos et éléments graphiques de ce site sont la propriété de ${esc(SITE.name)} ou de leurs auteurs respectifs. Toute reproduction sans autorisation est interdite.</p>
+    <h3>Commandes et prix</h3><p>Les prix sont indiqués en euros, toutes taxes comprises. Une commande envoyée via WhatsApp n'est définitive qu'après confirmation du restaurant. Le règlement s'effectue sur place lors du retrait.</p>
+    <h3>Médiation de la consommation</h3><p>Conformément à l'article L.612-1 du Code de la consommation, le client peut recourir gratuitement à un médiateur de la consommation en cas de litige non résolu. Médiateur : <span class="legal-todo">[à compléter — à désigner par le restaurant]</span></p>
+    ${L.creditLine ? '<h3>Crédits</h3><p>' + esc(L.creditLine) + '</p>' : ''}` };
+
+  if (type === 'confidentialite') return { title:'Confidentialité & cookies', html: `
+    <h3>Responsable du traitement</h3><p>${todo(L.companyName)} — ${esc(SITE.name)}, ${esc(fullAddr)}. Contact : ${todo(L.contactEmail)}</p>
+    <h3>Données collectées</h3>
+    <ul><li><strong>Prénom</strong> : saisi dans le panier pour identifier votre commande. Il n'est pas enregistré sur un serveur : il est simplement transmis dans le message WhatsApp que vous envoyez.</li>
+    <li><strong>Panier</strong> : conservé uniquement dans votre navigateur (stockage local) pour ne pas le perdre si vous rechargez la page. Aucune donnée n'est envoyée à un serveur.</li>
+    <li><strong>WhatsApp</strong> : lorsque vous envoyez votre commande, votre numéro et votre message sont traités par WhatsApp (Meta) selon leur propre politique, puis reçus par le restaurant pour préparer la commande.</li></ul>
+    <h3>Finalité et base légale</h3><p>Ces données servent uniquement à préparer et confirmer votre commande (exécution d'une demande de votre part). Elles ne sont ni vendues ni utilisées à des fins publicitaires.</p>
+    <h3>Cookies et services tiers</h3>
+    <p><strong>Google Maps</strong> : le plan d'accès n'est chargé qu'après votre accord. Google peut alors déposer des cookies et recevoir votre adresse IP. Vous pouvez retirer votre choix à tout moment via « Cookies » en bas de page.</p>
+    <p>Ce site n'utilise aucun cookie publicitaire ni outil de mesure d'audience.</p>
+    <h3>Durée de conservation</h3><p>Panier et choix de consentement : conservés dans votre navigateur jusqu'à suppression par vos soins. Messages WhatsApp : conservés par le restaurant le temps nécessaire au traitement de la commande.</p>
+    <h3>Vos droits</h3><p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement, d'opposition et de limitation. Pour l'exercer : ${todo(L.contactEmail)}. Vous pouvez aussi introduire une réclamation auprès de la CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener">cnil.fr</a>).</p>` };
+
+  if (type === 'allergenes') return { title:'Allergènes', html: `
+    <p>La réglementation européenne impose d'informer sur la présence des <strong>14 allergènes à déclaration obligatoire</strong> :</p>
+    <ul><li>Céréales contenant du gluten (blé, seigle, orge, avoine…)</li><li>Crustacés</li><li>Œufs</li><li>Poissons</li><li>Arachides</li><li>Soja</li><li>Lait (y compris lactose)</li><li>Fruits à coque (amandes, noisettes, noix…)</li><li>Céleri</li><li>Moutarde</li><li>Graines de sésame</li><li>Anhydride sulfureux et sulfites</li><li>Lupin</li><li>Mollusques</li></ul>
+    <p>Nos plats sont préparés dans une cuisine où plusieurs de ces allergènes sont manipulés : des <strong>traces</strong> sont possibles, même si un plat ne les contient pas dans sa recette.</p>
+    <h3>Vous êtes allergique ?</h3>
+    <p>Avant de commander, <strong>dites-le-nous</strong> : appelez le <a href="tel:${esc(SITE.phone)}">${esc(SITE.phoneDisplay)}</a> ou précisez-le dans votre message WhatsApp. Nous vous indiquerons les allergènes présents dans chaque plat.</p>` };
+  return { title:'', html:'' };
+}
+function openLegal(type) {
+  const c = legalContent(type);
+  document.getElementById('legalTitle').textContent = c.title;
+  document.getElementById('legalBody').innerHTML = c.html;
+  document.getElementById('legalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('legalBody').scrollTop = 0;
+}
+function closeLegal() {
+  document.getElementById('legalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function initLegal() {
+  document.addEventListener('click', (e) => {
+    const l = e.target.closest('[data-legal]');
+    if (l) { e.preventDefault(); openLegal(l.dataset.legal); }
+  });
+  document.getElementById('legalClose').addEventListener('click', closeLegal);
+  document.getElementById('legalOverlay').addEventListener('click', (e) => { if (e.target.id === 'legalOverlay') closeLegal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLegal(); });
+}
+
 /* ============ FOOTER — ANNÉE DYNAMIQUE ============ */
 function initYear() {
   const el = document.getElementById('currentYear');
@@ -2290,10 +2561,13 @@ function initYear() {
    charges). Ordre calqué sur le brief (point 51), adapté aux fonctions
    réellement présentes dans ce fichier. */
 function safeInit(fn, label) {
-  try { fn(); } catch (e) { console.error('[Sept 7]', label || fn.name, 'error:', e); }
+  try { fn(); } catch (e) { console.error('[' + SITE.name + ']', label || fn.name, 'error:', e); }
 }
 
 function initApp() {
+  safeInit(applySiteConfig, 'Site config');
+  safeInit(initLegal, 'Legal');
+  safeInit(initCookies, 'Cookies');
   safeInit(initYear, 'Year');
   safeInit(initAnnounceClose, 'Announcement');
   safeInit(initHeaderScroll, 'Header scroll');
@@ -2321,6 +2595,27 @@ function initApp() {
 
 document.addEventListener('DOMContentLoaded', initApp);
 </script>
+
+
+<!-- MODALE LÉGALE -->
+<div class="legal-overlay" id="legalOverlay" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+  <div class="legal-modal">
+    <div class="legal-head">
+      <h2 id="legalTitle">Mentions légales</h2>
+      <button class="legal-close" id="legalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="legal-body" id="legalBody"></div>
+  </div>
+</div>
+
+<!-- BANDEAU COOKIES -->
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Préférences cookies">
+  <p>Ce site utilise <strong>Google Maps</strong> pour afficher le plan d'accès, ce qui peut déposer des cookies. Rien n'est chargé sans votre accord. <a data-legal="confidentialite">En savoir plus</a></p>
+  <div class="cookie-actions">
+    <button class="cookie-btn refuse" id="cookieRefuse">Refuser</button>
+    <button class="cookie-btn accept" id="cookieAccept">Accepter</button>
+  </div>
+</div>
 
 </body>
 </html>
