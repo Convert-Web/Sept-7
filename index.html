@@ -411,7 +411,7 @@ address { font-style:normal; }
 .section-ink .section-sub { color:var(--muted); }
 
 /* POPULAIRES — carrousel scroll horizontal */
-.pop-scroller { display:flex; gap:1.1rem; overflow-x:auto; padding:.5rem var(--s6) 1.5rem; scroll-padding-inline:var(--s6); scroll-snap-type:x mandatory; scrollbar-width:none; }
+.pop-scroller { display:flex; gap:1.1rem; overflow-x:auto; max-width:var(--max-w); margin-inline:auto; padding:.5rem var(--s6) 1.5rem; scroll-padding-inline:var(--s6); scroll-snap-type:x mandatory; scrollbar-width:none; }
 .pop-scroller::after { content:""; flex:0 0 1px; } /* garde la marge droite après la dernière carte */
 .pop-scroller::-webkit-scrollbar { display:none; }
 .pop-card { scroll-snap-align:start; flex:0 0 auto; width:250px; background:#fff; border-radius:var(--r-lg); border:1px solid var(--border-lt); overflow:hidden; transition:all var(--t); cursor:pointer; display:flex; flex-direction:column; }
@@ -440,6 +440,12 @@ address { font-style:normal; }
 .cat-filters::-webkit-scrollbar { display:none; }
 .cat-chip { flex:0 0 auto; display:flex; align-items:center; gap:.4rem; padding:.5rem .95rem; border-radius:var(--r-f); border:2px solid var(--border-lt); background:#fff; font-size:.8rem; font-weight:700; color:var(--muted-lt); white-space:nowrap; transition:all var(--tf); }
 .cat-chip.active { background:var(--ink); border-color:var(--ink); color:var(--white); }
+/* Filtre budget — même famille visuelle que les chips catégories, mais
+   plus petit et discret : c'est un filtre secondaire, pas le principal. */
+.budget-filters { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; }
+.budget-chip { flex:0 0 auto; padding:.35rem .75rem; border-radius:var(--r-f); border:1.5px solid var(--border-lt); background:transparent; font-size:.72rem; font-weight:700; color:var(--muted-lt); white-space:nowrap; transition:all var(--tf); cursor:pointer; }
+.budget-chip:hover, .budget-chip.mobile-hover { border-color:var(--gold); color:var(--ink); }
+.budget-chip.active { background:var(--gold); border-color:var(--gold); color:#fff; }
 .cat-chip:hover, .cat-chip.mobile-hover { border-color:var(--flame); }.cat-chip.active:hover, .cat-chip.active.mobile-hover { border-color:var(--ink); }
 .menu-results-info { font-size:.8rem; color:var(--muted2); text-align:center; margin-bottom:var(--s6); }
 .menu-cat-group { margin-bottom:var(--s12); }
@@ -450,9 +456,21 @@ address { font-style:normal; }
 .product-card:hover, .product-card.mobile-hover { transform:translateY(-4px); border-color:var(--gold); box-shadow:0 2px 6px rgba(20,17,15,.06),0 18px 34px rgba(20,17,15,.14); }
 .product-vis { height:110px; display:flex; align-items:center; justify-content:center; font-size:2.6rem; position:relative; flex-shrink:0; }
 .product-badge { position:absolute; top:.5rem; left:.5rem; font-size:.62rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; padding:.2rem .5rem; border-radius:var(--r-f); background:var(--flame); color:#fff; box-shadow:0 0 0 0 rgba(198,66,30,.5); animation:badgeGlow 2.6s ease-in-out infinite; }
-.product-badge.menu-badge { left:auto; right:.5rem; background:var(--gold-d); box-shadow:0 0 0 0 rgba(201,138,46,.5); animation:badgeGlowGold 2.6s ease-in-out infinite; }
-@keyframes badgeGlow { 0%,100% { box-shadow:0 0 0 0 rgba(198,66,30,.35); } 50% { box-shadow:0 0 10px 1px rgba(198,66,30,.45); } }
-@keyframes badgeGlowGold { 0%,100% { box-shadow:0 0 0 0 rgba(201,138,46,.35); } 50% { box-shadow:0 0 10px 1px rgba(201,138,46,.45); } }
+.product-badge.menu-badge { left:auto; right:.65rem; background:var(--gold-d); box-shadow:0 0 0 0 rgba(201,138,46,.5); animation:badgeGlowGold 2.6s ease-in-out infinite; }
+/* RUPTURE DE STOCK — un produit avec available:false reste visible dans la
+   carte (pour ne pas fausser le nombre de plats affiché) mais ne peut plus
+   être ajouté au panier : image assombrie, bouton inerte, badge dédié qui
+   remplace "Populaire"/"+Frites+Boisson" plutôt que de les cumuler. */
+.product-badge.badge-unavailable { position:static; display:inline-block; margin:.5rem; background:var(--ink-3); color:var(--muted); animation:none; box-shadow:none; border:1px solid var(--border); }
+.is-unavailable .product-vis, .is-unavailable .pop-card-vis { filter:grayscale(.6) brightness(.65); }
+.is-unavailable .product-name, .is-unavailable .pop-name { color:var(--muted); }
+.is-unavailable .product-price, .is-unavailable .pop-price { color:var(--muted); }
+.is-unavailable .product-add, .is-unavailable .pop-add { background:var(--ink-3); color:var(--muted2); cursor:not-allowed; box-shadow:none; }
+.is-unavailable .product-add:hover, .is-unavailable .pop-add:hover, .is-unavailable .product-add.mobile-hover, .is-unavailable .pop-add.mobile-hover { background:var(--ink-3); transform:none; }
+.is-unavailable { cursor:default; }
+.is-unavailable:hover, .is-unavailable.mobile-hover { transform:none !important; border-color:var(--border-lt) !important; box-shadow:none !important; }
+@keyframes badgeGlow { 0%,100% { box-shadow:0 0 0 0 rgba(198,66,30,.35); } 50% { box-shadow:0 0 5px 0 rgba(198,66,30,.4); } }
+@keyframes badgeGlowGold { 0%,100% { box-shadow:0 0 0 0 rgba(201,138,46,.35); } 50% { box-shadow:0 0 5px 0 rgba(201,138,46,.4); } }
 @media (prefers-reduced-motion:reduce) { .product-badge, .product-badge.menu-badge { animation:none; } }
 .product-info { padding:.85rem .9rem 1rem; display:flex; flex-direction:column; gap:.35rem; flex:1; }
 .product-name { font-size:.85rem; font-weight:800; color:var(--off); line-height:1.25; }
@@ -727,6 +745,15 @@ address { font-style:normal; }
 .product-vis.has-photo::after, .pop-card-vis.has-photo::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(20,17,15,.04) 0%,rgba(20,17,15,.5) 100%); z-index:0; }
 .product-vis.has-photo .product-badge, .pop-card-vis.has-photo .product-badge { z-index:2; }
 .vis-emoji-badge { position:absolute; bottom:.5rem; right:.5rem; width:26px; height:26px; border-radius:50%; background:rgba(20,17,15,.78); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; font-size:.85rem; z-index:2; line-height:1; }
+.vis-share-btn { position:absolute; bottom:.5rem; left:.5rem; width:26px; height:26px; border-radius:50%; background:rgba(20,17,15,.6); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; z-index:2; color:#fff; opacity:0; transform:scale(.8); transition:opacity .25s var(--ease-o),transform .25s var(--ease-o),background .25s var(--ease-o); }
+.vis-share-btn .icon { width:13px; height:13px; }
+.vis-share-btn:hover, .vis-share-btn.mobile-hover { background:var(--gold-d); }
+.product-card:hover .vis-share-btn, .product-card.mobile-hover .vis-share-btn,
+.pop-card:hover .vis-share-btn, .pop-card.mobile-hover .vis-share-btn { opacity:1; transform:scale(1); }
+/* Sur tactile sans hover fiable, toujours visible plutôt que caché derrière
+   un survol que l'appareil ne peut pas garantir. */
+@media (hover:none) { .vis-share-btn { opacity:1; transform:scale(1); } }
+.is-unavailable .vis-share-btn { display:none; }
 
 .hero-food-layer { position:absolute; z-index:0; pointer-events:none; opacity:.34; mix-blend-mode:luminosity; filter:grayscale(.25) contrast(1.05); -webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 40%,transparent 100%); mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 40%,transparent 100%); }
 
@@ -836,6 +863,7 @@ window.SITE = {
   <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
   <symbol id="i-utensils" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h0a2 2 0 0 0 2-2V2M7 2v20M17 2v20M17 2a5 5 0 0 0-5 5v3h5"/></symbol>
   <symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></symbol>
 </svg>
 <!-- FLAMME SVG — accent réutilisable (remplace 🔥 et les icônes-catégories). -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1032,6 +1060,12 @@ window.SITE = {
         <button class="search-clear" id="searchClear"><svg class="icon"><use href="#i-close" xlink:href="#i-close"/></svg></button>
       </div>
       <div class="cat-filters" id="catFilters"></div>
+      <div class="budget-filters" id="budgetFilters">
+        <button class="budget-chip active" data-budget="all">Tous les prix</button>
+        <button class="budget-chip" data-budget="lt10">Moins de 10€</button>
+        <button class="budget-chip" data-budget="10to15">10€ – 15€</button>
+        <button class="budget-chip" data-budget="gt15">Plus de 15€</button>
+      </div>
     </div>
     <p class="menu-results-info" id="menuResultsInfo"></p>
     <div id="menuGrid"></div>
@@ -1421,6 +1455,7 @@ const ADDRESS = `${SITE.street}, ${SITE.postalCode} ${SITE.city}`;
 let cart = [];
 let activeCategory = 'all';
 let searchQuery = '';
+let activeBudget = 'all'; // 'all' | 'lt10' | '10to15' | 'gt15'
 let cfgCurrentProduct = null;
 let cfgSelectedMeats = [];
 let cfgSelectedSauces = [];
@@ -1438,23 +1473,30 @@ function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTi
 /* ============ PRODUCT CARD RENDER ============ */
 function productCardHTML(p, variant) {
   const badges = [];
-  if (p.popular) badges.push('<span class="product-badge">Populaire</span>');
-  if (p.menu) badges.push('<span class="product-badge menu-badge">+Frites+Boisson</span>');
+  const unavailable = p.available === false;
+  if (unavailable) badges.push('<span class="product-badge badge-unavailable">Indisponible aujourd\'hui</span>');
+  else {
+    if (p.popular) badges.push('<span class="product-badge">Populaire</span>');
+    if (p.menu) badges.push('<span class="product-badge menu-badge">+Frites+Boisson</span>');
+  }
   const visClass = variant === 'pop' ? 'pop-card-vis' : 'product-vis';
   const isDrink = p.cat === 'boissons';
   const photoClass = isDrink ? 'vis-drink' : 'vis-food';
   return `
-    <div class="${variant === 'pop' ? 'pop-card' : 'product-card'}" data-id="${p.id}">
+    <div class="${variant === 'pop' ? 'pop-card' : 'product-card'}${unavailable ? ' is-unavailable' : ''}" data-id="${p.id}">
       <div class="${visClass} has-photo ${photoClass}">
         ${badges.join('')}
         <span class="vis-emoji-badge"><svg class="icon icon-flame"><use href="#i-flame" xlink:href="#i-flame"/></svg></span>
+        <button class="vis-share-btn" data-share-id="${p.id}" aria-label="Partager ${p.name}" title="Partager ce plat"><svg class="icon"><use href="#i-share" xlink:href="#i-share"/></svg></button>
       </div>
       <div class="${variant === 'pop' ? 'pop-body' : 'product-info'}">
         <div class="${variant === 'pop' ? 'pop-name' : 'product-name'}">${p.name}</div>
         <div class="${variant === 'pop' ? 'pop-desc' : 'product-desc'}">${p.desc}</div>
         <div class="${variant === 'pop' ? 'pop-foot' : 'product-foot'}">
           <span class="${variant === 'pop' ? 'pop-price' : 'product-price'}">${euro(p.price)}</span>
-          <button class="${variant === 'pop' ? 'pop-add' : 'product-add'}" data-add-id="${p.id}" aria-label="Ajouter ${p.name}">+</button>
+          ${unavailable
+            ? `<button class="${variant === 'pop' ? 'pop-add' : 'product-add'}" disabled aria-label="${p.name} indisponible aujourd'hui" aria-disabled="true">—</button>`
+            : `<button class="${variant === 'pop' ? 'pop-add' : 'product-add'}" data-add-id="${p.id}" aria-label="Ajouter ${p.name}">+</button>`}
         </div>
       </div>
     </div>`;
@@ -1474,9 +1516,25 @@ function renderCatFilters() {
   el.innerHTML = html;
 }
 
+function resetFilters() {
+  activeCategory = 'all';
+  activeBudget = 'all';
+  searchQuery = '';
+  const input = document.getElementById('searchInput');
+  const box = document.getElementById('searchBox');
+  if (input) input.value = '';
+  if (box) box.classList.remove('has-val');
+  renderCatFilters();
+  document.querySelectorAll('.budget-chip').forEach(b => b.classList.toggle('active', b.dataset.budget === 'all'));
+  renderMenuGrid();
+}
+
 function getFilteredProducts() {
   let list = PRODUCTS;
   if (activeCategory !== 'all') list = list.filter(p => p.cat === activeCategory);
+  if (activeBudget === 'lt10') list = list.filter(p => p.price < 10);
+  else if (activeBudget === '10to15') list = list.filter(p => p.price >= 10 && p.price <= 15);
+  else if (activeBudget === 'gt15') list = list.filter(p => p.price > 15);
   if (searchQuery.trim()) {
     const q = searchQuery.trim().toLowerCase();
     list = list.filter(p => p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
@@ -1490,7 +1548,7 @@ function renderMenuGrid() {
   const list = getFilteredProducts();
 
   if (list.length === 0) {
-    grid.innerHTML = `<div class="no-results"><div class="no-results-emoji"><svg class="icon icon-xl"><use href="#i-search" xlink:href="#i-search"/></svg></div><p>Aucun plat ne correspond à votre recherche.</p></div>`;
+    grid.innerHTML = `<div class="no-results"><div class="no-results-emoji"><svg class="icon icon-xl"><use href="#i-search" xlink:href="#i-search"/></svg></div><p>Aucun plat ne correspond à votre recherche.</p><button class="btn btn-outline" id="resetFiltersBtn" style="margin-top:1rem">Réinitialiser les filtres</button></div>`;
     info.textContent = '';
     return;
   }
@@ -1612,7 +1670,7 @@ function cartCount() { return cart.reduce((sum, item) => sum + item.qty, 0); }
 
 function addToCartSimple(productId) {
   const p = getProduct(productId);
-  if (!p) return;
+  if (!p || p.available === false) return;
   const existing = cart.find(i => i.key === 'p' + productId);
   if (existing) { existing.qty++; }
   else { cart.push({ key:'p' + productId, id:productId, name:p.name, price:p.price, emoji:p.emoji, qty:1, config:null }); }
@@ -1736,7 +1794,7 @@ function closeCart() {
 /* ============ CONFIGURATOR ============ */
 function openConfigurator(productId) {
   const p = getProduct(productId);
-  if (!p) return;
+  if (!p || p.available === false) return;
   cfgCurrentProduct = p;
   cfgSelectedMeats = [];
   cfgSelectedSauces = [];
@@ -1894,9 +1952,31 @@ function confirmConfiguratorAdd() {
 
 function handleProductClick(productId) {
   const p = getProduct(productId);
-  if (!p) return;
+  if (!p || p.available === false) return;
   if (p.config || p.menu) { openConfigurator(productId); }
   else { addToCartSimple(productId); }
+}
+
+function shareProduct(productId) {
+  const p = getProduct(productId);
+  if (!p) return;
+  const url = `${location.origin}${location.pathname}#produit-${p.id}`;
+  const text = `${p.name} — ${euro(p.price)} chez ${SITE.name}`;
+  if (navigator.share) {
+    /* L'utilisateur peut annuler la feuille de partage native : ce n'est
+       pas une erreur, juste un choix, donc on l'avale sans la logger. */
+    navigator.share({ title: p.name, text, url }).catch(() => {});
+    return;
+  }
+  /* Pas d'API de partage (desktop, navigateur ancien) : on copie le lien
+     et on le confirme avec le toast déjà utilisé partout ailleurs. */
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url)
+      .then(() => showToast('Lien du plat copié'))
+      .catch(() => showToast('Impossible de copier le lien'));
+  } else {
+    showToast('Partage indisponible sur ce navigateur');
+  }
 }
 </script>
 
@@ -2097,7 +2177,7 @@ function initMobileHover() {
     '.cart-delivery-note-link, .search-clear, .nav-link, .mobile-nav-link, ' +
     '.mobile-phone-link, .footer-links a, .fab-cart, .fab-uber, .a-link, .a-close, .hamburger';
   /* Les cartes qui portent un vrai tilt 3D au survol sur desktop */
-  const TILTABLE = '.product-card, .pop-card, .classique-card';
+  const TILTABLE = '.product-card:not(.is-unavailable), .pop-card:not(.is-unavailable), .classique-card';
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let currentEl = null, currentTiltEl = null, ticking = false, centerY = 0;
@@ -2189,8 +2269,11 @@ function initDelegatedEvents() {
     const addBtn = e.target.closest('[data-add-id]');
     if (addBtn) { handleProductClick(parseInt(addBtn.dataset.addId, 10)); return; }
 
+    const shareBtn = e.target.closest('[data-share-id]');
+    if (shareBtn) { shareProduct(parseInt(shareBtn.dataset.shareId, 10)); return; }
+
     const card = e.target.closest('.product-card, .pop-card');
-    if (card && !e.target.closest('[data-add-id]')) { handleProductClick(parseInt(card.dataset.id, 10)); return; }
+    if (card && !e.target.closest('[data-add-id]') && !e.target.closest('[data-share-id]')) { handleProductClick(parseInt(card.dataset.id, 10)); return; }
 
     const catChip = e.target.closest('[data-cat]');
     if (catChip) {
@@ -2199,6 +2282,16 @@ function initDelegatedEvents() {
       renderMenuGrid();
       return;
     }
+
+    const budgetChip = e.target.closest('[data-budget]');
+    if (budgetChip) {
+      activeBudget = budgetChip.dataset.budget;
+      document.querySelectorAll('.budget-chip').forEach(b => b.classList.toggle('active', b.dataset.budget === activeBudget));
+      renderMenuGrid();
+      return;
+    }
+
+    if (e.target.closest('#resetFiltersBtn')) { resetFilters(); return; }
 
     const qtyBtn = e.target.closest('[data-qty-key]');
     if (qtyBtn) { updateCartQty(qtyBtn.dataset.qtyKey, parseInt(qtyBtn.dataset.delta, 10)); return; }
@@ -2331,6 +2424,7 @@ function applyProductTilt() {
     if (card._tiltBound) return;
     card._tiltBound = true;
     card.addEventListener('mousemove', e => {
+      if (card.classList.contains('is-unavailable')) return;
       const rect = card.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
