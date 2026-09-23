@@ -215,10 +215,26 @@ address { font-style:normal; }
 
 /* HERO — nuit urbaine, le 7 géant comme repère graphique de marque */
 .hero { position:relative; background:var(--ink); color:var(--white); padding-top:var(--header-h); overflow:clip; min-height:92vh; display:flex; flex-direction:column; }
+/* Photo réelle du Sept 7 en fond de hero (classe .vis-food-lg partagée avec
+   le showcase et les cartes "classiques") — remplace l'ancienne texture à
+   pois qui ne montrait aucune image, en particulier sur mobile où la
+   colonne visuelle (7 géant) est masquée. */
+.hero-photo-layer { position:absolute; top:0;left:0;right:0;bottom:0; z-index:0; background-position:center 30%; }
+.hero-photo-scrim { position:absolute; top:0;left:0;right:0;bottom:0; z-index:1; pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(20,17,15,.88) 0%, rgba(20,17,15,.72) 38%, rgba(20,17,15,.62) 60%, rgba(20,17,15,.86) 100%),
+    linear-gradient(90deg, rgba(20,17,15,.5) 0%, rgba(20,17,15,.1) 55%, rgba(20,17,15,.35) 100%);
+}
+@media (min-width:960px) {
+  .hero-photo-scrim { background:
+    linear-gradient(90deg, rgba(20,17,15,.94) 0%, rgba(20,17,15,.8) 42%, rgba(20,17,15,.35) 72%, rgba(20,17,15,.15) 100%),
+    linear-gradient(180deg, rgba(20,17,15,.55) 0%, transparent 22%, transparent 78%, rgba(20,17,15,.7) 100%);
+  }
+}
 /* Élément dédié plutôt qu'un ::before : certains moteurs de rendu
    n'affichent pas d'image de fond sur un pseudo-élément généré, un vrai
    nœud du DOM est le choix le plus robuste pour une texture importante. */
-.hero-texture-layer { position:absolute; top:0;left:0;right:0;bottom:0; opacity:.5; background-repeat:repeat; z-index:0; pointer-events:none;
+.hero-texture-layer { position:absolute; top:0;left:0;right:0;bottom:0; opacity:.35; background-repeat:repeat; z-index:1; pointer-events:none; mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='4' cy='4' r='1' fill='%23C6421E'/%3E%3Ccircle cx='18' cy='4' r='1' fill='%23C98A2E'/%3E%3Ccircle cx='11' cy='11' r='1' fill='%23C6421E'/%3E%3Ccircle cx='25' cy='11' r='1' fill='%23C98A2E'/%3E%3Ccircle cx='4' cy='18' r='1' fill='%23C6421E'/%3E%3Ccircle cx='18' cy='18' r='1' fill='%23C98A2E'/%3E%3Ccircle cx='11' cy='25' r='1' fill='%23C6421E'/%3E%3Ccircle cx='25' cy='25' r='1' fill='%23C98A2E'/%3E%3C/svg%3E");
   -webkit-mask-image:radial-gradient(ellipse 90% 90% at 50% 40%,#000 0%,transparent 85%);
   mask-image:radial-gradient(ellipse 90% 90% at 50% 40%,#000 0%,transparent 85%);
@@ -254,6 +270,8 @@ address { font-style:normal; }
 .hero-tagline { font-size:clamp(1rem,2.4vw,1.2rem); font-weight:600; color:var(--muted); max-width:34ch; margin-top:var(--s5); line-height:1.55; }
 .hero-tagline strong { color:var(--white); font-weight:800; }
 .hero-cta-row { display:flex; flex-wrap:wrap; gap:.85rem; margin-top:var(--s8); }
+.btn-reorder { border-color:var(--gold); color:var(--gold); }
+.btn-reorder:hover, .btn-reorder.mobile-hover { background:var(--gold); color:var(--ink); }
 .hero-cta-row .btn-primary, .hero-cta-row .btn-outline { padding:1rem 1.85rem; font-size:.95rem; }
 .hero-cta-row .btn-outline { border-color:var(--border-h); color:var(--white); }
 .hero-cta-row .btn-outline:hover, .hero-cta-row .btn-outline.mobile-hover { border-color:var(--gold); background:rgba(201,138,46,.08); }
@@ -457,6 +475,12 @@ address { font-style:normal; }
 .cat-filters::-webkit-scrollbar { display:none; }
 .cat-chip { flex:0 0 auto; display:flex; align-items:center; gap:.4rem; padding:.5rem .95rem; border-radius:var(--r-f); border:2px solid var(--border-lt); background:#fff; font-size:.8rem; font-weight:700; color:var(--muted-lt); white-space:nowrap; transition:all var(--tf); }
 .cat-chip.active { background:var(--ink); border-color:var(--ink); color:var(--white); }
+.cat-chip-fav { border-color:rgba(198,66,30,.3); color:var(--flame-d); }
+.cat-chip-fav.active { background:var(--flame); border-color:var(--flame); color:#fff; }
+.cat-chip-fav .icon { width:14px; height:14px; }
+.fav-count { display:inline-flex; align-items:center; justify-content:center; min-width:17px; height:17px; padding:0 4px; border-radius:var(--r-f); background:rgba(198,66,30,.14); color:var(--flame-d); font-size:.65rem; font-weight:800; }
+.cat-chip-fav.active .fav-count { background:rgba(255,255,255,.25); color:#fff; }
+.cat-chip-fav:not(.has-items) .fav-count { display:none; }
 /* Filtre budget — même famille visuelle que les chips catégories, mais
    plus petit et discret : c'est un filtre secondaire, pas le principal. */
 .budget-filters { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; }
@@ -774,6 +798,14 @@ address { font-style:normal; }
    un survol que l'appareil ne peut pas garantir. */
 @media (hover:none) { .vis-share-btn { opacity:1; transform:scale(1); } }
 .is-unavailable .vis-share-btn { display:none; }
+.vis-fav-btn { position:absolute; top:.5rem; right:.5rem; width:28px; height:28px; border-radius:50%; background:rgba(20,17,15,.6); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; z-index:3; color:#fff; transition:background .25s var(--ease-o),transform .2s var(--ease-o),color .25s var(--ease-o); }
+.vis-fav-btn .icon { width:15px; height:15px; }
+.vis-fav-btn:active { transform:scale(.85); }
+.vis-fav-btn.is-fav { color:var(--flame); background:rgba(255,255,255,.92); }
+.vis-fav-btn.is-fav .icon { fill:var(--flame); }
+.vis-fav-btn.pulse { animation:favPulse .4s var(--ease-o); }
+@keyframes favPulse { 0% { transform:scale(1); } 45% { transform:scale(1.3); } 100% { transform:scale(1); } }
+.is-unavailable .vis-fav-btn { display:none; }
 
 .hero-food-layer { position:absolute; z-index:0; pointer-events:none; opacity:.34; mix-blend-mode:luminosity; filter:grayscale(.25) contrast(1.05); -webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 40%,transparent 100%); mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 40%,transparent 100%); }
 
@@ -783,6 +815,7 @@ address { font-style:normal; }
 @media (min-width:900px) { .footer-bottom { padding-bottom:1rem; } }
 .footer-legal-links a { color:inherit; text-decoration:underline; text-underline-offset:3px; opacity:.85; }
 .footer-legal-links a:hover { opacity:1; color:var(--gold); }
+.icon-inline { width:12px; height:12px; vertical-align:-1px; margin-right:2px; }
 #demoNotice { opacity:.7; font-style:italic; }
 
 .legal-overlay { position:fixed; top:0;left:0;right:0;bottom:0; z-index:9000; background:rgba(10,8,7,.72); backdrop-filter:blur(4px); display:none; align-items:flex-end; justify-content:center; padding:0; }
@@ -797,6 +830,19 @@ address { font-style:normal; }
 .legal-body p, .legal-body li { margin-bottom:.55rem; color:var(--muted-lt,#57534e); }
 .legal-body ul { padding-left:1.2rem; list-style:disc; }
 .legal-body a { color:var(--flame,#c6421e); text-decoration:underline; }
+.vendor-pin-form { display:flex; gap:.6rem; margin-top:1rem; }
+.vendor-pin-form input { flex:1; min-width:0; padding:.85rem 1rem; border-radius:var(--r-m); border:2px solid var(--border-lt); font-size:1.3rem; letter-spacing:.4em; text-align:center; font-weight:800; background:#fff; color:var(--ink); }
+.vendor-pin-form input:focus { outline:none; border-color:var(--flame); }
+.vendor-pin-error { color:var(--flame-d); font-weight:700; margin-top:.7rem; }
+.vendor-list { display:flex; flex-direction:column; gap:.5rem; margin-top:1rem; max-height:48vh; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.vendor-item { display:flex; align-items:center; gap:.8rem; padding:.7rem .9rem; border-radius:var(--r-m); border:2px solid var(--border-lt); background:#fff; text-align:left; width:100%; }
+.vendor-item-name { flex:1; font-weight:700; font-size:.88rem; }
+.vendor-item-cat { font-size:.7rem; color:var(--muted-lt); font-weight:600; }
+.vendor-toggle { flex-shrink:0; width:44px; height:26px; border-radius:99px; background:#dcd4c4; position:relative; transition:background .2s var(--ease-o); }
+.vendor-toggle::after { content:''; position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.3); transition:transform .2s var(--ease-o); }
+.vendor-item.is-out .vendor-toggle { background:var(--flame); }
+.vendor-item.is-out .vendor-toggle::after { transform:translateX(18px); }
+.vendor-item.is-out .vendor-item-name { text-decoration:line-through; opacity:.6; }
 .legal-todo { background:#fff3cd; color:#7a5b00; border-radius:4px; padding:0 .25rem; font-weight:700; }
 
 .cookie-banner { position:fixed; left:.75rem; right:.75rem; bottom:.75rem; z-index:8500; max-width:640px; margin-inline:auto; background:var(--ink,#1c1917); color:#f5efe4; border-radius:18px; padding:1.1rem 1.2rem; box-shadow:0 18px 50px rgba(0,0,0,.5); border:1px solid rgba(255,255,255,.08); display:none; font-size:.86rem; line-height:1.5; }
@@ -829,6 +875,11 @@ window.SITE = {
   priceRange:  '10€–20€',
   domain:      'https://lesept7.fr',
   storageKey:  'sept7_cart',    // clé du panier (unique par restaurant)
+  favKey:      'sept7_favorites',   // clé des favoris client
+  lastOrderKey:'sept7_last_order',  // clé de la dernière commande envoyée
+  stockKey:    'sept7_stock_overrides', // clé du panneau vendeur (ruptures du jour)
+  statsKey:    'sept7_add_stats',       // clé des stats d'ajout au panier (panneau vendeur)
+  vendorPin:   '2026',           // code à 4 chiffres pour l'espace équipe (à changer)
 
   /* ── Contact & adresse ── */
   whatsapp:    '33763676191',   // format international sans + ni espaces
@@ -884,6 +935,9 @@ window.SITE = {
   <symbol id="i-utensils" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h0a2 2 0 0 0 2-2V2M7 2v20M17 2v20M17 2a5 5 0 0 0-5 5v3h5"/></symbol>
   <symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></symbol>
   <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></symbol>
 </svg>
 <!-- FLAMME SVG — accent réutilisable (remplace 🔥 et les icônes-catégories). -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -931,6 +985,8 @@ window.SITE = {
 </header>
 
 <section class="hero" id="hero">
+  <div class="hero-photo-layer vis-food-lg" role="img" aria-label="Plateau de tacos, burger, kebab et pizza du Sept 7"></div>
+  <div class="hero-photo-scrim"></div>
   <div class="hero-texture-layer"></div>
   <div class="hero-grid-lines"></div>
   <div class="hero-glow-1"></div><div class="hero-glow-2"></div><div class="hero-glow-3"></div>
@@ -957,6 +1013,7 @@ window.SITE = {
         <div class="hero-cta-row">
           <a href="#menu" class="btn btn-primary btn-lg">Voir la carte</a>
           <a href="#" class="btn btn-outline btn-lg" id="heroWaBtn"><svg class="icon"><use href="#i-chat" xlink:href="#i-chat"/></svg> Commander sur WhatsApp</a>
+          <button class="btn btn-outline btn-lg btn-reorder" id="reorderBtn" hidden><svg class="icon"><use href="#i-repeat" xlink:href="#i-repeat"/></svg> Reprendre ma dernière commande</button>
         </div>
         <div class="hero-meta-row">
           <div class="hero-meta-item"><span class="hero-meta-num">91</span><span class="hero-meta-lbl">Plats à la carte</span></div>
@@ -1266,6 +1323,7 @@ window.SITE = {
         <a href="#" data-legal="confidentialite">Confidentialité</a>
         <a href="#" data-legal="allergenes">Allergènes</a>
         <a href="#" data-cookie-settings>Cookies</a>
+        <a href="#" id="vendorPanelLink" title="Accès équipe"><svg class="icon icon-inline"><use href="#i-lock" xlink:href="#i-lock"/></svg> Équipe</a>
       </span>
       <span id="demoNotice" hidden>Site non-officiel réalisé à titre de démonstration.</span>
     </div>
@@ -1289,6 +1347,10 @@ window.SITE = {
       <div>
         <div class="cart-form-label" style="margin-bottom:.4rem">Votre prénom</div>
         <input type="text" class="cart-input" id="custName" placeholder="Prénom"/>
+      </div>
+      <div>
+        <div class="cart-form-label" style="margin-bottom:.4rem">Allergie, remarque ? (facultatif)</div>
+        <input type="text" class="cart-input" id="custNote" placeholder="Ex : sans oignon, allergie arachides…" maxlength="140"/>
       </div>
       <div class="order-mode-group order-mode-group--single">
         <div class="order-mode-label order-mode-label--static"><svg class="icon"><use href="#i-bag" xlink:href="#i-bag"/></svg> À emporter / sur place — réglé à la prise en charge</div>
@@ -1478,6 +1540,9 @@ let cart = [];
 let activeCategory = 'all';
 let searchQuery = '';
 let activeBudget = 'all'; // 'all' | 'lt10' | '10to15' | 'gt15'
+let favorites = [];       // ids des plats favoris du client (localStorage)
+let showOnlyFavs = false;
+let stockOverrides = {};  // { [productId]: true } -> marqué en rupture par le vendeur aujourd'hui
 let cfgCurrentProduct = null;
 let cfgSelectedMeats = [];
 let cfgSelectedSauces = [];
@@ -1495,7 +1560,7 @@ function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTi
 /* ============ PRODUCT CARD RENDER ============ */
 function productCardHTML(p, variant) {
   const badges = [];
-  const unavailable = p.available === false;
+  const unavailable = p.available === false || isOutOfStock(p.id);
   if (unavailable) badges.push('<span class="product-badge badge-unavailable">Indisponible aujourd\'hui</span>');
   else {
     if (p.popular) badges.push('<span class="product-badge">Populaire</span>');
@@ -1504,12 +1569,14 @@ function productCardHTML(p, variant) {
   const visClass = variant === 'pop' ? 'pop-card-vis' : 'product-vis';
   const isDrink = p.cat === 'boissons';
   const photoClass = isDrink ? 'vis-drink' : 'vis-food';
+  const isFav = favorites.includes(p.id);
   return `
     <div class="${variant === 'pop' ? 'pop-card' : 'product-card'}${unavailable ? ' is-unavailable' : ''}" data-id="${p.id}">
       <div class="${visClass} has-photo ${photoClass}">
         ${badges.join('')}
         <span class="vis-emoji-badge"><svg class="icon icon-flame"><use href="#i-flame" xlink:href="#i-flame"/></svg></span>
         <button class="vis-share-btn" data-share-id="${p.id}" aria-label="Partager ${p.name}" title="Partager ce plat"><svg class="icon"><use href="#i-share" xlink:href="#i-share"/></svg></button>
+        <button class="vis-fav-btn${isFav ? ' is-fav' : ''}" data-fav-id="${p.id}" aria-label="${isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'}" title="Favori"><svg class="icon"><use href="#i-heart" xlink:href="#i-heart"/></svg></button>
       </div>
       <div class="${variant === 'pop' ? 'pop-body' : 'product-info'}">
         <div class="${variant === 'pop' ? 'pop-name' : 'product-name'}">${p.name}</div>
@@ -1533,15 +1600,18 @@ function renderPopulaires() {
 
 function renderCatFilters() {
   const el = document.getElementById('catFilters');
-  let html = `<button class="cat-chip ${activeCategory === 'all' ? 'active' : ''}" data-cat="all"><svg class="icon"><use href="#i-utensils" xlink:href="#i-utensils"/></svg> Tout voir</button>`;
-  html += CATEGORIES.map(c => `<button class="cat-chip ${activeCategory === c.id ? 'active' : ''}" data-cat="${c.id}">${c.label}</button>`).join('');
+  let html = `<button class="cat-chip ${activeCategory === 'all' && !showOnlyFavs ? 'active' : ''}" data-cat="all"><svg class="icon"><use href="#i-utensils" xlink:href="#i-utensils"/></svg> Tout voir</button>`;
+  html += `<button class="cat-chip cat-chip-fav ${showOnlyFavs ? 'active' : ''}" id="favFilterChip" data-cat="favs"><svg class="icon"><use href="#i-heart" xlink:href="#i-heart"/></svg> Mes favoris <span id="favCount" class="fav-count">${favorites.length}</span></button>`;
+  html += CATEGORIES.map(c => `<button class="cat-chip ${activeCategory === c.id && !showOnlyFavs ? 'active' : ''}" data-cat="${c.id}">${c.label}</button>`).join('');
   el.innerHTML = html;
+  updateFavCount();
 }
 
 function resetFilters() {
   activeCategory = 'all';
   activeBudget = 'all';
   searchQuery = '';
+  showOnlyFavs = false;
   const input = document.getElementById('searchInput');
   const box = document.getElementById('searchBox');
   if (input) input.value = '';
@@ -1553,6 +1623,7 @@ function resetFilters() {
 
 function getFilteredProducts() {
   let list = PRODUCTS;
+  if (showOnlyFavs) list = list.filter(p => favorites.includes(p.id));
   if (activeCategory !== 'all') list = list.filter(p => p.cat === activeCategory);
   if (activeBudget === 'lt10') list = list.filter(p => p.price < 10);
   else if (activeBudget === '10to15') list = list.filter(p => p.price >= 10 && p.price <= 15);
@@ -1570,18 +1641,24 @@ function renderMenuGrid() {
   const list = getFilteredProducts();
 
   if (list.length === 0) {
-    grid.innerHTML = `<div class="no-results"><div class="no-results-emoji"><svg class="icon icon-xl"><use href="#i-search" xlink:href="#i-search"/></svg></div><p>Aucun plat ne correspond à votre recherche.</p><button class="btn btn-outline" id="resetFiltersBtn" style="margin-top:1rem">Réinitialiser les filtres</button></div>`;
+    if (showOnlyFavs) {
+      grid.innerHTML = `<div class="no-results"><div class="no-results-emoji"><svg class="icon icon-xl"><use href="#i-heart" xlink:href="#i-heart"/></svg></div><p>Vous n'avez pas encore de favoris.<br>Touchez le cœur sur un plat pour l'ajouter ici.</p><button class="btn btn-outline" id="resetFiltersBtn" style="margin-top:1rem">Voir tout le menu</button></div>`;
+    } else {
+      grid.innerHTML = `<div class="no-results"><div class="no-results-emoji"><svg class="icon icon-xl"><use href="#i-search" xlink:href="#i-search"/></svg></div><p>Aucun plat ne correspond à votre recherche.</p><button class="btn btn-outline" id="resetFiltersBtn" style="margin-top:1rem">Réinitialiser les filtres</button></div>`;
+    }
     info.textContent = '';
     return;
   }
 
-  if (searchQuery.trim() || activeCategory !== 'all') {
+  if (showOnlyFavs) {
+    info.textContent = `${list.length} favori${list.length > 1 ? 's' : ''}`;
+  } else if (searchQuery.trim() || activeCategory !== 'all') {
     info.textContent = `${list.length} plat${list.length > 1 ? 's' : ''} trouvé${list.length > 1 ? 's' : ''}`;
   } else {
     info.textContent = '';
   }
 
-  if (activeCategory !== 'all' || searchQuery.trim()) {
+  if (showOnlyFavs || activeCategory !== 'all' || searchQuery.trim()) {
     grid.innerHTML = `<div class="product-grid">${list.map(p => productCardHTML(p, 'grid')).join('')}</div>`;
   } else {
     let html = '';
@@ -1687,18 +1764,122 @@ function loadCart() {
 function saveCart() {
   try { localStorage.setItem(SITE.storageKey, JSON.stringify(cart)); } catch (e) {}
 }
+
+/* ============ FAVORIS CLIENT ============ */
+function loadFavorites() {
+  try {
+    const saved = localStorage.getItem(SITE.favKey);
+    favorites = saved ? JSON.parse(saved) : [];
+  } catch (e) { favorites = []; }
+}
+function saveFavorites() {
+  try { localStorage.setItem(SITE.favKey, JSON.stringify(favorites)); } catch (e) {}
+}
+function toggleFavorite(productId) {
+  const idx = favorites.indexOf(productId);
+  const wasFav = idx !== -1;
+  if (wasFav) favorites.splice(idx, 1);
+  else favorites.push(productId);
+  saveFavorites();
+  document.querySelectorAll(`[data-fav-id="${productId}"]`).forEach(btn => {
+    btn.classList.toggle('is-fav', !wasFav);
+    btn.classList.remove('pulse'); void btn.offsetWidth; btn.classList.add('pulse');
+    btn.setAttribute('aria-label', wasFav ? 'Ajouter aux favoris' : 'Retirer des favoris');
+  });
+  updateFavCount();
+  if (!wasFav) showToast(`${getProduct(productId)?.name || 'Plat'} ajouté aux favoris`);
+  if (showOnlyFavs) renderMenuGrid();
+}
+function updateFavCount() {
+  const el = document.getElementById('favCount');
+  if (el) el.textContent = favorites.length;
+  const chip = document.getElementById('favFilterChip');
+  if (chip) chip.classList.toggle('has-items', favorites.length > 0);
+}
+
+/* ============ PANNEAU VENDEUR — ruptures du jour ============ */
+function loadStockOverrides() {
+  try {
+    const saved = localStorage.getItem(SITE.stockKey);
+    stockOverrides = saved ? JSON.parse(saved) : {};
+  } catch (e) { stockOverrides = {}; }
+}
+function saveStockOverrides() {
+  try { localStorage.setItem(SITE.stockKey, JSON.stringify(stockOverrides)); } catch (e) {}
+}
+function isOutOfStock(productId) { return !!stockOverrides[productId]; }
+function toggleStock(productId) {
+  if (stockOverrides[productId]) delete stockOverrides[productId];
+  else stockOverrides[productId] = true;
+  saveStockOverrides();
+  renderMenuGrid();
+  renderPopulaires();
+  renderVendorPanelList();
+}
+
+/* ============ STATS VENDEUR — ajouts au panier du jour ============
+   Compteur local et anonyme, remis à zéro chaque jour, pour aider
+   l'équipe à repérer les plats qui partent bien aujourd'hui. */
+function todayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+}
+function loadAddStats() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SITE.statsKey) || 'null');
+    if (!saved || saved.day !== todayKey()) return {};
+    return saved.counts || {};
+  } catch (e) { return {}; }
+}
+function bumpAddStat(productId) {
+  try {
+    const counts = loadAddStats();
+    counts[productId] = (counts[productId] || 0) + 1;
+    localStorage.setItem(SITE.statsKey, JSON.stringify({ day: todayKey(), counts }));
+  } catch (e) {}
+}
+
+/* ============ DERNIÈRE COMMANDE — recommander en 1 clic ============ */
+function saveLastOrder() {
+  try {
+    const snapshot = cart.map(i => ({ id:i.id, qty:i.qty, config:i.config, name:i.name, price:i.price, emoji:i.emoji }));
+    localStorage.setItem(SITE.lastOrderKey, JSON.stringify(snapshot));
+  } catch (e) {}
+}
+function loadLastOrder() {
+  try {
+    const saved = localStorage.getItem(SITE.lastOrderKey);
+    return saved ? JSON.parse(saved) : null;
+  } catch (e) { return null; }
+}
+function reorderLast() {
+  const last = loadLastOrder();
+  if (!last || !last.length) { showToast('Aucune commande précédente trouvée'); return; }
+  last.forEach(item => {
+    const key = item.config ? ('p' + item.id + '_' + item.config.replace(/\s+/g,'') + '_' + Date.now() + Math.random()) : ('p' + item.id);
+    const existing = !item.config && cart.find(i => i.key === key);
+    if (existing) existing.qty += item.qty;
+    else cart.push({ key, id:item.id, name:item.name, price:item.price, emoji:item.emoji, qty:item.qty, config:item.config || null });
+  });
+  saveCart();
+  renderCart();
+  bumpCartBadges();
+  openCart();
+  showToast('Votre dernière commande a été ajoutée au panier');
+}
 function cartTotal() { return cart.reduce((sum, item) => sum + item.price * item.qty, 0); }
 function cartCount() { return cart.reduce((sum, item) => sum + item.qty, 0); }
 
 function addToCartSimple(productId) {
   const p = getProduct(productId);
-  if (!p || p.available === false) return;
+  if (!p || p.available === false || isOutOfStock(productId)) return;
   const existing = cart.find(i => i.key === 'p' + productId);
   if (existing) { existing.qty++; }
   else { cart.push({ key:'p' + productId, id:productId, name:p.name, price:p.price, emoji:p.emoji, qty:1, config:null }); }
   saveCart();
   renderCart();
   bumpCartBadges();
+  bumpAddStat(productId);
   flashAddButton(productId);
   showToast(`${p.name} ajouté au panier`);
   spawnConfetti(document.querySelector(`[data-add-id="${productId}"]`));
@@ -1715,6 +1896,7 @@ function addToCartConfigured(product, meats, sauces, drink, qty) {
   saveCart();
   renderCart();
   bumpCartBadges();
+  bumpAddStat(product.id);
   showToast(`${product.name} ajouté au panier`);
   spawnConfetti(document.getElementById('cfgAddBtn'));
 }
@@ -1785,13 +1967,16 @@ function renderCart() {
 
 function buildWhatsAppMessage() {
   const name = document.getElementById('custName').value.trim() || 'Client';
+  const note = document.getElementById('custNote')?.value.trim() || '';
   let msg = `Bonjour ${RESTAURANT_NAME}\n\nJe souhaite passer commande (${name}) :\n\n`;
   cart.forEach(item => {
     msg += `• ${item.qty}x ${item.name}`;
     if (item.config) msg += ` (${item.config})`;
     msg += ` — ${euro(item.price * item.qty)}\n`;
   });
-  msg += `\nTotal : ${euro(cartTotal())}\n\nMerci !`;
+  msg += `\nTotal : ${euro(cartTotal())}\n`;
+  if (note) msg += `\n⚠️ Remarque / allergie : ${note}\n`;
+  msg += `\nMerci !`;
   return msg;
 }
 
@@ -1799,6 +1984,7 @@ function sendWhatsAppOrder() {
   if (cart.length === 0) { showToast('Votre panier est vide'); return; }
   const msg = buildWhatsAppMessage();
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  saveLastOrder();
   window.open(url, '_blank');
 }
 
@@ -2296,12 +2482,21 @@ function initDelegatedEvents() {
     const shareBtn = e.target.closest('[data-share-id]');
     if (shareBtn) { shareProduct(parseInt(shareBtn.dataset.shareId, 10)); return; }
 
+    const favBtn = e.target.closest('[data-fav-id]');
+    if (favBtn) { toggleFavorite(parseInt(favBtn.dataset.favId, 10)); return; }
+
     const card = e.target.closest('.product-card, .pop-card');
-    if (card && !e.target.closest('[data-add-id]') && !e.target.closest('[data-share-id]')) { handleProductClick(parseInt(card.dataset.id, 10)); return; }
+    if (card && !e.target.closest('[data-add-id]') && !e.target.closest('[data-share-id]') && !e.target.closest('[data-fav-id]')) { handleProductClick(parseInt(card.dataset.id, 10)); return; }
 
     const catChip = e.target.closest('[data-cat]');
     if (catChip) {
-      activeCategory = catChip.dataset.cat;
+      if (catChip.dataset.cat === 'favs') {
+        showOnlyFavs = !showOnlyFavs;
+        if (showOnlyFavs) activeCategory = 'all';
+      } else {
+        showOnlyFavs = false;
+        activeCategory = catChip.dataset.cat;
+      }
       renderCatFilters();
       renderMenuGrid();
       return;
@@ -2684,6 +2879,92 @@ function initLegal() {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLegal(); });
 }
 
+/* ============ PANNEAU ÉQUIPE — gestion des ruptures du jour ============
+   Petit code PIN pour éviter qu'un client ne bascule les plats par erreur
+   en tombant sur le lien ; ce n'est pas une sécurité forte (le code vit
+   dans ce fichier public), seulement un garde-fou pratique pour l'équipe.
+   Pour changer le code : modifier SITE.vendorPin ci-dessus. */
+function renderVendorPanelList() {
+  const list = document.getElementById('vendorList');
+  if (!list) return;
+  const stats = loadAddStats();
+  const sorted = [...PRODUCTS].sort((a, b) => (stats[b.id] || 0) - (stats[a.id] || 0));
+  list.innerHTML = sorted.map(p => {
+    const catLabel = CATEGORIES.find(c => c.id === p.cat)?.label || '';
+    const out = isOutOfStock(p.id);
+    const count = stats[p.id] || 0;
+    return `<button type="button" class="vendor-item${out ? ' is-out' : ''}" data-vendor-toggle="${p.id}">
+      <span><span class="vendor-item-name">${esc(p.name)}</span><br><span class="vendor-item-cat">${esc(catLabel)}${count ? ` · ${count} ajout${count > 1 ? 's' : ''} au panier aujourd'hui` : ''}</span></span>
+      <span class="vendor-toggle" aria-hidden="true"></span>
+    </button>`;
+  }).join('');
+}
+function openVendorPanel() {
+  const unlocked = sessionStorage.getItem('sept7_vendor_unlocked') === '1';
+  document.getElementById('vendorGate').hidden = unlocked;
+  document.getElementById('vendorContent').hidden = !unlocked;
+  if (unlocked) renderVendorPanelList();
+  document.getElementById('vendorOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeVendorPanel() {
+  document.getElementById('vendorOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function initVendorPanel() {
+  const link = document.getElementById('vendorPanelLink');
+  if (link) link.addEventListener('click', (e) => { e.preventDefault(); openVendorPanel(); });
+  const closeBtn = document.getElementById('vendorClose');
+  if (closeBtn) closeBtn.addEventListener('click', closeVendorPanel);
+  const overlay = document.getElementById('vendorOverlay');
+  if (overlay) overlay.addEventListener('click', (e) => { if (e.target.id === 'vendorOverlay') closeVendorPanel(); });
+
+  const form = document.getElementById('vendorPinForm');
+  if (form) form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = document.getElementById('vendorPinInput');
+    const err = document.getElementById('vendorPinError');
+    if (input.value.trim() === SITE.vendorPin) {
+      sessionStorage.setItem('sept7_vendor_unlocked', '1');
+      err.hidden = true;
+      document.getElementById('vendorGate').hidden = true;
+      document.getElementById('vendorContent').hidden = false;
+      renderVendorPanelList();
+    } else {
+      err.hidden = false;
+      input.value = '';
+      input.focus();
+    }
+  });
+
+  const list = document.getElementById('vendorList');
+  if (list) list.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-vendor-toggle]');
+    if (btn) toggleStock(parseInt(btn.dataset.vendorToggle, 10));
+  });
+
+  const resetBtn = document.getElementById('vendorResetAll');
+  if (resetBtn) resetBtn.addEventListener('click', () => {
+    stockOverrides = {};
+    saveStockOverrides();
+    renderMenuGrid();
+    renderPopulaires();
+    renderVendorPanelList();
+    showToast('Tous les plats sont de nouveau disponibles');
+  });
+}
+
+/* ============ REPRENDRE LA DERNIÈRE COMMANDE ============ */
+function initReorderButton() {
+  const btn = document.getElementById('reorderBtn');
+  if (!btn) return;
+  const last = loadLastOrder();
+  if (last && last.length) {
+    btn.hidden = false;
+    btn.addEventListener('click', reorderLast);
+  }
+}
+
 /* ============ FOOTER — ANNÉE DYNAMIQUE ============ */
 function initYear() {
   const el = document.getElementById('currentYear');
@@ -2708,6 +2989,8 @@ function initApp() {
   safeInit(initHeaderScroll, 'Header scroll');
   safeInit(updateOpenStatus, 'Open status');
   safeInit(loadCart, 'Cart load');
+  safeInit(loadFavorites, 'Favorites load');
+  safeInit(loadStockOverrides, 'Stock overrides load');
   safeInit(renderPopulaires, 'Populaires render');
   safeInit(renderCatFilters, 'Filters render');
   safeInit(renderMenuGrid, 'Menu grid render');
@@ -2725,6 +3008,8 @@ function initApp() {
   safeInit(initFAQ, 'FAQ toggle');
   safeInit(initMobileHover, 'Mobile hover');
   safeInit(initDelegatedEvents, 'Delegated events');
+  safeInit(initVendorPanel, 'Vendor panel');
+  safeInit(initReorderButton, 'Reorder button');
   requestAnimationFrame(() => document.querySelector('.hero').classList.add('hero-loaded'));
 }
 
@@ -2740,6 +3025,31 @@ document.addEventListener('DOMContentLoaded', initApp);
       <button class="legal-close" id="legalClose" aria-label="Fermer">×</button>
     </div>
     <div class="legal-body" id="legalBody"></div>
+  </div>
+</div>
+
+<!-- PANNEAU ÉQUIPE (gestion des ruptures du jour) -->
+<div class="legal-overlay" id="vendorOverlay" role="dialog" aria-modal="true" aria-labelledby="vendorTitle">
+  <div class="legal-modal">
+    <div class="legal-head">
+      <h2 id="vendorTitle">Espace équipe</h2>
+      <button class="legal-close" id="vendorClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="legal-body">
+      <div id="vendorGate">
+        <p>Réservé à l'équipe du Sept 7. Entrez le code à 4 chiffres pour marquer les plats en rupture aujourd'hui.</p>
+        <form id="vendorPinForm" class="vendor-pin-form">
+          <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="4" id="vendorPinInput" placeholder="Code" autocomplete="off">
+          <button type="submit" class="btn btn-primary">Entrer</button>
+        </form>
+        <p id="vendorPinError" class="vendor-pin-error" hidden>Code incorrect, réessayez.</p>
+      </div>
+      <div id="vendorContent" hidden>
+        <p>Touchez un plat pour basculer sa disponibilité. C'est enregistré sur cet appareil et visible immédiatement par les clients qui consultent le site.</p>
+        <div class="vendor-list" id="vendorList"></div>
+        <button class="btn btn-outline btn-full" id="vendorResetAll" style="margin-top:1rem">Tout remettre disponible</button>
+      </div>
+    </div>
   </div>
 </div>
 
