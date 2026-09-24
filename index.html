@@ -23,7 +23,7 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxNDExMEYiLz48cGF0aCBkPSJNMTQ1IDFRMTYxIDI0NyAyMTQuMCA0NjEuMFEyNjcgNjc1IDMzNi4wIDg1OS41UTQwNSAxMDQ0IDQ2OSAxMTk4TDU2NyAxNDM1SDcwVjE3NjFIOTU4VjE1NjlROTU4IDE0NjMgOTIzLjAgMTM1NS4wUTg4OCAxMjQ3IDgzMSAxMTE3UTcwNyA4MzUgNjMzLjUgNTU1LjVRNTYwIDI3NiA1NDMgMVoiIGZpbGw9IiNDNjQyMUUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIwLjMxOCA1Mi4wMjMpIHNjYWxlKDAuMDIyNzMgLTAuMDIyNzMpIi8+PC9zdmc+"/>
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACXElEQVR4nMSXT2sTQRjGn5nsZmNDN5u0KhZBUdCTVD1IBS8ebNEPoCf/IH4Br+J38AuINw/eBSNevAiiiClUEeyhIAhKTDZbMdlNZsd3qlm6SaE7u8nmOWVmh3l/M/O8b2YM7JLjwDFg35cMK0ziLBg7hElIyp80Z4PmfDuA98h14Q4/seGPqm1f5QU8ZmBLmKIk5PdQ4F7b815EADXbXuMFVkeOEkJeUxCsUqlUTS4/EcsR5Ci1E32BM7RweTvv4ErqqA2OWwYnw2FGUrENKdkKY/sPPsCBZ8sVJNH19Q564f7jVGyDgh/DjKRic0xBQSgTjzWSDhQ058Z2f6y/ZnIslQpRuxWECJHgTHUBAgJ4sPlnrP/hibkYQGMPyIkA7KWDJsOFihnre93WA8jkgdXFYqzd9AUa3gA6Sr0DnGrZ6kIc4FWrv2PtXAAuVU1QDY/aUkrUmwF0lRrgSi2++vdeH+1B8vTLBLBI5lu2R8zX0jNfJgC1/bslaPs/aJovE8DFkdRbp+DdBLV/IgBl8t3pciHWp84/rbQBztsG/Y3GU+3zb4G00i5Ep0ZW74sQW930ANo7cHIuDvCVgkvN4pMJ4KgVB/iW1n1pAFT5dcz4qTWDbAA0p/yRdPDh4rhlfvX1q18kis0WqnadbqhrmIHoav6SlsQamJlYgzlO6XgB1kcysoMcRdXbFfDPcdftbQHhXeSu8I6KvZNT3V7wxSpa7xjHZfLDPKao/4/TG63O9nPVjpK65/ubVsl/wmEF9JT26Sk9T7ebMiahf8/zNzTnUwHvptvxN4af/gIAAP//g/mgQgAAAAZJREFUAwBMCcjiJVZpdgAAAABJRU5ErkJggg=="/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Lora:ital,wght@0,400..700;1,400..700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&display=swap" rel="stylesheet"/>
 <style>
 /* LE SEPT 7 — Nuit urbaine, néon d'enseigne, le chiffre 7 comme signature graphique */
 :root {
@@ -40,12 +40,12 @@
   --flame:#C6421E; --flame-d:#9A3216; --flame-glow:rgba(198,66,30,.28);
   --gold:#C98A2E; --gold-d:#A16D22; --gold-glow:rgba(201,138,46,.24);
   --lime:#8FA84A; --lime-glow:rgba(143,168,74,.3);
-  --cyan:#3E8A91; --violet:#6E5590;
+  --cyan:#3E8A91;
 
   --wa:#25D366; --wa-d:#1DA851;
 
   --announce-h:38px; --nav-h:64px; --header-h:calc(var(--announce-h) + var(--nav-h));
-  --font-d:'Anton',sans-serif; --font-b:'Manrope',-apple-system,sans-serif; --font-t:'Fraunces',serif;
+  --font-d:'Anton',sans-serif; --font-b:'Lora',Georgia,serif; --font-t:'Fraunces',serif;
   --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px; --r-f:9999px;
   --s2:.5rem; --s3:.75rem; --s4:1rem; --s5:1.25rem; --s6:1.5rem;
   --s8:2rem; --s10:2.5rem; --s12:3rem; --s16:4rem; --s20:5rem;
@@ -106,7 +106,7 @@ address { font-style:normal; }
 @media (prefers-reduced-motion:reduce) { .reveal { opacity:1; transform:none; filter:none; transition:none; } }
 
 /* BUTTONS */
-.btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.75rem 1.5rem; border-radius:var(--r-f); font-weight:700; font-size:.875rem; letter-spacing:.01em; white-space:nowrap; transition:all var(--t); cursor:pointer; border:2px solid transparent; position:relative; overflow:hidden; text-decoration:none; }
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.75rem 1.5rem; border-radius:var(--r-lg); font-weight:700; font-size:.875rem; letter-spacing:.01em; white-space:nowrap; transition:all var(--t); cursor:pointer; border:2px solid transparent; position:relative; overflow:hidden; text-decoration:none; }
 .btn::after { content:''; position:absolute; top:0;left:0;right:0;bottom:0; background:#fff; opacity:0; transition:opacity var(--tf); pointer-events:none; }
 .btn:active { transform:scale(.96); }
 .btn:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
@@ -283,7 +283,7 @@ address { font-style:normal; }
    animations continues ; ceci orchestre uniquement le contenu texte + CTA
    + les couches visuelles pour une apparition dans l'ordre. */
 .hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row,
-.hero-glow-1, .hero-glow-2, .hero-glow-3, .hero-visual-col {
+.hero-visual-col {
   opacity:0; filter:blur(6px); transition:opacity .9s var(--ease-o), filter .9s var(--ease-o), transform .9s var(--ease-o);
 }
 .hero-status-row { transform:translateY(14px); }
@@ -291,7 +291,6 @@ address { font-style:normal; }
 .hero-tagline { transform:translateY(16px); }
 .hero-cta-row { transform:translateY(16px); }
 .hero-meta-row { transform:translateY(18px); }
-.hero-glow-1, .hero-glow-2, .hero-glow-3 { transition:opacity 1.4s var(--ease-o); }
 /* .hero-visual-col ne transitionne pas "transform" ici : cette propriété est
    déjà pilotée par le parallax souris en JS (voir initHeroParallax) — un
    double-emploi sur transform provoquerait un à-coup au premier mousemove. */
@@ -303,9 +302,6 @@ address { font-style:normal; }
 .hero-loaded .hero-tagline    { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.5s; }
 .hero-loaded .hero-cta-row    { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.62s; }
 .hero-loaded .hero-meta-row   { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.74s; }
-.hero-loaded .hero-glow-1 { opacity:1; transition-delay:0s; }
-.hero-loaded .hero-glow-2 { opacity:1; transition-delay:.1s; }
-.hero-loaded .hero-glow-3 { opacity:1; transition-delay:.2s; }
 .hero-loaded .hero-visual-col { opacity:1; filter:blur(0); transition-delay:.3s; }
 /* FILET DE SÉCURITÉ — si le JS est bloqué, lent ou en erreur avant
    d'ajouter .hero-loaded, ces éléments resteraient invisibles indéfiniment
@@ -315,16 +311,16 @@ address { font-style:normal; }
    normal), et rattrape le contenu sinon. */
 @keyframes heroFallbackIn { to { opacity:1; filter:blur(0); transform:none; } }
 .hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row,
-.hero-glow-1, .hero-glow-2, .hero-glow-3, .hero-visual-col {
+.hero-visual-col {
   animation:heroFallbackIn .01s linear 1.2s forwards;
 }
 @media (prefers-reduced-motion:reduce) {
   .hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row,
-  .hero-glow-1, .hero-glow-2, .hero-glow-3, .hero-visual-col { animation:none; }
+  .hero-visual-col { animation:none; }
 }
 @media (prefers-reduced-motion:reduce) {
   .hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row,
-  .hero-glow-1, .hero-glow-2, .hero-glow-3, .hero-visual-col {
+  .hero-visual-col {
     opacity:1; filter:none; transform:none; transition:none;
   }
 }
@@ -349,7 +345,7 @@ address { font-style:normal; }
 .hero-seven-frame { position:relative; width:min(20vw,260px); aspect-ratio:.72; }
 .hsf-num { position:absolute; top:0;left:0;right:0;bottom:0; font-family:var(--font-d); font-size:min(19vw,250px); line-height:1; color:transparent; -webkit-text-stroke:2.5px var(--gold); display:flex; align-items:center; justify-content:center; filter:drop-shadow(0 0 26px rgba(201,138,46,.22)); animation:sevenFloat 6s ease-in-out infinite; }
 @keyframes sevenFloat { 0%,100% { transform:translateY(0) rotate(-2deg); } 50% { transform:translateY(-14px) rotate(1deg); } }
-.hsf-chip { position:absolute; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.15rem; border-radius:var(--r-lg); backdrop-filter:blur(10px); text-align:center; padding:.75rem .95rem; box-shadow:0 14px 30px rgba(0,0,0,.32); animation:chipDrift 7s ease-in-out infinite; }
+.hsf-chip { position:absolute; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.15rem; border-radius:var(--r-lg); text-align:center; padding:.75rem .95rem; box-shadow:0 14px 30px rgba(0,0,0,.32); animation:chipDrift 7s ease-in-out infinite; }
 .hsf-chip .cn { font-family:var(--font-d); font-size:1.3rem; line-height:1; }
 .hsf-chip .cl { font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; }
 .hsf-chip.c1 { top:6%; left:-22%; background:rgba(198,66,30,.16); border:1.5px solid rgba(198,66,30,.4); color:#F4957B; animation-delay:0s; }
@@ -399,7 +395,7 @@ address { font-style:normal; }
 .showcase-step.active .showcase-title { opacity:1; transform:translateY(0); }
 .showcase-title .hl0 { color:var(--flame); }
 .showcase-title .hl1 { color:var(--cyan); }
-.showcase-title .hl2 { color:var(--violet); }
+.showcase-title .hl2 { color:var(--lime); }
 .showcase-desc { font-size:1.05rem; color:var(--muted); max-width:46ch; line-height:1.6; opacity:0; transform:translateY(18px); transition:all .7s var(--ease-o) .36s; }
 .showcase-step.active .showcase-desc { opacity:1; transform:translateY(0); }
 .showcase-progress { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); z-index:3; display:flex; gap:.5rem; }
@@ -642,15 +638,15 @@ address { font-style:normal; }
 
 /* FAB */
 .floating-actions { position:fixed; bottom:1.5rem; right:1.5rem; z-index:850; display:flex; flex-direction:column; align-items:flex-end; gap:.75rem; }
-.fab-cart { width:50px; height:50px; border-radius:50%; background:#fff; color:var(--ink); border:1.5px solid var(--border-lt); display:flex; align-items:center; justify-content:center; box-shadow:0 10px 26px rgba(20,17,15,.18); transition:all var(--t); }
+.fab-cart { width:50px; height:50px; border-radius:50%; background:#fff; color:var(--ink); border:1.5px solid var(--border-lt); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(20,17,15,.18); transition:all var(--t); }
 .fab-cart .icon { width:22px; height:22px; }
-.fab-cart:hover, .fab-cart.mobile-hover { transform:scale(1.08); border-color:var(--gold); box-shadow:0 14px 32px rgba(20,17,15,.24); }
+.fab-cart:hover, .fab-cart.mobile-hover { transform:scale(1.08); border-color:var(--gold); box-shadow:0 8px 20px rgba(20,17,15,.22); }
 .fab-cart-badge { position:absolute; top:-4px; right:-4px; min-width:22px; height:22px; background:var(--flame); color:#fff; font-size:.7rem; font-weight:800; border-radius:50%; display:flex; align-items:center; justify-content:center; padding:0 4px; border:2px solid #fff; }
 .fab-cart-badge.hidden { display:none; }
 .fab-cart.bump { animation:badgeBump .35s var(--ease-o); }
-.fab-uber { height:50px; padding:0 1.25rem; background:#06C167; color:#fff; border-radius:var(--r-f); display:flex; align-items:center; justify-content:center; gap:.5rem; font-size:.85rem; font-weight:800; text-decoration:none; box-shadow:0 10px 22px rgba(6,193,103,.32); transition:all var(--t); animation:fabUberPulse 2.6s ease-in-out infinite; white-space:nowrap; }
+.fab-uber { height:50px; padding:0 1.25rem; background:#06C167; color:#fff; border-radius:var(--r-f); display:flex; align-items:center; justify-content:center; gap:.5rem; font-size:.85rem; font-weight:800; text-decoration:none; box-shadow:0 6px 14px rgba(6,193,103,.32); transition:all var(--t); animation:fabUberPulse 2.6s ease-in-out infinite; white-space:nowrap; }
 .fab-uber .icon { width:22px; height:22px; }
-.fab-uber:hover, .fab-uber.mobile-hover { transform:scale(1.05); box-shadow:0 14px 28px rgba(6,193,103,.42); }
+.fab-uber:hover, .fab-uber.mobile-hover { transform:scale(1.05); box-shadow:0 8px 18px rgba(6,193,103,.4); }
 @keyframes fabUberPulse { 0%,100% { box-shadow:0 10px 22px rgba(6,193,103,.32),0 0 0 0 rgba(6,193,103,.35); } 50% { box-shadow:0 10px 22px rgba(6,193,103,.32),0 0 0 8px rgba(6,193,103,0); } }
 @media (prefers-reduced-motion:reduce) { .fab-uber { animation:none; } }
 @media (max-width:480px) { .fab-uber span.fab-uber-label { display:none; } .fab-uber { width:50px; height:50px; padding:0; border-radius:50%; } }
@@ -713,12 +709,7 @@ address { font-style:normal; }
    remplace les anciens halos flous type glassmorphism. Le rythme d'origine
    (position, tempo d'animation) est conservé, seule la matière change :
    du grain net et dur plutôt qu'un dégradé de lumière diffuse. */
-.hero-glow-1,.hero-glow-2,.hero-glow-3 { position:absolute; border-radius:50%; pointer-events:none; z-index:0; opacity:.14; background-repeat:repeat; -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,#000 0%,transparent 75%); mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,#000 0%,transparent 75%); }
-.hero-glow-1 { width:520px; height:520px; top:-120px; right:0%; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='4' cy='4' r='1.3' fill='%23fff'/%3E%3Ccircle cx='18' cy='4' r='1.3' fill='%23fff'/%3E%3Ccircle cx='11' cy='11' r='1.3' fill='%23fff'/%3E%3Ccircle cx='25' cy='11' r='1.3' fill='%23fff'/%3E%3Ccircle cx='4' cy='18' r='1.3' fill='%23fff'/%3E%3Ccircle cx='18' cy='18' r='1.3' fill='%23fff'/%3E%3Ccircle cx='11' cy='25' r='1.3' fill='%23fff'/%3E%3Ccircle cx='25' cy='25' r='1.3' fill='%23fff'/%3E%3C/svg%3E"), linear-gradient(var(--flame),var(--flame)); animation:texturePulse 7s ease-in-out infinite alternate; }
-.hero-glow-2 { width:440px; height:440px; bottom:-100px; left:0%; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='4' cy='4' r='1.3' fill='%23fff'/%3E%3Ccircle cx='18' cy='4' r='1.3' fill='%23fff'/%3E%3Ccircle cx='11' cy='11' r='1.3' fill='%23fff'/%3E%3Ccircle cx='25' cy='11' r='1.3' fill='%23fff'/%3E%3Ccircle cx='4' cy='18' r='1.3' fill='%23fff'/%3E%3Ccircle cx='18' cy='18' r='1.3' fill='%23fff'/%3E%3Ccircle cx='11' cy='25' r='1.3' fill='%23fff'/%3E%3Ccircle cx='25' cy='25' r='1.3' fill='%23fff'/%3E%3C/svg%3E"), linear-gradient(var(--gold),var(--gold)); animation:texturePulse 9s ease-in-out infinite alternate-reverse; }
-.hero-glow-3 { width:360px; height:360px; top:38%; left:42%; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='4' cy='4' r='1.3' fill='%23fff'/%3E%3Ccircle cx='18' cy='4' r='1.3' fill='%23fff'/%3E%3Ccircle cx='11' cy='11' r='1.3' fill='%23fff'/%3E%3Ccircle cx='25' cy='11' r='1.3' fill='%23fff'/%3E%3Ccircle cx='4' cy='18' r='1.3' fill='%23fff'/%3E%3Ccircle cx='18' cy='18' r='1.3' fill='%23fff'/%3E%3Ccircle cx='11' cy='25' r='1.3' fill='%23fff'/%3E%3Ccircle cx='25' cy='25' r='1.3' fill='%23fff'/%3E%3C/svg%3E"), linear-gradient(var(--lime),var(--lime)); animation:texturePulse 11s ease-in-out infinite alternate; }
 @keyframes texturePulse { from { opacity:.1; transform:scale(1); } to { opacity:.2; transform:scale(1.08); } }
-@media (prefers-reduced-motion:reduce) { .hero-glow-1,.hero-glow-2,.hero-glow-3 { animation:none; } }
 
 .hero-particles { position:absolute; top:0;left:0;right:0;bottom:0; pointer-events:none; overflow:hidden; contain:layout; z-index:0; }
 /* ICÔNES SVG — remplace les emojis d'interface. Taille par défaut alignée
@@ -752,10 +743,10 @@ address { font-style:normal; }
 
 /* CLASSIQUES — cartes photo avec overlay + badge (upgrade) */
 .classique-card { position:relative; border-radius:var(--r-xl); overflow:hidden; min-height:300px; border:1px solid var(--border); transition:all .4s var(--ease-o); display:flex; flex-direction:column; justify-content:flex-end; cursor:pointer; padding:1.75rem; color:#fff; }
-.classique-card:hover, .classique-card.mobile-hover { transform:translateY(-8px); box-shadow:0 26px 52px rgba(0,0,0,.4); }
-.classique-card[data-glow="flame"]:hover, .classique-card[data-glow="flame"].mobile-hover { border-color:rgba(198,66,30,.45); box-shadow:0 26px 52px rgba(0,0,0,.4),0 0 0 1px rgba(198,66,30,.18); }
-.classique-card[data-glow="lime"]:hover, .classique-card[data-glow="lime"].mobile-hover { border-color:rgba(143,168,74,.4); box-shadow:0 26px 52px rgba(0,0,0,.4),0 0 0 1px rgba(143,168,74,.14); }
-.classique-card[data-glow="gold"]:hover, .classique-card[data-glow="gold"].mobile-hover { border-color:rgba(201,138,46,.45); box-shadow:0 26px 52px rgba(0,0,0,.4),0 0 0 1px rgba(201,138,46,.16); }
+.classique-card:hover, .classique-card.mobile-hover { transform:translateY(-8px); box-shadow:0 14px 28px rgba(0,0,0,.35); }
+.classique-card[data-glow="flame"]:hover, .classique-card[data-glow="flame"].mobile-hover { border-color:rgba(198,66,30,.45); box-shadow:0 14px 28px rgba(0,0,0,.35),0 0 0 1px rgba(198,66,30,.18); }
+.classique-card[data-glow="lime"]:hover, .classique-card[data-glow="lime"].mobile-hover { border-color:rgba(143,168,74,.4); box-shadow:0 14px 28px rgba(0,0,0,.35),0 0 0 1px rgba(143,168,74,.14); }
+.classique-card[data-glow="gold"]:hover, .classique-card[data-glow="gold"].mobile-hover { border-color:rgba(201,138,46,.45); box-shadow:0 14px 28px rgba(0,0,0,.35),0 0 0 1px rgba(201,138,46,.16); }
 .classique-img { position:absolute; top:0;left:0;right:0;bottom:0; z-index:0; background-size:cover; background-position:center; transition:transform .7s var(--ease-o); }
 .classique-card:hover .classique-img, .classique-card.mobile-hover .classique-img { transform:scale(1.07); }
 .classique-card-overlay { position:absolute; top:0;left:0;right:0;bottom:0; z-index:0; background:linear-gradient(to top,rgba(14,11,9,.92) 0%,rgba(14,11,9,.55) 45%,rgba(14,11,9,.08) 100%); }
@@ -788,8 +779,8 @@ address { font-style:normal; }
 .product-vis.has-photo, .pop-card-vis.has-photo { position:relative; }
 .product-vis.has-photo::after, .pop-card-vis.has-photo::after { content:''; position:absolute; top:0;left:0;right:0;bottom:0; background:linear-gradient(180deg,rgba(20,17,15,.04) 0%,rgba(20,17,15,.5) 100%); z-index:0; }
 .product-vis.has-photo .product-badge, .pop-card-vis.has-photo .product-badge { z-index:2; }
-.vis-emoji-badge { position:absolute; bottom:.5rem; right:.5rem; width:26px; height:26px; border-radius:50%; background:rgba(20,17,15,.78); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; font-size:.85rem; z-index:2; line-height:1; }
-.vis-share-btn { position:absolute; bottom:.5rem; left:.5rem; width:26px; height:26px; border-radius:50%; background:rgba(20,17,15,.6); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; z-index:2; color:#fff; opacity:0; transform:scale(.8); transition:opacity .25s var(--ease-o),transform .25s var(--ease-o),background .25s var(--ease-o); }
+.vis-emoji-badge { position:absolute; bottom:.5rem; right:.5rem; width:26px; height:26px; border-radius:50%; background:rgba(20,17,15,.78); display:flex; align-items:center; justify-content:center; font-size:.85rem; z-index:2; line-height:1; }
+.vis-share-btn { position:absolute; bottom:.5rem; left:.5rem; width:26px; height:26px; border-radius:50%; background:rgba(20,17,15,.6); display:flex; align-items:center; justify-content:center; z-index:2; color:#fff; opacity:0; transform:scale(.8); transition:opacity .25s var(--ease-o),transform .25s var(--ease-o),background .25s var(--ease-o); }
 .vis-share-btn .icon { width:13px; height:13px; }
 .vis-share-btn:hover, .vis-share-btn.mobile-hover { background:var(--gold-d); }
 .product-card:hover .vis-share-btn, .product-card.mobile-hover .vis-share-btn,
@@ -798,7 +789,7 @@ address { font-style:normal; }
    un survol que l'appareil ne peut pas garantir. */
 @media (hover:none) { .vis-share-btn { opacity:1; transform:scale(1); } }
 .is-unavailable .vis-share-btn { display:none; }
-.vis-fav-btn { position:absolute; top:.5rem; right:.5rem; width:28px; height:28px; border-radius:50%; background:rgba(20,17,15,.6); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; z-index:3; color:#fff; transition:background .25s var(--ease-o),transform .2s var(--ease-o),color .25s var(--ease-o); }
+.vis-fav-btn { position:absolute; top:.5rem; right:.5rem; width:28px; height:28px; border-radius:50%; background:rgba(20,17,15,.6); display:flex; align-items:center; justify-content:center; z-index:3; color:#fff; transition:background .25s var(--ease-o),transform .2s var(--ease-o),color .25s var(--ease-o); }
 .vis-fav-btn .icon { width:15px; height:15px; }
 .vis-fav-btn:active { transform:scale(.85); }
 .vis-fav-btn.is-fav { color:var(--flame); background:rgba(255,255,255,.92); }
@@ -879,7 +870,10 @@ window.SITE = {
   lastOrderKey:'sept7_last_order',  // clé de la dernière commande envoyée
   stockKey:    'sept7_stock_overrides', // clé du panneau vendeur (ruptures du jour)
   statsKey:    'sept7_add_stats',       // clé des stats d'ajout au panier (panneau vendeur)
-  vendorPin:   '2026',           // code à 4 chiffres pour l'espace équipe (à changer)
+  vendorPinHash: '158a323a7ba44870f23d96f1516dd70aa48e9a72db4ebb026b0a89e212a208ab', // SHA-256 du code équipe (PIN actuel : 2026)
+  // Pour changer le code : ouvrez la console du navigateur sur ce site et tapez
+  // crypto.subtle.digest('SHA-256', new TextEncoder().encode('NOUVEAU_CODE')).then(b => console.log([...new Uint8Array(b)].map(x => x.toString(16).padStart(2,'0')).join('')))
+  // puis collez le résultat ci-dessus à la place du hash actuel.
 
   /* ── Contact & adresse ── */
   whatsapp:    '33763676191',   // format international sans + ni espaces
@@ -989,7 +983,6 @@ window.SITE = {
   <div class="hero-photo-scrim"></div>
   <div class="hero-texture-layer"></div>
   <div class="hero-grid-lines"></div>
-  <div class="hero-glow-1"></div><div class="hero-glow-2"></div><div class="hero-glow-3"></div>
   <div class="hero-particles" id="heroParticles"></div>
   <div class="hero-seven-bg">7</div>
   <div class="container hero-inner">
@@ -1046,7 +1039,6 @@ window.SITE = {
       <div class="showcase-scrim"></div>
       <div class="showcase-num">7</div>
       <div class="showcase-content">
-        <div class="showcase-emoji">🌯</div>
         <span class="showcase-tag">01 · La galette dorée</span>
         <h2 class="showcase-title">TACOS <span class="hl0">FRANÇAIS</span></h2>
         <p class="showcase-desc">1, 2 ou 3 viandes au choix, sauce fromagère maison, galette dorée à la plancha. Le classique qui ne déçoit jamais.</p>
@@ -1057,7 +1049,6 @@ window.SITE = {
       <div class="showcase-scrim"></div>
       <div class="showcase-num">7</div>
       <div class="showcase-content">
-        <div class="showcase-emoji">🥙</div>
         <span class="showcase-tag">02 · La recette maison</span>
         <h2 class="showcase-title">SANDWICH <span class="hl1">LE SEPT 7</span></h2>
         <p class="showcase-desc">Escalope de poulet, bacon de dinde, sauce Boursin et fromage fondu. Notre signature, celle qui porte le nom du resto.</p>
@@ -1068,7 +1059,6 @@ window.SITE = {
       <div class="showcase-scrim"></div>
       <div class="showcase-num">7</div>
       <div class="showcase-content">
-        <div class="showcase-emoji">🍔</div>
         <span class="showcase-tag">03 · Pour les grosses faims</span>
         <h2 class="showcase-title">540+ <span class="hl2">BURGER</span></h2>
         <p class="showcase-desc">3 steaks 180g, œuf, galette de pommes de terre et 3 fromages. Le burger qui se mérite.</p>
@@ -1379,121 +1369,121 @@ window.SITE = {
 <script>
 /* ============ DATA ============ */
 const CATEGORIES = [
-  { id:'menus-sandwiches', label:'Menus Sandwichs', emoji:'🥙' },
-  { id:'menus-tacos',      label:'Menus Tacos',     emoji:'🌯' },
-  { id:'menus-burgers',    label:'Menus Burgers',   emoji:'🍔' },
-  { id:'menus-paninis',    label:'Menus Paninis',   emoji:'🥪' },
-  { id:'menus-hummers',    label:'Menus Hummers',   emoji:'🥖' },
-  { id:'menus-croques',    label:'Menus Croques',   emoji:'🧀' },
-  { id:'menus-wraps',      label:'Menus Wraps',     emoji:'🌯' },
-  { id:'menus-texmex',     label:'Menus Tex-Mex',   emoji:'🍗' },
-  { id:'menus-enfants',    label:'Menu Enfant',     emoji:'🧒' },
-  { id:'sandwiches',       label:'Sandwichs',       emoji:'🥙' },
-  { id:'tacos',            label:'Tacos',           emoji:'🌯' },
-  { id:'burgers',          label:'Burgers',         emoji:'🍔' },
-  { id:'paninis',          label:'Paninis',         emoji:'🥪' },
-  { id:'hummers',          label:'Hummers',         emoji:'🥖' },
-  { id:'texmex',           label:'Tex-Mex',         emoji:'🍗' },
-  { id:'wraps',            label:'Wraps',           emoji:'🌯' },
-  { id:'assiettes',        label:'Assiettes & Riz', emoji:'🍽️' },
-  { id:'salades',          label:'Salades',         emoji:'🥗' },
-  { id:'desserts',         label:'Desserts',        emoji:'🍰' },
-  { id:'boissons',         label:'Boissons',        emoji:'🥤' },
+  { id:'menus-sandwiches', label:'Menus Sandwichs' },
+  { id:'menus-tacos',      label:'Menus Tacos' },
+  { id:'menus-burgers',    label:'Menus Burgers' },
+  { id:'menus-paninis',    label:'Menus Paninis' },
+  { id:'menus-hummers',    label:'Menus Hummers' },
+  { id:'menus-croques',    label:'Menus Croques' },
+  { id:'menus-wraps',      label:'Menus Wraps' },
+  { id:'menus-texmex',     label:'Menus Tex-Mex' },
+  { id:'menus-enfants',    label:'Menu Enfant' },
+  { id:'sandwiches',       label:'Sandwichs' },
+  { id:'tacos',            label:'Tacos' },
+  { id:'burgers',          label:'Burgers' },
+  { id:'paninis',          label:'Paninis' },
+  { id:'hummers',          label:'Hummers' },
+  { id:'texmex',           label:'Tex-Mex' },
+  { id:'wraps',            label:'Wraps' },
+  { id:'assiettes',        label:'Assiettes & Riz' },
+  { id:'salades',          label:'Salades' },
+  { id:'desserts',         label:'Desserts' },
+  { id:'boissons',         label:'Boissons' },
 ];
 
 
 const PRODUCTS = [
-  { id:1, name:'Menu Sandwich Kebab', desc:'Morceaux de viande kebab, salade, tomates, oignons.', price:12.00, cat:'menus-sandwiches', emoji:'🥙', popular:true, menu:true },
-  { id:2, name:'Menu Sandwich Montagnard', desc:'Pain bun\'s, 3 steaks 45g, lardons, bacon de dinde, galette de pommes de terre, crème fraîche et fromage à raclette.', price:13.00, cat:'menus-sandwiches', emoji:'🥙', menu:true },
-  { id:3, name:'Menu Sandwich Le Sept 7', desc:'Escalope de poulet, bacon de dinde, sauce Boursin et fromage.', price:12.00, cat:'menus-sandwiches', emoji:'🥙', popular:true, menu:true },
-  { id:4, name:'Menu Sandwich Campagnard', desc:'Pain bun\'s, escalope de poulet, lardons, bacon de dinde, galette de pommes de terre, crème fraîche et fromage à raclette.', price:13.00, cat:'menus-sandwiches', emoji:'🥙', menu:true },
-  { id:5, name:'Menu Sandwich Red Tikka', desc:'Morceaux de poulet marinés, sauce tandoori et fromage.', price:11.50, cat:'menus-sandwiches', emoji:'🥙', menu:true },
-  { id:6, name:'Menu Sandwich Yellow Tikka', desc:'Morceaux de poulet marinés, sauce curry et fromage.', price:11.50, cat:'menus-sandwiches', emoji:'🥙', popular:true, menu:true },
-  { id:7, name:'Menu Sandwich Savoyard', desc:'3 steaks, bacon de dinde et Boursin.', price:11.00, cat:'menus-sandwiches', emoji:'🥙', menu:true },
-  { id:8, name:'Menu Sandwich Cordon Bleu', desc:'Cordon bleu et fromage.', price:8.50, cat:'menus-sandwiches', emoji:'🥙', menu:true },
-  { id:9, name:'Menu Sandwich Steak', desc:'2 steaks et fromage.', price:9.90, cat:'menus-sandwiches', emoji:'🥙', menu:true },
-  { id:10, name:'Menu Sandwich Savoureux', desc:'Escalope de poulet, crème fraîche, fromage râpé, champignons et fromage.', price:12.50, cat:'menus-sandwiches', emoji:'🥙', menu:true },
-  { id:11, name:'Menu Sandwich Méga Bun\'s', desc:'Pain bun\'s, 4 steaks, bacon de dinde et 2 fromages.', price:11.80, cat:'menus-sandwiches', emoji:'🥙', menu:true },
-  { id:12, name:'Menu Sandwich Normand', desc:'3 steaks, galette de pommes de terre, bacon de dinde et fromage.', price:11.50, cat:'menus-sandwiches', emoji:'🥙', menu:true },
-  { id:13, name:'Menu Sandwich Double Croc', desc:'2 steaks 45g, cordon bleu et fromage.', price:12.00, cat:'menus-sandwiches', emoji:'🥙', menu:true },
-  { id:14, name:'Menu Sandwich Chikanos', desc:'Morceaux de poulet, sauce relevée et œuf.', price:12.00, cat:'menus-sandwiches', emoji:'🥙', menu:true },
-  { id:15, name:'Menu Sandwich Triplex', desc:'3 steaks, bacon de dinde et fromage.', price:11.50, cat:'menus-sandwiches', emoji:'🥙', menu:true },
-  { id:16, name:'Menu Tacos 1 Viande', desc:'Galette dorée, sauce fromagère maison, servi avec frites et 1 boisson 33cl au choix.', price:11.50, cat:'menus-tacos', emoji:'🌯', config:'tacos-1v', menu:true },
-  { id:17, name:'Menu Tacos 2 Viandes', desc:'2 viandes au choix, galette dorée, sauce fromagère maison, frites et 1 boisson 33cl.', price:13.00, cat:'menus-tacos', emoji:'🌯', popular:true, config:'tacos-2v', menu:true },
-  { id:18, name:'Menu Tacos 3 Viandes', desc:'3 viandes au choix, galette dorée, sauce fromagère maison, frites et 1 boisson 33cl.', price:17.99, cat:'menus-tacos', emoji:'🌯', config:'tacos-3v', menu:true },
-  { id:19, name:'Menu Cheeseburger', desc:'1 steak et fromage.', price:7.45, cat:'menus-burgers', emoji:'🍔', menu:true },
-  { id:20, name:'Menu Double Cheeseburger', desc:'2 steaks et 2 fromages.', price:10.10, cat:'menus-burgers', emoji:'🍔', menu:true },
-  { id:21, name:'Menu Zinger Burger', desc:'Poulet façon KFC et fromage.', price:12.00, cat:'menus-burgers', emoji:'🍔', menu:true },
-  { id:22, name:'Menu Chicken Burger', desc:'Chicken pané et fromage.', price:9.50, cat:'menus-burgers', emoji:'🍔', menu:true },
-  { id:23, name:'Menu Bacon Burger', desc:'2 steaks, bacon de dinde et 2 fromages.', price:11.00, cat:'menus-burgers', emoji:'🍔', menu:true },
-  { id:24, name:'Menu 180 Burger', desc:'1 steak 180g et 2 fromages. Sauce au choix (ketchup, mayo, biggy, barbecue).', price:12.40, cat:'menus-burgers', emoji:'🍔', menu:true },
-  { id:25, name:'Menu Batata Burger', desc:'Galette de pommes de terre, œuf et fromage.', price:8.50, cat:'menus-burgers', emoji:'🍔', menu:true },
-  { id:26, name:'Menu 360 Burger', desc:'2 steaks 180g et 2 fromages.', price:14.50, cat:'menus-burgers', emoji:'🍔', popular:true, menu:true },
-  { id:27, name:'Menu 540+ Burger', desc:'3 steaks 180g, œuf, galette de pommes de terre et 3 fromages.', price:19.00, cat:'menus-burgers', emoji:'🍔', menu:true },
-  { id:28, name:'Menu Panini Poulet', desc:'Pain panini grillé, poulet.', price:9.00, cat:'menus-paninis', emoji:'🥪', menu:true },
-  { id:29, name:'Menu Panini Steak', desc:'Pain panini, steak.', price:9.00, cat:'menus-paninis', emoji:'🥪', menu:true },
-  { id:30, name:'Menu Panini 3 Fromages', desc:'Pain panini garni de 3 fromages.', price:9.00, cat:'menus-paninis', emoji:'🥪', menu:true },
-  { id:31, name:'Sandwich au Four', desc:'Grand pain panini, viande au choix (kebab, steak, poulet curry ou tandoori) et mozzarella, gratiné au four.', price:12.90, cat:'menus-paninis', emoji:'🥪', popular:true, config:'sandwich-au-four', menu:true },
-  { id:32, name:'Menu Hummer Toast Double', desc:'3 pains, 2 maxi steaks, bacon de dinde et fromage.', price:12.00, cat:'menus-hummers', emoji:'🥖', menu:true },
-  { id:33, name:'Menu Croque Monsieur', desc:'2 tranches de pain de mie, Gruyère râpée, 2 tranches de jambon et 15g de beurre.', price:7.50, cat:'menus-croques', emoji:'🧀', popular:true, menu:true },
-  { id:34, name:'Menu Wrap Spécial', desc:'Pain tacos, viande au choix, oignons frits, Boursin et cordon bleu en morceaux.', price:12.00, cat:'menus-wraps', emoji:'🌯', config:'wrap', menu:true },
-  { id:35, name:'Menu Tenders', desc:'3 tenders croustillants.', price:11.00, cat:'menus-texmex', emoji:'🍗', menu:true },
-  { id:36, name:'Menu Wings', desc:'5 ailes de poulet.', price:8.00, cat:'menus-texmex', emoji:'🍗', menu:true },
-  { id:37, name:'Menu Nuggets', desc:'6 nuggets de poulet.', price:7.80, cat:'menus-texmex', emoji:'🍗', menu:true },
-  { id:38, name:'Menu Enfant', desc:'1 plat au choix, servi avec frites et 1 boisson 33cl au choix.', price:7.50, cat:'menus-enfants', emoji:'🧒', menu:true },
-  { id:39, name:'Sandwich Kebab', desc:'Morceaux de viande marinés, sauce curry et fromage.', price:8.00, cat:'sandwiches', emoji:'🥙' },
-  { id:40, name:'Sandwich Montagnard', desc:'Pain bun\'s, 3 steaks 45g, lardons, bacon de dinde, galette de pommes de terre, crème fraîche et fromage à raclette.', price:8.50, cat:'sandwiches', emoji:'🥙' },
-  { id:41, name:'Sandwich Red Tikka', desc:'Morceaux de poulet marinés, sauce tandoori et fromage.', price:8.00, cat:'sandwiches', emoji:'🥙', popular:true },
-  { id:42, name:'Sandwich Le Sept 7', desc:'Escalope de poulet, bacon de dinde, sauce Boursin et fromage.', price:8.50, cat:'sandwiches', emoji:'🥙' },
-  { id:43, name:'Sandwich Campagnard', desc:'Pain bun\'s, escalope de poulet, lardons, bacon de dinde, galette de pommes de terre, crème fraîche et fromage à raclette.', price:8.50, cat:'sandwiches', emoji:'🥙' },
-  { id:44, name:'Sandwich Yellow Tikka', desc:'Morceaux de poulet marinés, sauce curry et fromage.', price:8.00, cat:'sandwiches', emoji:'🥙' },
-  { id:45, name:'Sandwich Steak', desc:'2 steaks et fromage.', price:7.50, cat:'sandwiches', emoji:'🥙' },
-  { id:46, name:'Sandwich Savoyard', desc:'3 steaks, bacon de dinde et Boursin.', price:8.50, cat:'sandwiches', emoji:'🥙' },
-  { id:47, name:'Sandwich Savoureux', desc:'Escalope de poulet, crème fraîche, fromage râpé, champignons et fromage.', price:8.50, cat:'sandwiches', emoji:'🥙', popular:true },
-  { id:48, name:'Sandwich Méga Bun\'s', desc:'Pain bun\'s, 4 steaks, bacon de dinde et 2 fromages.', price:8.50, cat:'sandwiches', emoji:'🥙' },
-  { id:49, name:'Sandwich Cordon Bleu', desc:'Cordon bleu et fromage.', price:7.50, cat:'sandwiches', emoji:'🥙' },
-  { id:50, name:'Sandwich Triplex', desc:'3 steaks, bacon de dinde et fromage.', price:8.50, cat:'sandwiches', emoji:'🥙' },
-  { id:51, name:'Sandwich Normand', desc:'3 steaks, galette de pommes de terre, bacon de dinde et fromage.', price:8.50, cat:'sandwiches', emoji:'🥙' },
-  { id:52, name:'Sandwich Chikanos', desc:'Morceaux de poulet, sauce relevée et œuf.', price:8.50, cat:'sandwiches', emoji:'🥙' },
-  { id:53, name:'Sandwich Double Croc', desc:'2 steaks 45g, cordon bleu et fromage.', price:8.50, cat:'sandwiches', emoji:'🥙' },
-  { id:54, name:'Tacos 1 Viande', desc:'Galette dorée, sauce fromagère maison.', price:8.80, cat:'tacos', emoji:'🌯', config:'tacos-1v' },
-  { id:55, name:'Tacos 2 Viandes', desc:'2 viandes au choix, galette dorée, sauce fromagère maison.', price:9.90, cat:'tacos', emoji:'🌯', config:'tacos-2v' },
-  { id:56, name:'Tacos 3 Viandes', desc:'3 viandes au choix, galette dorée, sauce fromagère maison.', price:11.50, cat:'tacos', emoji:'🌯', config:'tacos-3v' },
-  { id:57, name:'Tacos Zinger', desc:'Poulet façon KFC, bacon de dinde, 1 steak 45g, 1 galette de pommes de terre et fromage.', price:9.50, cat:'tacos', emoji:'🌯' },
-  { id:58, name:'Cheeseburger', desc:'1 steak et fromage.', price:4.99, cat:'burgers', emoji:'🍔' },
-  { id:59, name:'Double Cheeseburger', desc:'2 steaks et 2 fromages.', price:7.50, cat:'burgers', emoji:'🍔' },
-  { id:60, name:'Zinger Burger', desc:'Poulet façon KFC et fromage.', price:7.00, cat:'burgers', emoji:'🍔' },
-  { id:61, name:'Chicken Burger', desc:'Chicken pané et fromage.', price:7.50, cat:'burgers', emoji:'🍔' },
-  { id:62, name:'Bacon Burger', desc:'2 steaks, bacon de dinde et 2 fromages.', price:9.50, cat:'burgers', emoji:'🍔' },
-  { id:63, name:'180 Burger', desc:'1 steak 180g et 2 fromages.', price:9.50, cat:'burgers', emoji:'🍔' },
-  { id:64, name:'Batata Burger', desc:'Galette de pommes de terre, œuf et fromage.', price:6.50, cat:'burgers', emoji:'🍔' },
-  { id:65, name:'360 Burger', desc:'2 steaks 180g et 2 fromages.', price:10.50, cat:'burgers', emoji:'🍔' },
-  { id:66, name:'540+ Burger', desc:'3 steaks 180g, œuf, galette de pommes de terre et 3 fromages.', price:13.00, cat:'burgers', emoji:'🍔' },
-  { id:67, name:'Panini Poulet', desc:'Pain panini grillé, poulet.', price:6.50, cat:'paninis', emoji:'🥪' },
-  { id:68, name:'Panini Steak', desc:'Pain panini, steak.', price:6.50, cat:'paninis', emoji:'🥪' },
-  { id:69, name:'Panini 3 Fromages', desc:'Pain panini garni de 3 fromages.', price:6.50, cat:'paninis', emoji:'🥪' },
-  { id:70, name:'Hummer Toast Double', desc:'3 pains, 2 maxi steaks, bacon de dinde et fromage.', price:9.10, cat:'hummers', emoji:'🥖', popular:true },
-  { id:71, name:'Tenders', desc:'3 tenders croustillants, sauce au choix.', price:9.00, cat:'texmex', emoji:'🍗' },
-  { id:72, name:'Wings', desc:'5 ailes de poulet, sauce au choix.', price:7.00, cat:'texmex', emoji:'🍗' },
-  { id:73, name:'Nuggets', desc:'6 nuggets de poulet, sauce au choix.', price:4.90, cat:'texmex', emoji:'🍗' },
-  { id:74, name:'Wrap Spécial', desc:'Pain tacos, viande au choix, oignons frits, Boursin et cordon bleu en morceaux.', price:8.50, cat:'wraps', emoji:'🌯', popular:true, config:'wrap' },
-  { id:75, name:'Assiette Mixte', desc:'Riz basmati, salade et 3 viandes au choix.', price:16.00, cat:'assiettes', emoji:'🍽️', config:'assiette-3v' },
-  { id:76, name:'Assiette Le Sept 7', desc:'Riz basmati, salade et 1 viande au choix.', price:13.00, cat:'assiettes', emoji:'🍽️', config:'assiette-1v' },
-  { id:77, name:'Riz Thaï 2 Viandes', desc:'Riz thaï et 2 viandes au choix parmi kebab, tandoori, tenders ou steak haché.', price:13.00, cat:'assiettes', emoji:'🍽️', popular:true, config:'riz-2v' },
-  { id:78, name:'Riz Thaï 1 Viande', desc:'1 viande au choix parmi kebab, tandoori, curry, escalope, steak haché, tenders, nuggets ou cordon bleu.', price:11.50, cat:'assiettes', emoji:'🍽️', config:'riz-1v' },
-  { id:79, name:'Salade César', desc:'Salade, tomates, poulet frit, copeaux de fromage et maïs.', price:8.45, cat:'salades', emoji:'🥗' },
-  { id:80, name:'Tiramisu', desc:'Dessert italien classique en couches, texture crémeuse.', price:4.00, cat:'desserts', emoji:'🍰' },
-  { id:81, name:'Tarte au Daim', desc:'Tarte garnie d\'éclats de Daim croquants.', price:4.00, cat:'desserts', emoji:'🍰' },
-  { id:82, name:'Coca-Cola', desc:'Taille au choix.', price:2.40, cat:'boissons', emoji:'🥤' },
-  { id:83, name:'Fanta', desc:'Taille au choix.', price:2.40, cat:'boissons', emoji:'🥤' },
-  { id:84, name:'Sprite', desc:'Taille au choix.', price:2.40, cat:'boissons', emoji:'🥤' },
-  { id:85, name:'Oasis Tropical', desc:'33cl.', price:2.40, cat:'boissons', emoji:'🥤' },
-  { id:86, name:'Oasis Pomme Poire', desc:'33cl.', price:2.40, cat:'boissons', emoji:'🥤' },
-  { id:87, name:'Pepsi', desc:'33cl.', price:2.40, cat:'boissons', emoji:'🥤' },
-  { id:88, name:'7Up', desc:'33cl.', price:2.40, cat:'boissons', emoji:'🥤' },
-  { id:89, name:'Thé Glacé Lipton', desc:'33cl.', price:2.40, cat:'boissons', emoji:'🥤' },
-  { id:90, name:'Eau', desc:'Bouteille, désaltérante.', price:1.20, cat:'boissons', emoji:'🥤' },
-  { id:91, name:'Milkshake Mangue', desc:'Milkshake onctueux à la mangue.', price:4.90, cat:'boissons', emoji:'🥤', popular:true },
+  { id:1, name:'Menu Sandwich Kebab', desc:'Morceaux de viande kebab, salade, tomates, oignons.', price:12.00, cat:'menus-sandwiches', popular:true, menu:true },
+  { id:2, name:'Menu Sandwich Montagnard', desc:'Pain bun\'s, 3 steaks 45g, lardons, bacon de dinde, galette de pommes de terre, crème fraîche et fromage à raclette.', price:13.00, cat:'menus-sandwiches', menu:true },
+  { id:3, name:'Menu Sandwich Le Sept 7', desc:'Escalope de poulet, bacon de dinde, sauce Boursin et fromage.', price:12.00, cat:'menus-sandwiches', popular:true, menu:true },
+  { id:4, name:'Menu Sandwich Campagnard', desc:'Pain bun\'s, escalope de poulet, lardons, bacon de dinde, galette de pommes de terre, crème fraîche et fromage à raclette.', price:13.00, cat:'menus-sandwiches', menu:true },
+  { id:5, name:'Menu Sandwich Red Tikka', desc:'Morceaux de poulet marinés, sauce tandoori et fromage.', price:11.50, cat:'menus-sandwiches', menu:true },
+  { id:6, name:'Menu Sandwich Yellow Tikka', desc:'Morceaux de poulet marinés, sauce curry et fromage.', price:11.50, cat:'menus-sandwiches', popular:true, menu:true },
+  { id:7, name:'Menu Sandwich Savoyard', desc:'3 steaks, bacon de dinde et Boursin.', price:11.00, cat:'menus-sandwiches', menu:true },
+  { id:8, name:'Menu Sandwich Cordon Bleu', desc:'Cordon bleu et fromage.', price:8.50, cat:'menus-sandwiches', menu:true },
+  { id:9, name:'Menu Sandwich Steak', desc:'2 steaks et fromage.', price:9.90, cat:'menus-sandwiches', menu:true },
+  { id:10, name:'Menu Sandwich Savoureux', desc:'Escalope de poulet, crème fraîche, fromage râpé, champignons et fromage.', price:12.50, cat:'menus-sandwiches', menu:true },
+  { id:11, name:'Menu Sandwich Méga Bun\'s', desc:'Pain bun\'s, 4 steaks, bacon de dinde et 2 fromages.', price:11.80, cat:'menus-sandwiches', menu:true },
+  { id:12, name:'Menu Sandwich Normand', desc:'3 steaks, galette de pommes de terre, bacon de dinde et fromage.', price:11.50, cat:'menus-sandwiches', menu:true },
+  { id:13, name:'Menu Sandwich Double Croc', desc:'2 steaks 45g, cordon bleu et fromage.', price:12.00, cat:'menus-sandwiches', menu:true },
+  { id:14, name:'Menu Sandwich Chikanos', desc:'Morceaux de poulet, sauce relevée et œuf.', price:12.00, cat:'menus-sandwiches', menu:true },
+  { id:15, name:'Menu Sandwich Triplex', desc:'3 steaks, bacon de dinde et fromage.', price:11.50, cat:'menus-sandwiches', menu:true },
+  { id:16, name:'Menu Tacos 1 Viande', desc:'Galette dorée, sauce fromagère maison, servi avec frites et 1 boisson 33cl au choix.', price:11.50, cat:'menus-tacos', config:'tacos-1v', menu:true },
+  { id:17, name:'Menu Tacos 2 Viandes', desc:'2 viandes au choix, galette dorée, sauce fromagère maison, frites et 1 boisson 33cl.', price:13.00, cat:'menus-tacos', popular:true, config:'tacos-2v', menu:true },
+  { id:18, name:'Menu Tacos 3 Viandes', desc:'3 viandes au choix, galette dorée, sauce fromagère maison, frites et 1 boisson 33cl.', price:17.99, cat:'menus-tacos', config:'tacos-3v', menu:true },
+  { id:19, name:'Menu Cheeseburger', desc:'1 steak et fromage.', price:7.45, cat:'menus-burgers', menu:true },
+  { id:20, name:'Menu Double Cheeseburger', desc:'2 steaks et 2 fromages.', price:10.10, cat:'menus-burgers', menu:true },
+  { id:21, name:'Menu Zinger Burger', desc:'Poulet façon KFC et fromage.', price:12.00, cat:'menus-burgers', menu:true },
+  { id:22, name:'Menu Chicken Burger', desc:'Chicken pané et fromage.', price:9.50, cat:'menus-burgers', menu:true },
+  { id:23, name:'Menu Bacon Burger', desc:'2 steaks, bacon de dinde et 2 fromages.', price:11.00, cat:'menus-burgers', menu:true },
+  { id:24, name:'Menu 180 Burger', desc:'1 steak 180g et 2 fromages. Sauce au choix (ketchup, mayo, biggy, barbecue).', price:12.40, cat:'menus-burgers', menu:true },
+  { id:25, name:'Menu Batata Burger', desc:'Galette de pommes de terre, œuf et fromage.', price:8.50, cat:'menus-burgers', menu:true },
+  { id:26, name:'Menu 360 Burger', desc:'2 steaks 180g et 2 fromages.', price:14.50, cat:'menus-burgers', popular:true, menu:true },
+  { id:27, name:'Menu 540+ Burger', desc:'3 steaks 180g, œuf, galette de pommes de terre et 3 fromages.', price:19.00, cat:'menus-burgers', menu:true },
+  { id:28, name:'Menu Panini Poulet', desc:'Pain panini grillé, poulet.', price:9.00, cat:'menus-paninis', menu:true },
+  { id:29, name:'Menu Panini Steak', desc:'Pain panini, steak.', price:9.00, cat:'menus-paninis', menu:true },
+  { id:30, name:'Menu Panini 3 Fromages', desc:'Pain panini garni de 3 fromages.', price:9.00, cat:'menus-paninis', menu:true },
+  { id:31, name:'Sandwich au Four', desc:'Grand pain panini, viande au choix (kebab, steak, poulet curry ou tandoori) et mozzarella, gratiné au four.', price:12.90, cat:'menus-paninis', popular:true, config:'sandwich-au-four', menu:true },
+  { id:32, name:'Menu Hummer Toast Double', desc:'3 pains, 2 maxi steaks, bacon de dinde et fromage.', price:12.00, cat:'menus-hummers', menu:true },
+  { id:33, name:'Menu Croque Monsieur', desc:'2 tranches de pain de mie, Gruyère râpée, 2 tranches de jambon et 15g de beurre.', price:7.50, cat:'menus-croques', popular:true, menu:true },
+  { id:34, name:'Menu Wrap Spécial', desc:'Pain tacos, viande au choix, oignons frits, Boursin et cordon bleu en morceaux.', price:12.00, cat:'menus-wraps', config:'wrap', menu:true },
+  { id:35, name:'Menu Tenders', desc:'3 tenders croustillants.', price:11.00, cat:'menus-texmex', menu:true },
+  { id:36, name:'Menu Wings', desc:'5 ailes de poulet.', price:8.00, cat:'menus-texmex', menu:true },
+  { id:37, name:'Menu Nuggets', desc:'6 nuggets de poulet.', price:7.80, cat:'menus-texmex', menu:true },
+  { id:38, name:'Menu Enfant', desc:'1 plat au choix, servi avec frites et 1 boisson 33cl au choix.', price:7.50, cat:'menus-enfants', menu:true },
+  { id:39, name:'Sandwich Kebab', desc:'Morceaux de viande marinés, sauce curry et fromage.', price:8.00, cat:'sandwiches' },
+  { id:40, name:'Sandwich Montagnard', desc:'Pain bun\'s, 3 steaks 45g, lardons, bacon de dinde, galette de pommes de terre, crème fraîche et fromage à raclette.', price:8.50, cat:'sandwiches' },
+  { id:41, name:'Sandwich Red Tikka', desc:'Morceaux de poulet marinés, sauce tandoori et fromage.', price:8.00, cat:'sandwiches', popular:true },
+  { id:42, name:'Sandwich Le Sept 7', desc:'Escalope de poulet, bacon de dinde, sauce Boursin et fromage.', price:8.50, cat:'sandwiches' },
+  { id:43, name:'Sandwich Campagnard', desc:'Pain bun\'s, escalope de poulet, lardons, bacon de dinde, galette de pommes de terre, crème fraîche et fromage à raclette.', price:8.50, cat:'sandwiches' },
+  { id:44, name:'Sandwich Yellow Tikka', desc:'Morceaux de poulet marinés, sauce curry et fromage.', price:8.00, cat:'sandwiches' },
+  { id:45, name:'Sandwich Steak', desc:'2 steaks et fromage.', price:7.50, cat:'sandwiches' },
+  { id:46, name:'Sandwich Savoyard', desc:'3 steaks, bacon de dinde et Boursin.', price:8.50, cat:'sandwiches' },
+  { id:47, name:'Sandwich Savoureux', desc:'Escalope de poulet, crème fraîche, fromage râpé, champignons et fromage.', price:8.50, cat:'sandwiches', popular:true },
+  { id:48, name:'Sandwich Méga Bun\'s', desc:'Pain bun\'s, 4 steaks, bacon de dinde et 2 fromages.', price:8.50, cat:'sandwiches' },
+  { id:49, name:'Sandwich Cordon Bleu', desc:'Cordon bleu et fromage.', price:7.50, cat:'sandwiches' },
+  { id:50, name:'Sandwich Triplex', desc:'3 steaks, bacon de dinde et fromage.', price:8.50, cat:'sandwiches' },
+  { id:51, name:'Sandwich Normand', desc:'3 steaks, galette de pommes de terre, bacon de dinde et fromage.', price:8.50, cat:'sandwiches' },
+  { id:52, name:'Sandwich Chikanos', desc:'Morceaux de poulet, sauce relevée et œuf.', price:8.50, cat:'sandwiches' },
+  { id:53, name:'Sandwich Double Croc', desc:'2 steaks 45g, cordon bleu et fromage.', price:8.50, cat:'sandwiches' },
+  { id:54, name:'Tacos 1 Viande', desc:'Galette dorée, sauce fromagère maison.', price:8.80, cat:'tacos', config:'tacos-1v' },
+  { id:55, name:'Tacos 2 Viandes', desc:'2 viandes au choix, galette dorée, sauce fromagère maison.', price:9.90, cat:'tacos', config:'tacos-2v' },
+  { id:56, name:'Tacos 3 Viandes', desc:'3 viandes au choix, galette dorée, sauce fromagère maison.', price:11.50, cat:'tacos', config:'tacos-3v' },
+  { id:57, name:'Tacos Zinger', desc:'Poulet façon KFC, bacon de dinde, 1 steak 45g, 1 galette de pommes de terre et fromage.', price:9.50, cat:'tacos' },
+  { id:58, name:'Cheeseburger', desc:'1 steak et fromage.', price:4.99, cat:'burgers' },
+  { id:59, name:'Double Cheeseburger', desc:'2 steaks et 2 fromages.', price:7.50, cat:'burgers' },
+  { id:60, name:'Zinger Burger', desc:'Poulet façon KFC et fromage.', price:7.00, cat:'burgers' },
+  { id:61, name:'Chicken Burger', desc:'Chicken pané et fromage.', price:7.50, cat:'burgers' },
+  { id:62, name:'Bacon Burger', desc:'2 steaks, bacon de dinde et 2 fromages.', price:9.50, cat:'burgers' },
+  { id:63, name:'180 Burger', desc:'1 steak 180g et 2 fromages.', price:9.50, cat:'burgers' },
+  { id:64, name:'Batata Burger', desc:'Galette de pommes de terre, œuf et fromage.', price:6.50, cat:'burgers' },
+  { id:65, name:'360 Burger', desc:'2 steaks 180g et 2 fromages.', price:10.50, cat:'burgers' },
+  { id:66, name:'540+ Burger', desc:'3 steaks 180g, œuf, galette de pommes de terre et 3 fromages.', price:13.00, cat:'burgers' },
+  { id:67, name:'Panini Poulet', desc:'Pain panini grillé, poulet.', price:6.50, cat:'paninis' },
+  { id:68, name:'Panini Steak', desc:'Pain panini, steak.', price:6.50, cat:'paninis' },
+  { id:69, name:'Panini 3 Fromages', desc:'Pain panini garni de 3 fromages.', price:6.50, cat:'paninis' },
+  { id:70, name:'Hummer Toast Double', desc:'3 pains, 2 maxi steaks, bacon de dinde et fromage.', price:9.10, cat:'hummers', popular:true },
+  { id:71, name:'Tenders', desc:'3 tenders croustillants, sauce au choix.', price:9.00, cat:'texmex' },
+  { id:72, name:'Wings', desc:'5 ailes de poulet, sauce au choix.', price:7.00, cat:'texmex' },
+  { id:73, name:'Nuggets', desc:'6 nuggets de poulet, sauce au choix.', price:4.90, cat:'texmex' },
+  { id:74, name:'Wrap Spécial', desc:'Pain tacos, viande au choix, oignons frits, Boursin et cordon bleu en morceaux.', price:8.50, cat:'wraps', popular:true, config:'wrap' },
+  { id:75, name:'Assiette Mixte', desc:'Riz basmati, salade et 3 viandes au choix.', price:16.00, cat:'assiettes', config:'assiette-3v' },
+  { id:76, name:'Assiette Le Sept 7', desc:'Riz basmati, salade et 1 viande au choix.', price:13.00, cat:'assiettes', config:'assiette-1v' },
+  { id:77, name:'Riz Thaï 2 Viandes', desc:'Riz thaï et 2 viandes au choix parmi kebab, tandoori, tenders ou steak haché.', price:13.00, cat:'assiettes', popular:true, config:'riz-2v' },
+  { id:78, name:'Riz Thaï 1 Viande', desc:'1 viande au choix parmi kebab, tandoori, curry, escalope, steak haché, tenders, nuggets ou cordon bleu.', price:11.50, cat:'assiettes', config:'riz-1v' },
+  { id:79, name:'Salade César', desc:'Salade, tomates, poulet frit, copeaux de fromage et maïs.', price:8.45, cat:'salades' },
+  { id:80, name:'Tiramisu', desc:'Dessert italien classique en couches, texture crémeuse.', price:4.00, cat:'desserts' },
+  { id:81, name:'Tarte au Daim', desc:'Tarte garnie d\'éclats de Daim croquants.', price:4.00, cat:'desserts' },
+  { id:82, name:'Coca-Cola', desc:'Taille au choix.', price:2.40, cat:'boissons' },
+  { id:83, name:'Fanta', desc:'Taille au choix.', price:2.40, cat:'boissons' },
+  { id:84, name:'Sprite', desc:'Taille au choix.', price:2.40, cat:'boissons' },
+  { id:85, name:'Oasis Tropical', desc:'33cl.', price:2.40, cat:'boissons' },
+  { id:86, name:'Oasis Pomme Poire', desc:'33cl.', price:2.40, cat:'boissons' },
+  { id:87, name:'Pepsi', desc:'33cl.', price:2.40, cat:'boissons' },
+  { id:88, name:'7Up', desc:'33cl.', price:2.40, cat:'boissons' },
+  { id:89, name:'Thé Glacé Lipton', desc:'33cl.', price:2.40, cat:'boissons' },
+  { id:90, name:'Eau', desc:'Bouteille, désaltérante.', price:1.20, cat:'boissons' },
+  { id:91, name:'Milkshake Mangue', desc:'Milkshake onctueux à la mangue.', price:4.90, cat:'boissons', popular:true },
 ];
 
 /* Liste de viandes générale — utilisée par défaut (tacos, assiettes, wraps) */
@@ -1575,17 +1565,17 @@ function productCardHTML(p, variant) {
       <div class="${visClass} has-photo ${photoClass}">
         ${badges.join('')}
         <span class="vis-emoji-badge"><svg class="icon icon-flame"><use href="#i-flame" xlink:href="#i-flame"/></svg></span>
-        <button class="vis-share-btn" data-share-id="${p.id}" aria-label="Partager ${p.name}" title="Partager ce plat"><svg class="icon"><use href="#i-share" xlink:href="#i-share"/></svg></button>
+        <button class="vis-share-btn" data-share-id="${p.id}" aria-label="Partager ${esc(p.name)}" title="Partager ce plat"><svg class="icon"><use href="#i-share" xlink:href="#i-share"/></svg></button>
         <button class="vis-fav-btn${isFav ? ' is-fav' : ''}" data-fav-id="${p.id}" aria-label="${isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'}" title="Favori"><svg class="icon"><use href="#i-heart" xlink:href="#i-heart"/></svg></button>
       </div>
       <div class="${variant === 'pop' ? 'pop-body' : 'product-info'}">
-        <div class="${variant === 'pop' ? 'pop-name' : 'product-name'}">${p.name}</div>
-        <div class="${variant === 'pop' ? 'pop-desc' : 'product-desc'}">${p.desc}</div>
+        <div class="${variant === 'pop' ? 'pop-name' : 'product-name'}">${esc(p.name)}</div>
+        <div class="${variant === 'pop' ? 'pop-desc' : 'product-desc'}">${esc(p.desc)}</div>
         <div class="${variant === 'pop' ? 'pop-foot' : 'product-foot'}">
           <span class="${variant === 'pop' ? 'pop-price' : 'product-price'}">${euro(p.price)}</span>
           ${unavailable
-            ? `<button class="${variant === 'pop' ? 'pop-add' : 'product-add'}" disabled aria-label="${p.name} indisponible aujourd'hui" aria-disabled="true">—</button>`
-            : `<button class="${variant === 'pop' ? 'pop-add' : 'product-add'}" data-add-id="${p.id}" aria-label="Ajouter ${p.name}">+</button>`}
+            ? `<button class="${variant === 'pop' ? 'pop-add' : 'product-add'}" disabled aria-label="${esc(p.name)} indisponible aujourd'hui" aria-disabled="true">—</button>`
+            : `<button class="${variant === 'pop' ? 'pop-add' : 'product-add'}" data-add-id="${p.id}" aria-label="Ajouter ${esc(p.name)}">+</button>`}
         </div>
       </div>
     </div>`;
@@ -1875,7 +1865,7 @@ function addToCartSimple(productId) {
   if (!p || p.available === false || isOutOfStock(productId)) return;
   const existing = cart.find(i => i.key === 'p' + productId);
   if (existing) { existing.qty++; }
-  else { cart.push({ key:'p' + productId, id:productId, name:p.name, price:p.price, emoji:p.emoji, qty:1, config:null }); }
+  else { cart.push({ key:'p' + productId, id:productId, name:p.name, price:p.price, qty:1, config:null }); }
   saveCart();
   renderCart();
   bumpCartBadges();
@@ -2595,9 +2585,6 @@ function initHeroParallax() {
      pour ne jamais entrer en conflit avec sevenFloat / chipDrift. */
   const seven = visual.querySelector('.hero-seven-frame');
   const layers = [
-    { el: hero.querySelector('.hero-glow-1'), fx: 6,  fy: 5  },
-    { el: hero.querySelector('.hero-glow-2'), fx: -5, fy: 4  },
-    { el: hero.querySelector('.hero-glow-3'), fx: 8,  fy: -6 },
     { el: hero.querySelector('.hero-seven-bg'), fx: 10, fy: 7 },
     { el: visual.querySelector('.hero-food-layer'), fx: 12, fy: 9 },
     { el: hero.querySelector('.hero-text-col'), fx: -3, fy: -2 },
@@ -2881,9 +2868,20 @@ function initLegal() {
 
 /* ============ PANNEAU ÉQUIPE — gestion des ruptures du jour ============
    Petit code PIN pour éviter qu'un client ne bascule les plats par erreur
-   en tombant sur le lien ; ce n'est pas une sécurité forte (le code vit
-   dans ce fichier public), seulement un garde-fou pratique pour l'équipe.
-   Pour changer le code : modifier SITE.vendorPin ci-dessus. */
+   en tombant sur le lien. Le code n'est jamais stocké ni transmis en clair :
+   seul son empreinte SHA-256 (SITE.vendorPinHash) vit dans ce fichier, donc
+   personne ne peut lire le PIN réel en ouvrant le code source. Attention
+   cependant : ce n'est pas une sécurité forte pour autant — tout tourne
+   côté navigateur dans un site 100% statique, donc quelqu'un qui saurait
+   manipuler la console du navigateur pourrait toujours contourner cette
+   vérification. C'est un garde-fou pratique contre les erreurs et les
+   curieux, pas un coffre-fort. Pour changer le code, voir l'instruction
+   juste au-dessus de vendorPinHash dans SITE. */
+async function hashPin(value) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  return [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
 function renderVendorPanelList() {
   const list = document.getElementById('vendorList');
   if (!list) return;
@@ -2920,11 +2918,15 @@ function initVendorPanel() {
   if (overlay) overlay.addEventListener('click', (e) => { if (e.target.id === 'vendorOverlay') closeVendorPanel(); });
 
   const form = document.getElementById('vendorPinForm');
-  if (form) form.addEventListener('submit', (e) => {
+  if (form) form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const input = document.getElementById('vendorPinInput');
     const err = document.getElementById('vendorPinError');
-    if (input.value.trim() === SITE.vendorPin) {
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+    const enteredHash = await hashPin(input.value.trim());
+    if (submitBtn) submitBtn.disabled = false;
+    if (enteredHash === SITE.vendorPinHash) {
       sessionStorage.setItem('sept7_vendor_unlocked', '1');
       err.hidden = true;
       document.getElementById('vendorGate').hidden = true;
