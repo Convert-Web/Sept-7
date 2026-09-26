@@ -291,7 +291,6 @@ function renderMenuGrid() {
     });
     grid.innerHTML = html;
   }
-  applyProductTilt();
 }
 
 /* ============ REVIEWS ============ */
@@ -963,12 +962,12 @@ function initMobileHover() {
   if (!isTouch) return;
 
   const HOVERABLE = '.btn, .hero-pill, .trust-item, .stat-item, .pop-card, .pop-add, ' +
-    '.cat-chip, .product-card, .product-add, .classique-card, .loc-card, .faq-q, ' +
+    '.cat-chip, .product-add, .classique-card, .loc-card, .faq-q, ' +
     '.review-platform, .cart-item, .qty-btn, .cfg-opt, .order-mode-label, ' +
     '.cart-delivery-note-link, .search-clear, .nav-link, .mobile-nav-link, ' +
     '.mobile-phone-link, .footer-links a, .fab-cart, .fab-uber, .a-link, .a-close, .hamburger';
   /* Les cartes qui portent un vrai tilt 3D au survol sur desktop */
-  const TILTABLE = '.product-card:not(.is-unavailable), .pop-card:not(.is-unavailable), .classique-card';
+  const TILTABLE = '.pop-card:not(.is-unavailable), .classique-card';
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let currentEl = null, currentTiltEl = null, ticking = false, centerY = 0;
@@ -1226,7 +1225,7 @@ function initHeroParallax() {
 /* ============ PRODUCT CARDS — TILT 3D ============ */
 function applyProductTilt() {
   if (window.innerWidth < 1024 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  document.querySelectorAll('.product-card, .pop-card, .review-card').forEach(card => {
+  document.querySelectorAll('.pop-card, .review-card').forEach(card => {
     if (card._tiltBound) return;
     card._tiltBound = true;
     card.addEventListener('mousemove', e => {
