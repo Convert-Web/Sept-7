@@ -214,6 +214,7 @@ function renderPopulaires() {
   const el = document.getElementById('popScroller');
   const pops = PRODUCTS.filter(p => p.popular);
   el.innerHTML = pops.map(p => productCardHTML(p, 'pop')).join('');
+  applyProductTilt();
 }
 
 function renderCatFilters() {
@@ -290,6 +291,7 @@ function renderMenuGrid() {
     });
     grid.innerHTML = html;
   }
+  applyProductTilt();
 }
 
 /* ============ REVIEWS ============ */
@@ -498,6 +500,7 @@ function addToCartSimple(productId) {
   bumpAddStat(productId);
   flashAddButton(productId);
   showToast(`${p.name} ajouté au panier`);
+  spawnConfetti(document.querySelector(`[data-add-id="${productId}"]`));
 }
 
 function addToCartConfigured(product, meats, sauces, drink, qty) {
@@ -513,6 +516,7 @@ function addToCartConfigured(product, meats, sauces, drink, qty) {
   bumpCartBadges();
   bumpAddStat(product.id);
   showToast(`${product.name} ajouté au panier`);
+  spawnConfetti(document.getElementById('cfgAddBtn'));
 }
 
 function updateCartQty(key, delta) {
@@ -884,6 +888,40 @@ function initReveal() {
   els.forEach(el => observer.observe(el));
 }
 
+function initCounters() {
+  const els = document.querySelectorAll('[data-count]');
+  if (!els.length) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function animate(el) {
+    const target = parseInt(el.dataset.count, 10) || 0;
+    if (reduced || !('IntersectionObserver' in window)) { el.textContent = target; return; }
+    const duration = 1400;
+    const start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(eased * target);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  if (!('IntersectionObserver' in window)) { els.forEach(el => { el.textContent = el.dataset.count; }); return; }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { animate(entry.target); observer.unobserve(entry.target); }
+    });
+  }, { threshold:0.6 });
+  els.forEach(el => observer.observe(el));
+}
+
+/* ============ TICKER ============ */
+function initTicker() {
+  const el = document.getElementById('tickerTrack');
+  const items = ['91 plats à la carte', "Ouvert jusqu'à minuit", 'Halal', 'Commande WhatsApp', '7j/7', 'Livraison Uber Eats', 'Montereau-Fault-Yonne'];
+  const html = items.map(t => `<span class="ticker-item">${t}<span class="tk-dot">●</span></span>`).join('');
+  el.innerHTML = html + html; // doublé pour boucle infinie
+}
+
 /* ============ FAQ TOGGLE ============ */
 function initFAQ() {
   document.getElementById('faqList').addEventListener('click', (e) => {
@@ -913,22 +951,27 @@ function initFAQ() {
 /* ============ MOBILE TAP-HOVER (virtual cursor pattern) ============ */
 /* ============ CURSEUR VIRTUEL (TACTILE) ============
    Sur un écran tactile il n'y a pas de survol : tous les effets liés au
-   hover (accents, glow, zoom d'image) resteraient invisibles. Ce module
-   simule un curseur au centre de l'écran : l'élément qui passe sous ce
-   point pendant le scroll reçoit la classe .mobile-hover, déjà câblée
-   dans tout le CSS à côté de chaque :hover. Le tap garde en plus un
-   retour immédiat sur l'élément touché. */
+   hover (accents, glow, zoom d'image, tilt 3D) resteraient invisibles.
+   Ce module simule un curseur au centre de l'écran : l'élément qui passe
+   sous ce point pendant le scroll reçoit la classe .mobile-hover, déjà
+   câblée dans tout le CSS à côté de chaque :hover. Le tap garde en plus
+   un retour immédiat sur l'élément touché.
+   Un seul système gère les deux cas, pour ne pas avoir deux modules qui
+   se retirent mutuellement la classe. */
 function initMobileHover() {
   const isTouch = !window.matchMedia('(hover: hover)').matches || 'ontouchstart' in window;
   if (!isTouch) return;
 
-  const HOVERABLE = '.btn, .hero-pill, .trust-item, .pop-card, .pop-add, ' +
+  const HOVERABLE = '.btn, .hero-pill, .trust-item, .stat-item, .pop-card, .pop-add, ' +
     '.cat-chip, .product-card, .product-add, .classique-card, .loc-card, .faq-q, ' +
     '.review-platform, .cart-item, .qty-btn, .cfg-opt, .order-mode-label, ' +
     '.cart-delivery-note-link, .search-clear, .nav-link, .mobile-nav-link, ' +
     '.mobile-phone-link, .footer-links a, .fab-cart, .fab-uber, .a-link, .a-close, .hamburger';
+  /* Les cartes qui portent un vrai tilt 3D au survol sur desktop */
+  const TILTABLE = '.product-card:not(.is-unavailable), .pop-card:not(.is-unavailable), .classique-card';
 
-  let currentEl = null, ticking = false, centerY = 0;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let currentEl = null, currentTiltEl = null, ticking = false, centerY = 0;
 
   function updateCenterY() { centerY = window.innerHeight / 2; }
 
@@ -955,6 +998,24 @@ function initMobileHover() {
     return null;
   }
 
+  function applyTiltFromCenter(card) {
+    const rect = card.getBoundingClientRect();
+    const cy = rect.top + rect.height / 2;
+    const dy = (centerY - cy) / (rect.height / 2);
+    /* Le translate du hover est repris ici : un transform inline écrase
+       toujours celui de la règle CSS :hover/.mobile-hover, donc les deux
+       effets doivent être combinés dans la même déclaration. */
+    const isClassique = card.classList.contains('classique-card');
+    const lift = isClassique ? 8 : 6;
+    const shiftX = isClassique ? 0 : -3;
+    card.style.transition = 'transform .18s ease-out';
+    card.style.transform = `perspective(600px) rotateX(${(-dy * 4).toFixed(2)}deg) translate(${shiftX}px,-${lift}px) translateZ(4px)`;
+  }
+  function resetTilt(card) {
+    card.style.transition = 'transform .4s ease';
+    card.style.transform = '';
+  }
+
   function update() {
     ticking = false;
     const target = findElementAtCenter();
@@ -963,6 +1024,13 @@ function initMobileHover() {
       if (target) target.classList.add('mobile-hover');
       currentEl = target;
     }
+    if (reduced) return;
+    const tiltTarget = target ? target.closest(TILTABLE) : null;
+    if (tiltTarget !== currentTiltEl) {
+      if (currentTiltEl) resetTilt(currentTiltEl);
+      currentTiltEl = tiltTarget;
+    }
+    if (currentTiltEl) applyTiltFromCenter(currentTiltEl);
   }
 
   function onScroll() {
@@ -1078,6 +1146,139 @@ function showToast(msg, duration = 2600) {
   clearTimeout(t._timer);
   t._timer = setTimeout(() => t.classList.remove('show'), duration);
 }
+
+/* ============ HERO — PARTICULES FLAMME ============ */
+function initParticles() {
+  const container = document.getElementById('heroParticles');
+  if (!container || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const symbols = ['✦', '·', '✧'];
+  const colors = ['c-flame', 'c-gold', 'c-lime'];
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  const maxActive = isTouch ? 10 : 22;
+  let active = 0;
+  function spawn() {
+    if (document.hidden || active >= maxActive) return;
+    active++;
+    const el = document.createElement('span');
+    el.className = 'spark ' + colors[Math.floor(Math.random() * colors.length)];
+    el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    el.style.cssText = 'left:' + (Math.random()*92+4) + '%;font-size:' + (.55+Math.random()*.85) + 'rem;animation-duration:' + (4+Math.random()*6) + 's;';
+    container.appendChild(el);
+    el.addEventListener('animationend', () => { el.remove(); active--; }, { once:true });
+  }
+  const spawnCount = isTouch ? 3 : 6;
+  for (let i = 0; i < spawnCount; i++) setTimeout(spawn, i * 350);
+  setInterval(spawn, isTouch ? 1100 : 650);
+}
+
+/* ============ HERO — PARALLAXE CURSEUR ============ */
+function initHeroParallax() {
+  const hero = document.getElementById('hero');
+  const visual = hero?.querySelector('.hero-visual-col');
+  if (!hero || !visual || window.innerWidth < 1024) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+
+  /* Couches à profondeurs différentes : plus "loin" = bouge moins vite.
+     Seuls des éléments SANS animation CSS de transform propre sont parallaxés
+     directement ; le "7" et les chips ont leur propre wrapper de parallax
+     pour ne jamais entrer en conflit avec sevenFloat / chipDrift. */
+  const seven = visual.querySelector('.hero-seven-frame');
+  const layers = [
+    { el: hero.querySelector('.hero-seven-bg'), fx: 10, fy: 7 },
+    { el: visual.querySelector('.hero-food-layer'), fx: 12, fy: 9 },
+    { el: hero.querySelector('.hero-text-col'), fx: -3, fy: -2 },
+  ].filter(l => l.el);
+  if (seven && seven.parentElement === visual) {
+    const wrap = document.createElement('div');
+    wrap.className = 'hsf-parallax-wrap';
+    wrap.style.cssText = 'position:absolute; top:0;left:0;right:0;bottom:0;';
+    visual.insertBefore(wrap, seven);
+    wrap.appendChild(seven);
+    layers.push({ el: wrap, fx: 22, fy: 15 });
+  }
+
+  let raf = null, tx = 0, ty = 0, cx = 0, cy = 0;
+  hero.addEventListener('mousemove', e => {
+    const r = hero.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    if (!raf) raf = requestAnimationFrame(apply);
+  }, { passive:true });
+  hero.addEventListener('mouseleave', () => { tx = 0; ty = 0; if (!raf) raf = requestAnimationFrame(apply); });
+
+  function apply() {
+    /* Interpolation légère pour un mouvement organique, jamais brutal */
+    cx += (tx - cx) * 0.08;
+    cy += (ty - cy) * 0.08;
+    visual.style.transform = `translate3d(${(cx * 16).toFixed(1)}px, ${(cy * 12).toFixed(1)}px, 0)`;
+    layers.forEach(l => {
+      l.el.style.transform = `translate3d(${(cx * l.fx).toFixed(1)}px, ${(cy * l.fy).toFixed(1)}px, 0)`;
+    });
+    if (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) {
+      raf = requestAnimationFrame(apply);
+    } else {
+      raf = null;
+    }
+  }
+}
+
+/* ============ PRODUCT CARDS — TILT 3D ============ */
+function applyProductTilt() {
+  if (window.innerWidth < 1024 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('.product-card, .pop-card, .review-card').forEach(card => {
+    if (card._tiltBound) return;
+    card._tiltBound = true;
+    card.addEventListener('mousemove', e => {
+      if (card.classList.contains('is-unavailable')) return;
+      const rect = card.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / (rect.width / 2);
+      const dy = (e.clientY - cy) / (rect.height / 2);
+      card.style.transform = `perspective(600px) rotateY(${dx * 5}deg) rotateX(${-dy * 5}deg) translateZ(4px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transition = 'transform .5s ease';
+      card.style.transform = '';
+      setTimeout(() => card.style.transition = '', 500);
+    });
+    card.addEventListener('mouseenter', () => { card.style.transition = 'transform .08s ease'; });
+  });
+}
+
+/* ============ CONFETTI — ajout au panier ============ */
+function spawnConfetti(originEl) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const colors = ['#C6421E', '#C98A2E', '#8FA84A', '#9A3216', '#A16D22'];
+  const rect = originEl ? originEl.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
+  const originX = rect.left + rect.width / 2;
+  const originY = rect.top + rect.height / 2;
+  const layer = document.createElement('div');
+  layer.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:9996;overflow:hidden;';
+  document.body.appendChild(layer);
+  const count = 14;
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement('span');
+    const color = colors[i % colors.length];
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 55 + Math.random() * 85;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist - 40;
+    const rot = (Math.random() * 720 - 360).toFixed(0);
+    const size = 5 + Math.random() * 5;
+    piece.style.cssText = `position:absolute;left:${originX}px;top:${originY}px;width:${size}px;height:${size}px;background:${color};border-radius:${Math.random() > .5 ? '50%' : '2px'};box-shadow:0 0 6px ${color};opacity:1;transform:translate(0,0) rotate(0deg);transition:transform .8s cubic-bezier(.15,.7,.3,1),opacity .8s ease-in;`;
+    layer.appendChild(piece);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        piece.style.transform = `translate(${dx}px, ${dy + 120}px) rotate(${rot}deg)`;
+        piece.style.opacity = '0';
+      });
+    });
+  }
+  setTimeout(() => layer.remove(), 900);
+}
+
 
 /* ============ APPLICATION DE LA CONFIG (SITE) ============ */
 const esc = (t) => String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1400,6 +1601,10 @@ function initApp() {
   safeInit(renderFAQ, 'FAQ render');
   safeInit(renderCart, 'Cart render');
   safeInit(initReveal, 'Reveal');
+  safeInit(initCounters, 'Counters');
+  safeInit(initParticles, 'Particles');
+  safeInit(initHeroParallax, 'Hero parallax');
+  safeInit(initTicker, 'Ticker');
   safeInit(initMobileNav, 'Mobile nav');
   safeInit(initFAQ, 'FAQ toggle');
   safeInit(initMobileHover, 'Mobile hover');
