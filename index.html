@@ -163,18 +163,19 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 .btn-wa-nav { padding:.5rem 1rem; font-size:.72rem; font-weight:700; letter-spacing:.03em; }
 .cart-badge { display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px; background:#fff; color:var(--wa-d); font-size:10px; font-weight:900; border-radius:var(--r-f); padding:0 4px; margin-left:.25rem; transition:transform .2s var(--ease); }
 .cart-badge.bump { animation:badgeBump .35s var(--ease-o); }
-.hamburger { display:none; flex-direction:column; justify-content:center; align-items:center; width:40px; height:40px; gap:5px; border-radius:var(--r-sm); border:2px solid rgba(250,246,238,.22); transition:border-color var(--tf); }
+.hamburger { position:relative; z-index:960; display:none; flex-direction:column; justify-content:center; align-items:center; width:40px; height:40px; gap:5px; border-radius:var(--r-sm); border:2px solid rgba(250,246,238,.22); transition:border-color var(--tf); }
 .header.scrolled .hamburger { border-color:var(--border); }
 .hamburger span { display:block; width:18px; height:2px; background:var(--white); border-radius:2px; transition:all var(--t); transform-origin:center; }
 .header.scrolled .hamburger span { background:var(--white); }
 .hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
 .hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
 .hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
-.mobile-nav { background:var(--ink); border-top:1px solid var(--border); display:flex; flex-direction:column; gap:.75rem; max-height:0; overflow:hidden; transition:max-height .42s var(--ease-o),padding .42s var(--ease-o); padding-block:0; }
-.mobile-nav.open { max-height:500px; padding:1.25rem 1.5rem 1.5rem; }
-.mobile-nav nav { display:flex; flex-direction:column; border-bottom:1px solid var(--border); padding-bottom:1rem; margin-bottom:.5rem; gap:.25rem; }
-.mobile-nav-link { font-size:1rem; font-weight:700; color:var(--white); padding:.75rem .5rem; border-radius:var(--r-md); transition:all var(--tf); }
-.mobile-phone-link { display:flex; align-items:center; gap:.5rem; font-size:.875rem; font-weight:600; color:var(--muted); padding:.5rem .5rem; }
+.mobile-nav { position:fixed; inset:0; z-index:950; background:var(--ink); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--s3); opacity:0; visibility:hidden; transform:translateY(-12px); transition:opacity .32s var(--ease-o), transform .32s var(--ease-o), visibility 0s linear .32s; padding:2rem; }
+.mobile-nav.open { opacity:1; visibility:visible; transform:translateY(0); transition:opacity .32s var(--ease-o), transform .32s var(--ease-o), visibility 0s linear 0s; }
+.mobile-nav nav { display:flex; flex-direction:column; align-items:center; gap:.5rem; width:100%; max-width:360px; }
+.mobile-nav-link { font-family:var(--font-d); font-size:1.7rem; font-weight:400; text-transform:uppercase; color:var(--white); padding:.6rem 1rem; border-radius:var(--r-md); transition:all var(--tf); text-align:center; }
+.mobile-phone-link { display:flex; align-items:center; gap:.5rem; font-size:1rem; font-weight:600; color:var(--muted); padding:1.5rem .5rem .5rem; border-top:1px solid var(--border); margin-top:1rem; width:100%; max-width:360px; justify-content:center; }
+@media (prefers-reduced-motion:reduce) { .mobile-nav { transition:opacity .01ms, visibility 0s; transform:none; } .mobile-nav.open { transform:none; } }
 .a-link:hover, .a-link.mobile-hover { opacity:.85; }.a-close:hover, .a-close.mobile-hover { color:#fff; background:rgba(255,255,255,.2); }.logo:hover, .logo.mobile-hover { filter:brightness(1.08); }.nav-link:hover, .nav-link.mobile-hover { color:var(--gold); }.nav-link:hover::after, .nav-link.mobile-hover::after { transform:scaleX(1); }.hamburger:hover, .hamburger.mobile-hover { border-color:var(--flame); }.mobile-nav-link:hover, .mobile-nav-link.mobile-hover { color:var(--gold); background:rgba(255,255,255,.05); }.mobile-phone-link:hover, .mobile-phone-link.mobile-hover { color:var(--white); }
 
 
@@ -217,9 +218,9 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 .order-mode-group { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
 .order-mode-label { display:flex; align-items:center; justify-content:center; gap:.5rem; padding:.6rem .75rem; border-radius:var(--r-md); font-size:.875rem; font-weight:600; color:var(--muted); background:var(--ink-2); border:2px solid var(--border); cursor:pointer; transition:all var(--tf); text-align:center; }
 .cart-disclaimer { font-size:.72rem; color:var(--muted2); text-align:center; line-height:1.5; margin-top:-.5rem; }
-.cart-delivery-note { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:.4rem; font-size:.78rem; color:var(--muted2); text-align:center; padding-top:.7rem; margin-top:.2rem; border-top:1px solid var(--border); }
-.cart-delivery-note-link { display:inline-flex; align-items:center; gap:.35rem; color:var(--off); font-weight:700; text-decoration:underline; text-underline-offset:2px; }
-.cart-delivery-note-link:hover, .cart-delivery-note-link.mobile-hover { color:var(--gold); }
+.cart-delivery-note { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:.4rem; font-size:.78rem; color:var(--muted); text-align:center; padding-top:.7rem; margin-top:.2rem; border-top:1px solid var(--border); }
+.cart-delivery-note-link { display:inline-flex; align-items:center; gap:.35rem; color:var(--gold); font-weight:700; text-decoration:underline; text-underline-offset:2px; }
+.cart-delivery-note-link:hover, .cart-delivery-note-link.mobile-hover { color:var(--white); }
 .order-mode-group--single { grid-template-columns:1fr; }
 .order-mode-label--static { border-color:var(--gold); color:var(--white); background:rgba(201,138,46,.1); cursor:default; }
 .cart-close:hover, .cart-close.mobile-hover { border-color:var(--flame); color:var(--flame); }.cart-item:hover, .cart-item.mobile-hover { border-color:rgba(201,138,46,.28); }.qty-btn:hover, .qty-btn.mobile-hover { background:var(--gold); color:var(--ink); }.qty-btn.remove:hover, .qty-btn.remove.mobile-hover { background:var(--flame); color:#fff; }.order-mode-label:hover, .order-mode-label.mobile-hover { border-color:var(--gold); color:var(--white); }
@@ -489,8 +490,11 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 .product-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; }
 .product-card { background:#fff; border-radius:var(--r-lg); border:2px solid var(--border-lt); overflow:hidden; display:flex; flex-direction:column; cursor:pointer; }
 .product-vis { height:110px; display:flex; align-items:center; justify-content:center; font-size:2.6rem; position:relative; flex-shrink:0; }
-.product-badge { position:absolute; top:.5rem; left:.5rem; font-size:.62rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; padding:.2rem .5rem; border-radius:var(--r-f); background:var(--flame); color:#fff; border:1.5px solid var(--ink); }
-.product-badge.menu-badge { left:auto; right:.65rem; background:var(--gold-d); border:1.5px solid var(--ink); }
+.product-badge { position:absolute; top:.5rem; left:.5rem; font-size:.62rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; padding:.2rem .5rem; border-radius:var(--r-f); background:var(--flame); color:#fff; border:1.5px solid var(--ink); z-index:2; }
+.product-badge.menu-badge { left:.5rem; top:.5rem; background:var(--gold-d); border:1.5px solid var(--ink); }
+/* Si un badge "Populaire" précède, le badge menu s'empile juste en dessous
+   au lieu de se superposer (cartes étroites : 2 badges côte à côte se coupent). */
+.product-badge + .product-badge.menu-badge { top:2rem; }
 /* RUPTURE DE STOCK — un produit avec available:false reste visible dans la
    carte (pour ne pas fausser le nombre de plats affiché) mais ne peut plus
    être ajouté au panier : image assombrie, bouton inerte, badge dédié qui
@@ -635,10 +639,10 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 
 /* FAB */
 .floating-actions { position:fixed; bottom:1.5rem; right:1.5rem; z-index:850; display:flex; flex-direction:column; align-items:flex-end; gap:.75rem; }
-.fab-cart { width:50px; height:50px; border-radius:50%; background:#fff; color:var(--ink); border:1.5px solid var(--border-lt); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(20,17,15,.18); transition:all var(--t); }
+.fab-cart { position:relative; width:50px; height:50px; border-radius:50%; background:#fff; color:var(--ink); border:1.5px solid var(--border-lt); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(20,17,15,.18); transition:all var(--t); }
 .fab-cart .icon { width:22px; height:22px; }
 .fab-cart:hover, .fab-cart.mobile-hover { transform:scale(1.08); border-color:var(--gold); box-shadow:0 8px 20px rgba(20,17,15,.22); }
-.fab-cart-badge { position:absolute; top:-4px; right:-4px; min-width:22px; height:22px; background:var(--flame); color:#fff; font-size:.7rem; font-weight:800; border-radius:50%; display:flex; align-items:center; justify-content:center; padding:0 4px; border:2px solid #fff; }
+.fab-cart-badge { position:absolute; top:0; right:0; min-width:22px; height:22px; background:var(--flame); color:#fff; font-size:.7rem; font-weight:800; border-radius:50%; display:flex; align-items:center; justify-content:center; padding:0 4px; border:2px solid #fff; transform:translate(30%,-30%); }
 .fab-cart-badge.hidden { display:none; }
 .fab-cart.bump { animation:badgeBump .35s var(--ease-o); }
 .fab-uber { height:50px; padding:0 1.25rem; background:#06C167; color:#fff; border-radius:var(--r-f); display:flex; align-items:center; justify-content:center; gap:.5rem; font-size:.85rem; font-weight:800; text-decoration:none; box-shadow:0 6px 14px rgba(6,193,103,.32); transition:all var(--t); animation:fabUberPulse 2.6s ease-in-out infinite; white-space:nowrap; }
@@ -770,17 +774,14 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 .product-vis.has-photo::after, .pop-card-vis.has-photo::after { content:''; position:absolute; top:0;left:0;right:0;bottom:0; background:linear-gradient(180deg,rgba(20,17,15,.04) 0%,rgba(20,17,15,.5) 100%); z-index:0; }
 .product-vis.has-photo .product-badge, .pop-card-vis.has-photo .product-badge { z-index:2; }
 .vis-emoji-badge { position:absolute; bottom:.5rem; right:.5rem; width:26px; height:26px; border-radius:50%; background:rgba(20,17,15,.78); display:flex; align-items:center; justify-content:center; font-size:.85rem; z-index:2; line-height:1; }
-.vis-share-btn { position:absolute; bottom:.5rem; left:.5rem; width:26px; height:26px; border-radius:50%; background:rgba(20,17,15,.6); display:flex; align-items:center; justify-content:center; z-index:2; color:#fff; opacity:0; transform:scale(.8); transition:opacity .25s var(--ease-o),transform .25s var(--ease-o),background .25s var(--ease-o); }
+.vis-share-btn { position:absolute; bottom:.5rem; left:.5rem; width:26px; height:26px; border-radius:50%; background:rgba(20,17,15,.6); display:flex; align-items:center; justify-content:center; z-index:2; color:#fff; opacity:1; transition:background .25s var(--ease-o); }
 .vis-share-btn::before { content:''; position:absolute; inset:-9px; } /* zone tactile ~44px */
 .vis-share-btn .icon { width:13px; height:13px; }
 .vis-share-btn:hover, .vis-share-btn.mobile-hover { background:var(--gold-d); }
-.pop-card:hover .vis-share-btn, .pop-card.mobile-hover .vis-share-btn { opacity:1; transform:scale(1); }
-/* Menu "La Carte" : bouton partage visible en permanence, sans effet
-   d'apparition au survol (demande client — pas d'animation sur ces cartes). */
-.product-card .vis-share-btn { opacity:1; transform:scale(1); }
-/* Sur tactile sans hover fiable, toujours visible plutôt que caché derrière
-   un survol que l'appareil ne peut pas garantir. */
-@media (hover:none) { .vis-share-btn { opacity:1; transform:scale(1); } }
+/* Bouton partage toujours visible sur toutes les cartes (menu, populaires,
+   classiques) : le survol seul n'est pas un déclencheur fiable sur mobile
+   tactile, même avec la détection @media (hover:none) — Safari iOS peut
+   simuler un état hover au premier tap et fausser cette détection. */
 .is-unavailable .vis-share-btn { display:none; }
 .vis-fav-btn { position:absolute; top:.5rem; right:.5rem; width:28px; height:28px; border-radius:50%; background:rgba(20,17,15,.6); display:flex; align-items:center; justify-content:center; z-index:3; color:#fff; transition:background .25s var(--ease-o),transform .2s var(--ease-o),color .25s var(--ease-o); }
 .vis-fav-btn::before { content:''; position:absolute; inset:-8px; } /* zone tactile ~44px */
