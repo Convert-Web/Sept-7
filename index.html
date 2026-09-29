@@ -225,12 +225,12 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 .order-mode-label--static { border-color:var(--gold); color:var(--white); background:rgba(201,138,46,.1); cursor:default; }
 .cart-close:hover, .cart-close.mobile-hover { border-color:var(--flame); color:var(--flame); }.cart-item:hover, .cart-item.mobile-hover { border-color:rgba(201,138,46,.28); }.qty-btn:hover, .qty-btn.mobile-hover { background:var(--gold); color:var(--ink); }.qty-btn.remove:hover, .qty-btn.remove.mobile-hover { background:var(--flame); color:#fff; }.order-mode-label:hover, .order-mode-label.mobile-hover { border-color:var(--gold); color:var(--white); }
 
-/* HERO — nuit urbaine, le 7 géant comme repère graphique de marque */
+/* HERO — nuit urbaine, la vraie photo du plateau comme repère visuel principal */
 .hero { position:relative; background:var(--ink); color:var(--white); padding-top:var(--header-h); overflow:clip; min-height:92vh; display:flex; flex-direction:column; }
-/* Photo réelle du Sept 7 en fond de hero (classe .vis-food-lg partagée avec
-   le showcase et les cartes "classiques") — remplace l'ancienne texture à
-   pois qui ne montrait aucune image, en particulier sur mobile où la
-   colonne visuelle (7 géant) est masquée. */
+/* Photo réelle du plateau en fond de hero (grand angle, classe dédiée
+   .vis-plateau-lg) — le showcase et les cartes "classiques" utilisent
+   chacun la photo recadrée correspondant au plat affiché (kebab/burger/
+   wrap), pas cette vue d'ensemble. */
 .hero-photo-layer { position:absolute; top:0;left:0;right:0;bottom:0; z-index:0; background-position:center 30%; }
 .hero-photo-scrim { position:absolute; top:0;left:0;right:0;bottom:0; z-index:1; pointer-events:none;
   background:
@@ -254,8 +254,6 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 .hero-grid-lines { position:absolute; top:0;left:0;right:0;bottom:0; opacity:.05; pointer-events:none;
   background-image:linear-gradient(rgba(255,255,255,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.6) 1px,transparent 1px);
   background-size:64px 64px; mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent); }
-.hero-seven-bg { position:absolute; top:50%; left:50%; transform:translate(-50%,-46%); font-family:var(--font-d); font-size:min(90vw,80rem); line-height:.78; color:transparent; -webkit-text-stroke:1px rgba(201,138,46,.05); pointer-events:none; user-select:none; z-index:0; }
-.hero-seven-bg.fill { -webkit-text-stroke:0; color:rgba(198,66,30,.05); }
 .hero-inner { position:relative; z-index:2; flex:1; display:flex; align-items:center; }
 .hero-content { display:grid; grid-template-columns:1fr; gap:2.5rem; width:100%; padding-block:var(--s12) var(--s10); }
 .hero-status-row { display:flex; flex-wrap:wrap; align-items:center; gap:.6rem; margin-bottom:var(--s6); }
@@ -291,11 +289,8 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 
 /* ENTRÉE CINÉMATIQUE — cascade progressive à l'arrivée sur le Hero.
    Chaque bloc part légèrement en retrait, flouté, puis se pose avec un délai
-   croissant. Le fond/les glows/le 7 sont déjà gérés par leurs propres
-   animations continues ; ceci orchestre uniquement le contenu texte + CTA
-   + les couches visuelles pour une apparition dans l'ordre. */
-.hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row,
-.hero-visual-col {
+   croissant. */
+.hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row {
   opacity:0; filter:blur(6px); transition:opacity .9s var(--ease-o), filter .9s var(--ease-o), transform .9s var(--ease-o);
 }
 .hero-status-row { transform:translateY(14px); }
@@ -303,10 +298,6 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 .hero-tagline { transform:translateY(16px); }
 .hero-cta-row { transform:translateY(16px); }
 .hero-meta-row { transform:translateY(18px); }
-/* .hero-visual-col ne transitionne pas "transform" ici : cette propriété est
-   déjà pilotée par le parallax souris en JS (voir initHeroParallax) — un
-   double-emploi sur transform provoquerait un à-coup au premier mousemove. */
-.hero-visual-col { transition:opacity .9s var(--ease-o), filter .9s var(--ease-o); }
 
 .hero-loaded .hero-status-row  { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.05s; }
 .hero-loaded .hero-eyebrow-row { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.16s; }
@@ -314,7 +305,6 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 .hero-loaded .hero-tagline    { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.5s; }
 .hero-loaded .hero-cta-row    { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.62s; }
 .hero-loaded .hero-meta-row   { opacity:1; filter:blur(0); transform:translateY(0); transition-delay:.74s; }
-.hero-loaded .hero-visual-col { opacity:1; filter:blur(0); transition-delay:.3s; }
 /* FILET DE SÉCURITÉ — si le JS est bloqué, lent ou en erreur avant
    d'ajouter .hero-loaded, ces éléments resteraient invisibles indéfiniment
    (opacity:0 ne dépendant que d'une classe posée en JS). Une animation CSS
@@ -322,17 +312,14 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
    cas — elle est simplement invisible si .hero-loaded arrive avant (cas
    normal), et rattrape le contenu sinon. */
 @keyframes heroFallbackIn { to { opacity:1; filter:blur(0); transform:none; } }
-.hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row,
-.hero-visual-col {
+.hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row {
   animation:heroFallbackIn .01s linear 1.2s forwards;
 }
 @media (prefers-reduced-motion:reduce) {
-  .hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row,
-  .hero-visual-col { animation:none; }
+  .hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row { animation:none; }
 }
 @media (prefers-reduced-motion:reduce) {
-  .hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row,
-  .hero-visual-col {
+  .hero-status-row, .hero-eyebrow-row, .hero-tagline, .hero-cta-row, .hero-meta-row {
     opacity:1; filter:none; transform:none; transition:none;
   }
 }
@@ -347,33 +334,8 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 @media (prefers-reduced-motion:reduce) { .hero-title .line span { transform:none; } .status-dot.pulse { animation:none; } .hero-scroll-cue .sc-line::after { animation:none; display:none; } }
 
 @media (min-width:960px) {
-  .hero-content { grid-template-columns:1.05fr .75fr; align-items:center; gap:1.5rem; }
-  .hero-visual-col { display:flex; align-items:center; justify-content:center; position:relative; height:100%; }
+  .hero-text-col { max-width:640px; }
 }
-
-/* Colonne visuelle hero — le 7 comme cadre graphique, sans photo */
-.hero-visual-col { display:none; }
-@media (min-width:960px) { .hero-visual-col { display:flex; } }
-.hero-seven-frame { position:relative; width:min(20vw,260px); aspect-ratio:.72; }
-.hsf-num { position:absolute; top:0;left:0;right:0;bottom:0; font-family:var(--font-d); font-size:min(19vw,250px); line-height:1; color:transparent; -webkit-text-stroke:2.5px var(--gold); display:flex; align-items:center; justify-content:center; filter:drop-shadow(0 0 26px rgba(201,138,46,.22)); animation:sevenFloat 6s ease-in-out infinite; }
-@keyframes sevenFloat { 0%,100% { transform:translateY(0) rotate(-2deg); } 50% { transform:translateY(-14px) rotate(1deg); } }
-.hsf-chip { position:absolute; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.15rem; border-radius:var(--r-lg); text-align:center; padding:.75rem .95rem; box-shadow:0 14px 30px rgba(0,0,0,.32); animation:chipDrift 7s ease-in-out infinite; }
-.hsf-chip .cn { font-family:var(--font-d); font-size:1.3rem; line-height:1; }
-.hsf-chip .cl { font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; }
-.hsf-chip.c1 { top:6%; left:-22%; background:rgba(198,66,30,.16); border:1.5px solid rgba(198,66,30,.4); color:#F4957B; animation-delay:0s; }
-.hsf-chip.c2 { bottom:14%; right:-20%; background:rgba(201,138,46,.16); border:1.5px solid rgba(201,138,46,.4); color:var(--gold); animation-delay:1.4s; }
-.hsf-chip.c3 { bottom:-2%; left:10%; background:rgba(143,168,74,.13); border:1.5px solid rgba(143,168,74,.35); color:var(--lime); animation-delay:2.8s; }
-@keyframes chipDrift { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
-@media (prefers-reduced-motion:reduce) { .hsf-num, .hsf-chip { animation:none; } }
-
-/* TICKER */
-.ticker-strip { background:var(--ink-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:.85rem 0; overflow:hidden; position:relative; }
-.ticker-track { display:flex; gap:3rem; white-space:nowrap; animation:tickerScroll 32s linear infinite; width:max-content; }
-.ticker-strip:hover .ticker-track, .ticker-strip.mobile-hover .ticker-track { animation-play-state:paused; }
-@keyframes tickerScroll { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-.ticker-item { display:flex; align-items:center; gap:.75rem; font-family:var(--font-d); font-size:1rem; color:var(--muted); letter-spacing:.02em; text-transform:uppercase; }
-.ticker-item .tk-dot { color:var(--flame); font-size:.7rem; }
-@media (prefers-reduced-motion:reduce) { .ticker-track { animation:none; } }
 
 /* SHOWCASE — carrousel horizontal classique, 3 cartes premium (ex scroll-lock 300vh) */
 .showcase-wrap { position:relative; background:var(--ink); padding-block:var(--s14) var(--s10); }
@@ -720,12 +682,6 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 .spark.c-flame { color:var(--flame); } .spark.c-gold { color:var(--gold); } .spark.c-lime { color:var(--lime); }
 @keyframes sparkFloat { 0% { opacity:0; transform:translateY(0) scale(.4) rotate(0deg); } 12% { opacity:.85; } 78% { opacity:.4; } 100% { opacity:0; transform:translateY(-100vh) scale(1) rotate(220deg); } }
 
-/* HERO — parallaxe curseur : will-change seulement (la transition d'entrée
-   ci-dessus gère déjà opacity/filter/transform ; le parallax applique son
-   propre transform via JS une fois .hero-loaded actif et n'a pas besoin
-   d'une transition CSS distincte, la souris étant déjà interpolée en JS). */
-.hero-visual-col { will-change:transform; }
-
 /* PRODUCT CARDS — tilt 3D léger (desktop), désactivé sur .product-card (menu
    "La Carte") à la demande du client ; conservé sur .pop-card (Populaires). */
 .pop-card { transition-property:transform,border-color,box-shadow; transition-duration:.15s,.3s,.3s; transition-timing-function:var(--ease-o); }
@@ -765,15 +721,19 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 /* ══════════════════════════════════════════════
    PHOTOS RÉELLES — boissons & nourriture (fournies par Wissam)
    ══════════════════════════════════════════════ */
-.vis-food { background-image:url(plateau-480.webp); background-size:cover; background-position:center; }
+.vis-kebab { background-image:url(food-kebab-480.jpg); background-size:cover; background-position:center; }
+.vis-burger { background-image:url(food-burger-480.jpg); background-size:cover; background-position:center; }
+.vis-wrap { background-image:url(food-wrap-480.jpg); background-size:cover; background-position:center; }
 .vis-drink { background-image:url(boissons-480.webp); background-size:cover; background-position:center; }
-.vis-food-lg { background-image:url(plateau-840.webp); background-size:cover; background-position:center; }
+.vis-kebab-lg { background-image:url(food-kebab-840.jpg); background-size:cover; background-position:center; }
+.vis-burger-lg { background-image:url(food-burger-840.jpg); background-size:cover; background-position:center; }
+.vis-wrap-lg { background-image:url(food-wrap-840.jpg); background-size:cover; background-position:center; }
 .vis-drink-lg { background-image:url(boissons-840.webp); background-size:cover; background-position:center; }
+.vis-plateau-lg { background-image:url(plateau-840.webp); background-size:cover; background-position:center; }
 
 .product-vis.has-photo, .pop-card-vis.has-photo { position:relative; }
 .product-vis.has-photo::after, .pop-card-vis.has-photo::after { content:''; position:absolute; top:0;left:0;right:0;bottom:0; background:linear-gradient(180deg,rgba(20,17,15,.04) 0%,rgba(20,17,15,.5) 100%); z-index:0; }
 .product-vis.has-photo .product-badge, .pop-card-vis.has-photo .product-badge { z-index:2; }
-.vis-emoji-badge { position:absolute; bottom:.5rem; right:.5rem; width:26px; height:26px; border-radius:50%; background:rgba(20,17,15,.78); display:flex; align-items:center; justify-content:center; font-size:.85rem; z-index:2; line-height:1; }
 .vis-share-btn { position:absolute; bottom:.5rem; left:.5rem; width:26px; height:26px; border-radius:50%; background:rgba(20,17,15,.6); display:flex; align-items:center; justify-content:center; z-index:2; color:#fff; opacity:1; transition:background .25s var(--ease-o); }
 .vis-share-btn::before { content:''; position:absolute; inset:-9px; } /* zone tactile ~44px */
 .vis-share-btn .icon { width:13px; height:13px; }
@@ -793,7 +753,6 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 @keyframes favPulse { 0% { transform:scale(1); } 45% { transform:scale(1.3); } 100% { transform:scale(1); } }
 .is-unavailable .vis-fav-btn { display:none; }
 
-.hero-food-layer { position:absolute; z-index:0; pointer-events:none; opacity:.34; mix-blend-mode:luminosity; filter:grayscale(.25) contrast(1.05); -webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 40%,transparent 100%); mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 40%,transparent 100%); }
 
 /* ══ LÉGAL & COOKIES ══ */
 .footer-legal-links { display:flex; flex-wrap:wrap; justify-content:center; gap:.4rem 1.1rem; }
@@ -1062,12 +1021,10 @@ window.SITE = {
 </header>
 
 <section class="hero" id="hero">
-  <div class="hero-photo-layer vis-food-lg" role="img" aria-label="Plateau de tacos, burger, kebab et pizza du Sept 7"></div>
+  <div class="hero-photo-layer vis-plateau-lg" role="img" aria-label="Plateau de tacos, burger, kebab et pizza du Sept 7"></div>
   <div class="hero-photo-scrim"></div>
   <div class="hero-texture-layer"></div>
   <div class="hero-grid-lines"></div>
-  <div class="hero-particles" id="heroParticles"></div>
-  <div class="hero-seven-bg">7</div>
   <div class="container hero-inner">
     <div class="hero-content">
       <div class="hero-text-col">
@@ -1097,23 +1054,10 @@ window.SITE = {
           <div class="hero-meta-item"><span class="hero-meta-num">7j/7</span><span class="hero-meta-lbl">Jusqu'à minuit</span></div>
         </div>
       </div>
-      <div class="hero-visual-col">
-        <div class="hero-food-layer vis-food-lg" style="width:130%;height:130%;border-radius:50%;"></div>
-        <div class="hero-seven-frame">
-          <div class="hsf-num">7</div>
-          <div class="hsf-chip c1"><span class="cn">🌯</span><span class="cl">Tacos</span></div>
-          <div class="hsf-chip c2"><span class="cn">🥙</span><span class="cl">Kebab</span></div>
-          <div class="hsf-chip c3"><span class="cn">🍔</span><span class="cl">Burger</span></div>
-        </div>
-      </div>
     </div>
   </div>
   <div class="hero-scroll-cue"><span>SCROLL</span><span class="sc-line"></span></div>
 </section>
-
-<div class="ticker-strip">
-  <div class="ticker-track" id="tickerTrack"></div>
-</div>
 
 <section class="showcase-wrap" id="showcaseWrap" aria-label="Nos incontournables">
   <div class="showcase-head">
@@ -1121,7 +1065,7 @@ window.SITE = {
   </div>
   <div class="showcase-scroller">
     <div class="showcase-step" data-step="0">
-      <div class="showcase-bg vis-food"></div>
+      <div class="showcase-bg vis-wrap"></div>
       <div class="showcase-scrim"></div>
       <div class="showcase-num">7</div>
       <div class="showcase-content">
@@ -1131,7 +1075,7 @@ window.SITE = {
       </div>
     </div>
     <div class="showcase-step" data-step="1">
-      <div class="showcase-bg vis-food"></div>
+      <div class="showcase-bg vis-kebab"></div>
       <div class="showcase-scrim"></div>
       <div class="showcase-num">7</div>
       <div class="showcase-content">
@@ -1141,7 +1085,7 @@ window.SITE = {
       </div>
     </div>
     <div class="showcase-step" data-step="2">
-      <div class="showcase-bg vis-food"></div>
+      <div class="showcase-bg vis-burger"></div>
       <div class="showcase-scrim"></div>
       <div class="showcase-num">7</div>
       <div class="showcase-content">
@@ -1177,9 +1121,9 @@ window.SITE = {
 <section class="stats-section">
   <div class="stats-texture-layer"></div>
   <div class="container stats-grid">
-    <div class="stat-item reveal"><div class="stat-num"><span class="stat-accent" data-count="91">0</span></div><div class="stat-lbl">Plats à la carte</div></div>
+    <div class="stat-item reveal"><div class="stat-num"><span class="stat-accent">91</span></div><div class="stat-lbl">Plats à la carte</div></div>
     <div class="stat-item reveal"><div class="stat-num"><span class="stat-accent">3</span></div><div class="stat-lbl">Sur place, à emporter, livré</div></div>
-    <div class="stat-item reveal"><div class="stat-num"><span class="stat-accent" data-count="20">0</span></div><div class="stat-lbl">Familles de plats</div></div>
+    <div class="stat-item reveal"><div class="stat-num"><span class="stat-accent">20</span></div><div class="stat-lbl">Familles de plats</div></div>
     <div class="stat-item reveal"><div class="stat-num">7<span class="stat-accent">j/7</span></div><div class="stat-lbl">Jusqu'à minuit</div></div>
   </div>
 </section>
@@ -1279,7 +1223,7 @@ window.SITE = {
     </div>
     <div class="classiques-grid">
       <div class="classique-card reveal" data-glow="flame" data-id="42" tabindex="0" role="button" aria-label="Voir Sandwich Le Sept 7, 8,50€">
-        <div class="classique-img vis-food-lg" role="img" aria-label="Sandwich Le Sept 7"></div>
+        <div class="classique-img vis-kebab-lg" role="img" aria-label="Sandwich Le Sept 7"></div>
         <div class="classique-card-overlay"></div>
         <div class="classique-body">
           <div class="classique-badge-wrap"><span class="classique-badge badge-flame">Signature maison</span></div>
@@ -1289,7 +1233,7 @@ window.SITE = {
         </div>
       </div>
       <div class="classique-card reveal" data-glow="gold" data-id="77" tabindex="0" role="button" aria-label="Voir Riz Thaï 2 Viandes, 13,00€">
-        <div class="classique-img vis-food-lg" role="img" aria-label="Riz Thaï 2 viandes"></div>
+        <div class="classique-img vis-wrap-lg" role="img" aria-label="Riz Thaï 2 viandes"></div>
         <div class="classique-card-overlay"></div>
         <div class="classique-body">
           <div class="classique-badge-wrap"><span class="classique-badge badge-gold">Riz thaï 2 viandes</span></div>
@@ -1299,7 +1243,7 @@ window.SITE = {
         </div>
       </div>
       <div class="classique-card reveal" data-glow="lime" data-id="31" tabindex="0" role="button" aria-label="Voir Sandwich au Four, 12,90€">
-        <div class="classique-img vis-food-lg" role="img" aria-label="Sandwich au Four"></div>
+        <div class="classique-img vis-wrap-lg" role="img" aria-label="Sandwich au Four"></div>
         <div class="classique-card-overlay"></div>
         <div class="classique-body">
           <div class="classique-badge-wrap"><span class="classique-badge badge-lime">Gratiné au four</span></div>
