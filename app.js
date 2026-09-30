@@ -839,7 +839,7 @@ function initHeaderScroll() {
     const toolbar = document.getElementById('menuToolbar');
     if (toolbar) {
       const rect = toolbar.getBoundingClientRect();
-      toolbar.classList.toggle('stuck', rect.top <= parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) + 2);
+      toolbar.classList.toggle('stuck', rect.top <= header.offsetHeight + 2);
     }
   }
   window.addEventListener('scroll', onScroll, { passive:true });

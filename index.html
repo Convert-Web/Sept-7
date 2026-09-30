@@ -135,7 +135,12 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 
 /* HEADER */
 .header { position:fixed; top:0; left:0; right:0; z-index:900; transition:box-shadow var(--t); }
-.header.scrolled { background:rgba(20,17,15,.94); backdrop-filter:blur(24px) saturate(140%); box-shadow:0 1px 0 var(--border),0 8px 28px rgba(0,0,0,.3); }
+/* Le flou est porté par un pseudo-élément et non par le header lui-même : un
+   backdrop-filter sur le header en fait le bloc conteneur de ses descendants
+   position:fixed, donc le menu mobile (.mobile-nav) se réduisait à la hauteur
+   du header (~102px) dès que la page était scrollée. */
+.header.scrolled { box-shadow:0 1px 0 var(--border),0 8px 28px rgba(0,0,0,.3); }
+.header.scrolled::before { content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; background:rgba(20,17,15,.94); -webkit-backdrop-filter:blur(24px) saturate(140%); backdrop-filter:blur(24px) saturate(140%); }
 .logo-name, .nav-link, .btn-phone, .btn-phone-txt { color:var(--white); }
 .announce-bar { background:linear-gradient(90deg,var(--flame-d),var(--flame),var(--gold),var(--flame),var(--flame-d)); background-size:300% 100%; animation:announceFlow 8s linear infinite; height:var(--announce-h); overflow:hidden; transition:height var(--t),opacity var(--t); }
 @keyframes announceFlow { 0% { background-position:0% 0; } 100% { background-position:300% 0; } }
@@ -420,7 +425,7 @@ a:focus-visible, button:focus-visible, .product-card:focus-visible, .pop-card:fo
 @media (min-width:900px) { .pop-scroll-hint { display:none; } }
 
 /* MENU — recherche + filtres + grille */
-.menu-toolbar { display:flex; flex-direction:column; gap:1rem; margin-bottom:var(--s10); position:sticky; top:var(--nav-h); z-index:80; background:var(--paper); padding-block:.85rem; margin-inline:calc(-1 * var(--s6)); padding-inline:var(--s6); border-bottom:1px solid transparent; transition:border-color var(--tf),box-shadow var(--tf); }
+.menu-toolbar { display:flex; flex-direction:column; gap:1rem; margin-bottom:var(--s10); position:sticky; top:var(--header-h); z-index:80; background:var(--paper); padding-block:.85rem; margin-inline:calc(-1 * var(--s6)); padding-inline:var(--s6); border-bottom:1px solid transparent; transition:border-color var(--tf),box-shadow var(--tf); }
 .menu-toolbar.stuck { border-color:var(--border-lt); box-shadow:0 8px 20px rgba(0,0,0,.05); }
 .search-box { position:relative; max-width:420px; margin-inline:auto; width:100%; }
 .search-box input { width:100%; padding:.8rem 1rem .8rem 2.6rem; border-radius:var(--r-f); border:2px solid var(--border-lt); background:#fff; font-size:.9rem; transition:all var(--tf); }
@@ -1439,6 +1444,6 @@ window.SITE = {
   </div>
 </div>
 
-<script src="app.js" defer></script>
+<script src="app.js?v=2" defer></script>
 </body>
 </html>
